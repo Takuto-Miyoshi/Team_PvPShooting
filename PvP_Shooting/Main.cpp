@@ -4,6 +4,8 @@
 // プログラムは WinMain から始まります
 int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow )
 {
+	SetOutApplicationLogValidFlag( false );
+
 	SetGraphMode ( WINDOW_WIDTH, WINDOW_HEIGHT, 32, 60 );
 	ChangeWindowMode ( true ); // ウィンドウモードに変更
 
@@ -20,6 +22,10 @@ int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	{
 		// 画面を初期化
 		ClearDrawScreen();
+
+		// 入力状態を更新
+		if ( UpdateKeyState() != 0 ) break;
+		if ( UpdateMouseButtonState() != 0 ) break;
 
 		SceneBase::CreateScene();
 		SceneBase::ExecuteScene();
