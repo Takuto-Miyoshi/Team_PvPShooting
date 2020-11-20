@@ -1,63 +1,84 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{6d3928fb-8dde-4ad2-bbc9-efb5ae2c2d81}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Scene\Source">
+      <UniqueIdentifier>{8ac6dd2e-ab8f-4ab2-a055-070550bc64c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Scene\Header">
+      <UniqueIdentifier>{f31f8f23-4be5-422a-8186-45e09c7e80e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{bfca37a9-0ba8-43e1-84dd-eb6559b285b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Source">
+      <UniqueIdentifier>{73449c8f-32ad-4737-8cea-a15d84169132}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Header">
+      <UniqueIdentifier>{2504e01f-af99-4b0c-95cb-e8085f96812d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Other">
+      <UniqueIdentifier>{46131845-1ea8-4b5f-af89-60fe9a52932e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Other\Source">
+      <UniqueIdentifier>{063c7b41-49e4-449f-a7f2-8507a48e2776}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Other\Header">
+      <UniqueIdentifier>{e02fce09-254a-4134-b8e4-bb043aed9ba8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Script\Function.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Script\GameScene.cpp">
+      <Filter>Scene\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\Script\GameScene.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Script\ResultScene.cpp">
+      <Filter>Scene\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\Script\Player.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Script\SceneBase.cpp">
+      <Filter>Scene\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\Script\ResultScene.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Script\TitleScene.cpp">
+      <Filter>Scene\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\Script\SceneBase.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Script\Function.cpp">
+      <Filter>Other\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\Script\TitleScene.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Script\Player.cpp">
+      <Filter>Player\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\Main.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Main.cpp">
+      <Filter>Other\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Bullet.cpp">
+      <Filter>Player\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Script\Header\Common.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Script\Header\GameScene.h">
+      <Filter>Scene\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\Script\Header\Function.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Script\Header\ResultScene.h">
+      <Filter>Scene\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\Script\Header\GameScene.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Script\Header\SceneBase.h">
+      <Filter>Scene\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\Script\Header\Player.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Script\Header\TitleScene.h">
+      <Filter>Scene\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\Script\Header\ResultScene.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Script\Header\Player.h">
+      <Filter>Player\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\Script\Header\SceneBase.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Script\Header\Common.h">
+      <Filter>Other\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\Script\Header\TitleScene.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Script\Header\Function.h">
+      <Filter>Other\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Header\Bullet.h">
+      <Filter>Player\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

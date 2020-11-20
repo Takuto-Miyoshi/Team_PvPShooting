@@ -18,6 +18,26 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Script\Bullet.cpp" />
+    <ClCompile Include="Script\Function.cpp" />
+    <ClCompile Include="Script\GameScene.cpp" />
+    <ClCompile Include="Script\Player.cpp" />
+    <ClCompile Include="Script\ResultScene.cpp" />
+    <ClCompile Include="Script\SceneBase.cpp" />
+    <ClCompile Include="Script\TitleScene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Script\Header\Bullet.h" />
+    <ClInclude Include="Script\Header\Common.h" />
+    <ClInclude Include="Script\Header\Function.h" />
+    <ClInclude Include="Script\Header\GameScene.h" />
+    <ClInclude Include="Script\Header\Player.h" />
+    <ClInclude Include="Script\Header\ResultScene.h" />
+    <ClInclude Include="Script\Header\SceneBase.h" />
+    <ClInclude Include="Script\Header\TitleScene.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -148,24 +168,6 @@
       <AdditionalLibraryDirectories>$(DxLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\Main.cpp" />
-    <ClCompile Include="..\Script\Function.cpp" />
-    <ClCompile Include="..\Script\GameScene.cpp" />
-    <ClCompile Include="..\Script\Player.cpp" />
-    <ClCompile Include="..\Script\ResultScene.cpp" />
-    <ClCompile Include="..\Script\SceneBase.cpp" />
-    <ClCompile Include="..\Script\TitleScene.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\Script\Header\Common.h" />
-    <ClInclude Include="..\Script\Header\Function.h" />
-    <ClInclude Include="..\Script\Header\GameScene.h" />
-    <ClInclude Include="..\Script\Header\Player.h" />
-    <ClInclude Include="..\Script\Header\ResultScene.h" />
-    <ClInclude Include="..\Script\Header\SceneBase.h" />
-    <ClInclude Include="..\Script\Header\TitleScene.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

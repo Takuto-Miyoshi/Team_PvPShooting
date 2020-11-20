@@ -1,5 +1,7 @@
 ﻿
 #include "Header/Common.h"
+#include "Header/SceneBase.h"
+#include "Header/TitleScene.h"
 
 TitleScene::TitleScene() {
 

@@ -1,5 +1,6 @@
 ﻿
 #include "Script/Header/Common.h"
+#include "Script/Header/SceneBase.h"
 
 // プログラムは WinMain から始まります
 int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow )

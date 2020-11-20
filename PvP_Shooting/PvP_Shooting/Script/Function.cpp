@@ -126,3 +126,13 @@ InputState GetMouseButtonStatus( int mouseButtonCode ) {
 void MouseButtonInputEnabledToggle( int mouseButtonCode ) {
 	mouseState[mouseButtonCode] = ( mouseState[mouseButtonCode] == InputState::Invalid ) ? InputState::NotPressed : InputState::Invalid;
 }
+
+bool IsOutsideWindow( int posX, int posY ){
+
+	if( posX < 0 || posX > WINDOW_WIDTH ||
+		posY < 0 || posY > WINDOW_HEIGHT ){
+		return true;
+	}
+
+	return false;
+}
