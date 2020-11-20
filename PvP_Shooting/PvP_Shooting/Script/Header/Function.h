@@ -69,4 +69,10 @@ InputState GetMouseButtonStatus( int mouseButtonCode );
 /// @param mouseButtonCode 入力の無効/有効を切り替えたいマウスボタンのコード
 void MouseButtonInputEnabledToggle( int mouseButtonCode );
 
+/// @brief 対象が画面外にいるか判定する
+/// @param posX 対象のX座標
+/// @param posY 対象のY座標
+/// @return 画面外ならtrue
+bool IsOutsideWindow( int posX, int posY );
+
 #endif // !FUNCTION_H

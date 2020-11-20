@@ -1,5 +1,7 @@
 ﻿
 #include "Header/Common.h"
+#include "Header/SceneBase.h"
+#include "Header/ResultScene.h"
 
 ResultScene::ResultScene() {
 

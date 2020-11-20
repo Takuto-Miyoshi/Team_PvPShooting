@@ -1,5 +1,9 @@
 ﻿
 #include "Header/Common.h"
+#include "Header/SceneBase.h"
+#include "Header/TitleScene.h"
+#include "Header/GameScene.h"
+#include "Header/ResultScene.h"
 
 FadeMode SceneBase::fadeMode = FadeMode::None;
 SceneList SceneBase::currentScene = SceneList::Title;
