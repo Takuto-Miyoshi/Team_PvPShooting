@@ -18,6 +18,8 @@ int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	// グラフィックの描画先を裏画面にセット
 	SetDrawScreen ( DX_SCREEN_BACK );
 
+	SetFontSize( FONT_SIZE );
+
 	// メインループ
 	while ( true )
 	{

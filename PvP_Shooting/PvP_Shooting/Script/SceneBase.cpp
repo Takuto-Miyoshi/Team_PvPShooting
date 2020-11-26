@@ -1,23 +1,44 @@
 ﻿
 #include "Header/Common.h"
+#include "Header/Player.h"
 #include "Header/SceneBase.h"
 #include "Header/TitleScene.h"
+#include "Header/SettingScene.h"
 #include "Header/GameScene.h"
 #include "Header/ResultScene.h"
 
 FadeMode SceneBase::fadeMode = FadeMode::None;
 SceneList SceneBase::currentScene = SceneList::Title;
 
+Player* SceneBase::player1 = new Player( 1, KEY_INPUT_UP, KEY_INPUT_RIGHT, KEY_INPUT_LEFT, KEY_INPUT_DOWN, KEY_INPUT_Z, KEY_INPUT_X, spriteList[0] );
+Player* SceneBase::player2 = new Player( 2, KEY_INPUT_W, KEY_INPUT_D, KEY_INPUT_A, KEY_INPUT_S, KEY_INPUT_C, KEY_INPUT_V, spriteList[0] );
+Player* SceneBase::playerList[PLAYER_MAX] {
+	player1,
+	player2
+};
+
 SceneBase* SceneBase::sc_title  = nullptr;
+SceneBase* SceneBase::sc_setting = nullptr;
 SceneBase* SceneBase::sc_onPlay = nullptr;
 SceneBase* SceneBase::sc_result = nullptr;
-SceneBase* SceneBase::pSceneBase[3] = {
+SceneBase* SceneBase::pSceneBase[4] = {
 	sc_title,
+	sc_setting,
 	sc_onPlay,
 	sc_result
 };
 
+Stage SceneBase::stageList[3] {
+	{ 1, spriteList[2] },
+	{ 2, spriteList[3] },
+	{ 3, spriteList[4] }
+};
+
 int SceneBase::previousScene = 0;
+int SceneBase::battleCount = 0;
+
+int SceneBase::players = 0;
+Stage SceneBase::stage = stageList[0];
 
 SceneBase::SceneBase() {
 
@@ -47,6 +68,9 @@ void SceneBase::CreateScene() {
 	{
 	case SceneList::Title:
 		pSceneBase[currentScene] = new TitleScene();
+		break;
+	case SceneList::Setting:
+		pSceneBase[currentScene] = new SettingScene();
 		break;
 	case SceneList::OnPlay:
 		pSceneBase[currentScene] = new GameScene();
@@ -99,4 +123,26 @@ void SceneBase::SceneFade( SceneList destinationScene, int inPower, int outPower
 			fadeMode = FadeMode::In;
 		}
 	}
+}
+
+void SceneBase::SetStage( Stage stg ){
+	stage = stg;
+}
+
+Stage SceneBase::GetStage(){
+	return stage;
+}
+
+void SceneBase::Reset(){
+
+	battleCount = 0;
+
+	for( int i = 0; i < PLAYER_MAX; i++ ){
+		playerList[i]->SetAlive( true );
+		playerList[i]->ResetScore();
+		playerList[i]->SetPosY( WINDOW_HEIGHT / 2 - PLAYER_HEIGHT / 2 );
+	}
+
+	playerList[0]->SetPosX( 200 );
+	playerList[1]->SetPosX( WINDOW_WIDTH - 200 - PLAYER_WIDTH );
 }

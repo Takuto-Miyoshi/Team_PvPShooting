@@ -5,7 +5,7 @@
 // リザルトシーン
 class ResultScene : public SceneBase {
 public:
-	
+
 	/// @brief コンストラクタ
 	ResultScene();
 
@@ -22,6 +22,9 @@ private:
 
 	/// @brief 描画処理
 	void Draw();
+
+	/// @brief 結果を表示する
+	void DrawResult();
 };
 
 #endif

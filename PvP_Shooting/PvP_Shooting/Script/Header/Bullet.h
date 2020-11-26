@@ -2,7 +2,7 @@
 #ifndef BULLET_H
 #define BULLET_H
 
-#include "Header/Common.h"
+#include "Common.h"
 
 /// @brief 弾の最大数
 const int BULLET_MAX = 10;

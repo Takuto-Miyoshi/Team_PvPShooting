@@ -75,4 +75,9 @@ void MouseButtonInputEnabledToggle( int mouseButtonCode );
 /// @return 画面外ならtrue
 bool IsOutsideWindow( int posX, int posY );
 
+/// @brief 中央揃え用 : 文字列を表示する時にX座標に返り値を減算すると中央に表示できる
+/// @param Length 文字数 : 全角文字は2文字としてカウントする
+/// @return ずらす量
+int CenterAdjustment( int length );
+
 #endif // !FUNCTION_H

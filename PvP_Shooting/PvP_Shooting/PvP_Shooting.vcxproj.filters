@@ -33,9 +33,6 @@
     <ClCompile Include="Script\GameScene.cpp">
       <Filter>Scene\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Script\ResultScene.cpp">
-      <Filter>Scene\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Script\SceneBase.cpp">
       <Filter>Scene\Source</Filter>
     </ClCompile>
@@ -53,6 +50,12 @@
     </ClCompile>
     <ClCompile Include="Script\Bullet.cpp">
       <Filter>Player\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\ResultScene.cpp">
+      <Filter>Scene\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\SettingScene.cpp">
+      <Filter>Scene\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="Script\Header\Bullet.h">
       <Filter>Player\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Header\SettingScene.h">
+      <Filter>Scene\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
