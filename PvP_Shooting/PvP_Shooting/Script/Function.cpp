@@ -136,3 +136,7 @@ bool IsOutsideWindow( int posX, int posY ){
 
 	return false;
 }
+
+int CenterAdjustment( int length ){
+	return GetFontSize() * length / 4;
+}

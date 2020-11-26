@@ -8,12 +8,6 @@
 /// @brief プレイヤーの数
 const int PLAYER_MAX = 2;
 
-/// @brief 画像の横幅
-const int PLAYER_SPRITE_WIDTH = 192;
-
-/// @brief 画像の縦幅
-const int PLAYER_SPRITE_HEIGHT = 192;
-
 /// @brief 射撃のクールタイム(フレーム)
 const int SHOOTING_COOL_TIME = 60;
 
@@ -28,7 +22,7 @@ class Player {
 public:
 
 	/// @brief コンストラクタ
-	/// @param playerNum 個体識別用
+	/// @param playerNum 1か2
 	/// @param keyUp 上移動に使用するキー
 	/// @param keyRight 右移動に使用するキー
 	/// @param keyLeft 左移動に使用するキー
@@ -65,36 +59,45 @@ public:
 
 	/// @brief 現在のX座標を取得する
 	/// @return X座標
-	int GetPosX();
+	int GetPosX()const;
 
 	/// @brief 現在のY座標を取得する
 	/// @return Y座標
-	int GetPosY();
+	int GetPosY()const;
+
+	/// @brief X座標を設定する
+	/// @param x X座標
+	void SetPosX( int x );
+
+	/// @brief Y座標を設定する
+	/// @param y Y座標
+	void SetPosY( int y );
 
 	/// @brief 弾の情報を取得する
 	/// @param arrayNum 配列の番号
 	/// @return 弾の情報
-	Bullet* GetBulletData( int arrayNum );
+	Bullet* GetBulletData( int arrayNum )const;
 
 	/// @brief 生存状態を取得する
 	/// @return 生きていたらtrue
-	bool GetAlive();
+	bool GetAlive()const;
 
 	/// @brief 生存状態を設定する
 	/// @param state 生きている状態にするならtrue
 	void SetAlive( bool state );
 
-	/// @brief スコアを取得する
+	/// @brief スコアを取得する : 引数-1で合計スコアを取得
+	/// @param round 何ラウンド目のスコアを取得するか
 	/// @return 現在のスコア
-	int GetScore();
+	int GetScore( int round )const;
 
-	/// @brief スコアを設定する
-	/// @param value 設定する値
-	void SetScore( int value );
+	/// @brief スコアを全て０にする
+	void ResetScore();
 
 	/// @brief スコアを加算する
 	/// @param value 加算する値
-	void AddScore( int value );
+	/// @param round 現在のラウンド
+	void AddScore( int value, int round );
 
 	/// @brief 弾を削除する
 	/// @param arrayNum 配列の番号
@@ -114,8 +117,8 @@ private:
 	Direction dir;
 	Bullet* bullets[BULLET_MAX];
 	int shootingCoolTime;
-	int score;
 	int chargeCount;
+	int score[3];
 
 	int upMovingKey;
 	int rightMovingKey;

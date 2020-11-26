@@ -10,8 +10,8 @@ Player::Player( int playerNum, int keyUp, int keyRight, int keyLeft, int keyDown
 	posY = 100;
 	speed = PLAYER_SPEED;
 	shootingCoolTime = 0;
-	score = 0;
 	chargeCount = 0;
+	for( int i = 0; i < ROUND_MAX; i++ )score[i] = 0;
 
 	upMovingKey = keyUp;
 	rightMovingKey = keyRight;
@@ -21,6 +21,8 @@ Player::Player( int playerNum, int keyUp, int keyRight, int keyLeft, int keyDown
 	bombKey = keyBomb;
 	spriteFolderPath = spritePath;
 	dir = Direction::Down;
+
+	for( int i = 0; i < BULLET_MAX; i++ )bullets[i] = nullptr;
 }
 
 Player::~Player() {
@@ -85,8 +87,8 @@ void Player::Shoot() {
 
 			for( int i = 0; i < BULLET_MAX; i++ ){
 				if( bullets[i] == nullptr ){
-					bullets[i] = new Bullet( posX + PLAYER_SPRITE_WIDTH / 2 - BULLET_SPRITE_WIDTH / 2,
-						posY + PLAYER_SPRITE_HEIGHT / 2 - BULLET_SPRITE_HEIGHT / 2, dir, spriteList[1], tempCharge );
+					bullets[i] = new Bullet( posX + PLAYER_WIDTH / 2 - BULLET_SPRITE_WIDTH / 2,
+						posY + PLAYER_HEIGHT / 2 - BULLET_SPRITE_HEIGHT / 2, dir, spriteList[1], tempCharge );
 					shootingCoolTime = 0;
 					chargeCount = 0;
 					break;
@@ -124,19 +126,27 @@ int Player::GetPlayerNumber(){
 	return playerNumber;
 }
 
-int Player::GetPosX(){
+int Player::GetPosX()const{
 	return posX;
 }
 
-int Player::GetPosY(){
+int Player::GetPosY()const{
 	return posY;
 }
 
-Bullet* Player::GetBulletData( int arrayNum ) {
+void Player::SetPosX( int x ){
+	posX = x;
+}
+
+void Player::SetPosY( int y ){
+	posY = y;
+}
+
+Bullet* Player::GetBulletData( int arrayNum )const {
 	return bullets[arrayNum];
 }
 
-bool Player::GetAlive(){
+bool Player::GetAlive()const {
 	return isAlive;
 }
 
@@ -144,16 +154,22 @@ void Player::SetAlive( bool state ){
 	isAlive = state;
 }
 
-int Player::GetScore(){
-	return score;
+int Player::GetScore( int round )const{
+
+	if( round == -1 )return ( score[0] + score[1] + score[2] );
+
+	if( round <= 0 || round > ROUND_MAX )return 0;
+	return score[round - 1];
 }
 
-void Player::SetScore( int value ){
-	score = value;
+void Player::ResetScore(){
+
+	for( int i = 0; i < ROUND_MAX; i++ )score[i] = 0;
 }
 
-void Player::AddScore( int value ){
-	score += ( value );
+void Player::AddScore( int value, int round ){
+	if( round <= 0 || round > ROUND_MAX )return;
+	score[round - 1] += ( value );
 }
 
 void Player::DeleteBullet( int arrayNum ){

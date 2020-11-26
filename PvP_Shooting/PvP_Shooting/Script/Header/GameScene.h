@@ -4,7 +4,6 @@
 
 #include "Header/Common.h"
 #include "Header/SceneBase.h"
-#include "Header/Player.h"
 
 // ゲーム中のシーン
 class GameScene : public SceneBase {
@@ -30,6 +29,22 @@ private:
 	/// @brief 当たり判定
 	/// @param target 攻撃された人
 	void HitManager( Player* target );
+
+	/// @brief ゲーム開始からの経過時間によって処理を行う
+	void GameManager();
+
+	/// @brief 開始処理 : 最初に呼び出す
+	void Start();
+
+	/// @brief 終了処理 : 最後に呼び出す
+	void End();
+
+private:
+
+	static int counter;
+	static int startCounter;
+	static int endCounter;
+	static bool isOperatable;
 };
 
 #endif

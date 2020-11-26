@@ -26,6 +26,7 @@
     <ClCompile Include="Script\Player.cpp" />
     <ClCompile Include="Script\ResultScene.cpp" />
     <ClCompile Include="Script\SceneBase.cpp" />
+    <ClCompile Include="Script\SettingScene.cpp" />
     <ClCompile Include="Script\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -36,6 +37,7 @@
     <ClInclude Include="Script\Header\Player.h" />
     <ClInclude Include="Script\Header\ResultScene.h" />
     <ClInclude Include="Script\Header\SceneBase.h" />
+    <ClInclude Include="Script\Header\SettingScene.h" />
     <ClInclude Include="Script\Header\TitleScene.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
