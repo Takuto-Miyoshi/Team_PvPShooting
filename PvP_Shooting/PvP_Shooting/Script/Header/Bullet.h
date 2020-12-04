@@ -17,10 +17,10 @@ const int BULLET_SPRITE_HEIGHT = 32;
 const int CHARGE_COUNT = 120;
 
 /// @brief デフォルトの弾速度
-const int BULLET_SPEED = 12;
+const int BULLET_SPEED = 13;
 
 /// @brief チャージショットの速度
-const int BULLET_CHARGE_SPEED = 20;
+const int BULLET_CHARGE_SPEED = 26;
 
 class Bullet{
 

@@ -20,6 +20,9 @@ const int SHOOTING_COOL_TIME = 60;
 /// @brief 復活に必要な時間(フレーム)
 const int RESPAWN_REQUIRED_TIME = 120;
 
+/// @brief デフォルトの移動速度
+const int PLAYER_SPEED = 7;
+
 /// @brief プレイヤー
 class Player {
 public:
