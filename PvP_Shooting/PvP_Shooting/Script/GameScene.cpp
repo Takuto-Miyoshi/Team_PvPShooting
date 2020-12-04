@@ -27,7 +27,7 @@ void GameScene::Control() {
 	for ( int i = 0; i < PLAYER_MAX; i++ ){
 		playerList[i].Move();
 		playerList[i].Shoot();
-		playerList[i].Respawn();
+		playerList[i].Invincible();
 		HitManager( &playerList[i] );
 	}
 

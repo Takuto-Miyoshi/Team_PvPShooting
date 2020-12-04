@@ -4,7 +4,7 @@
 Player::Player( int playerNum, int keyUp, int keyRight, int keyLeft, int keyDown, int keyShot, int keyBomb, LPCTSTR spritePath ) {
 	playerNumber = playerNum;
 	isAlive = true;
-	respawnCount = 0;
+	invincibleCount = 0;
 
 	posX = 100;
 	posY = 100;
@@ -27,8 +27,6 @@ Player::~Player() {
 }
 
 void Player::Move() {
-
-	if( isAlive == false ) return;
 
 	if( GetKeyStatus( upMovingKey ) == InputState::Pressing ) {
 		posY -= speed;
@@ -68,11 +66,16 @@ void Player::Move() {
 
 void Player::Draw() {
 
-	if( isAlive == false ) return;
-
-	LoadGraphScreen( posX, posY, spriteFolderPath, false );
-	for( int i = 0; i < BULLET_MAX; i++ ){
-		if( bullets[i] != nullptr ) bullets[i]->Draw();
+	if ( isAlive == true ) {
+		LoadGraphScreen( posX, posY, spriteFolderPath, false );
+		for ( int i = 0; i < BULLET_MAX; i++ ) {
+			if ( bullets[i] != nullptr ) bullets[i]->Draw();
+		}
+	}
+	else {
+		if( invincibleCount >= 12 && invincibleCount < 24 || invincibleCount >= 36 && invincibleCount <48 ) {
+			LoadGraphScreen( posX, posY, spriteFolderPath, false );
+		}
 	}
 }
 
@@ -115,12 +118,12 @@ void Player::Hit(){
 
 }
 
-void Player::Respawn(){
+void Player::Invincible(){
 
 	if( isAlive == false ){
-		respawnCount++;
-		if( respawnCount > RESPAWN_REQUIRED_TIME ){
-			respawnCount = 0;
+		invincibleCount++;
+		if( invincibleCount > INVINCIBLE_TIME ){
+			invincibleCount = 0;
 			isAlive = true;
 		}
 	}
