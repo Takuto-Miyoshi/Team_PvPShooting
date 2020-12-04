@@ -72,12 +72,12 @@ void Player::Shoot() {
 		}
 	}
 
-	// 射撃キーが押されたら弾を生成
-	if( GetKeyStatus( shotKey ) == InputState::Pressed &&
+	if( GetKeyStatus( shotKey ) == InputState::Released &&
 		shootingCoolTime > SHOOTING_COOL_TIME ){
 		for( int i = 0; i < BULLET_MAX; i++ ){
 			if( bullets[i] == nullptr ){
-				bullets[i] = new Bullet( posX, posY, dir, spriteList[1] );
+				bullets[i] = new Bullet( posX + PLAYER_SPRITE_WIDTH / 2 - BULLET_SPRITE_WIDTH / 2,
+										 posY + PLAYER_SPRITE_HEIGHT / 2 - BULLET_SPRITE_HEIGHT / 2, dir, spriteList[1] );
 				shootingCoolTime = 0;
 				break;
 			}
