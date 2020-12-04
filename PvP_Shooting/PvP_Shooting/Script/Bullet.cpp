@@ -29,6 +29,22 @@ void Bullet::Move(){
 	case Down:
 		posY += speed;
 		break;
+	case UpperRight:
+		posX += speed;
+		posY -= speed;
+		break;
+	case UpperLeft:
+		posX -= speed;
+		posY -= speed;
+		break;
+	case LowerRight:
+		posX += speed;
+		posY += speed;
+		break;
+	case LowerLeft:
+		posX -= speed;
+		posY += speed;
+		break;
 	default:
 		break;
 	}

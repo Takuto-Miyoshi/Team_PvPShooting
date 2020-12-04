@@ -47,6 +47,23 @@ void Player::Move() {
 		posX -= speed;
 		dir = Direction::Left;
 	}
+
+	if ( GetKeyStatus( upMovingKey ) == InputState::Pressing ) {
+		if ( GetKeyStatus( rightMovingKey ) == InputState::Pressing ) {
+			dir = Direction::UpperRight;
+		}
+		else if ( GetKeyStatus( leftMovingKey ) == InputState::Pressing ) {		
+			dir = Direction::UpperLeft;
+		}
+	}
+	else if ( GetKeyStatus( downMovingKey ) == InputState::Pressing ) {
+		if ( GetKeyStatus( rightMovingKey ) == InputState::Pressing ) {
+			dir = Direction::LowerRight;
+		}
+		else if ( GetKeyStatus( leftMovingKey ) == InputState::Pressing ) {
+			dir = Direction::LowerLeft;
+		}
+	}
 }
 
 void Player::Draw() {

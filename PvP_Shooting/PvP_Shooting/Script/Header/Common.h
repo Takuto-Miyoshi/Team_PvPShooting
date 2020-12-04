@@ -20,7 +20,11 @@ enum Direction {
 	Up,
 	Right,
 	Left,
-	Down
+	Down,
+	UpperRight,
+	UpperLeft,
+	LowerRight,
+	LowerLeft
 };
 
 /// @brief 画像ファイル
