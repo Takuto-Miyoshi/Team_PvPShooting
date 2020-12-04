@@ -4,36 +4,39 @@
 
 #include "Header/Common.h"
 
-/// @brief ’e‚ÌÅ‘å”
+/// @brief å¼¾ã®æœ€å¤§æ•°
 const int BULLET_MAX = 10;
 
-/// @brief ‰æ‘œ‚Ì‰¡•
-const int BULLET_SPRITE_WIDTH = 32;
+/// @brief ç”»åƒã®æ¨ªå¹…
+const int BULLET_SPRITE_WIDTH = 64;
 
-/// @brief ‰æ‘œ‚Ìc•
-const int BULLET_SPRITE_HEIGHT = 32;
+/// @brief ç”»åƒã®ç¸¦å¹…
+const int BULLET_SPRITE_HEIGHT = 64;
+
+/// @brief å¼¾ã®å½“ãŸã‚Šåˆ¤å®šã®åŠå¾„
+const int BULLET_RADIUS = 32;
 
 class Bullet{
 
 public:
-	/// @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-	/// @param dir i‚Ş•ûŒü
-	/// @param spritePath “Ç‚İ‚Ş‰æ‘œ‚ÌƒpƒX
+	/// @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	/// @param dir é€²ã‚€æ–¹å‘
+	/// @param spritePath èª­ã¿è¾¼ã‚€ç”»åƒã®ãƒ‘ã‚¹
 	Bullet( int InitPosX, int InitPosY, Direction direction, LPCTSTR spritePath );
 	~Bullet();
 
-	/// @brief ˆÚ“®
+	/// @brief ç§»å‹•
 	void Move();
 	
-	/// @brief •`‰æ
+	/// @brief æç”»
 	void Draw();
 
-	/// @brief XÀ•W‚ğæ“¾‚·‚é
-	/// @return XÀ•W
+	/// @brief Xåº§æ¨™ã‚’å–å¾—ã™ã‚‹
+	/// @return Xåº§æ¨™
 	int GetPosX();
 
-	/// @brief YÀ•W‚ğæ“¾‚·‚é
-	/// @return YÀ•W
+	/// @brief Yåº§æ¨™ã‚’å–å¾—ã™ã‚‹
+	/// @return Yåº§æ¨™
 	int GetPosY();
 
 private:

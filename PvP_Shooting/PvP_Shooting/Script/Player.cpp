@@ -8,7 +8,7 @@ Player::Player( int playerNum, int keyUp, int keyRight, int keyLeft, int keyDown
 
 	posX = 100;
 	posY = 100;
-	speed = 4;
+	speed = 2;
 	shootingCoolTime = 0;
 	score = 0;
 

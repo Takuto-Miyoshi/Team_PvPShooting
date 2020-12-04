@@ -60,10 +60,13 @@ void GameScene::HitManager( Player* target ){
 				target->GetPlayerNumber() != playerList[playerNum].GetPlayerNumber() &&
 				target->GetAlive() == true ){
 				// -------------------------------------------当たり判定---------------------------------------------------------
-				if( ( target->GetPosX() + PLAYER_SPRITE_WIDTH ) > playerList[playerNum].GetBulletData( bulletNum )->GetPosX() &&
-					target->GetPosX() < ( playerList[playerNum].GetBulletData( bulletNum )->GetPosX() + BULLET_SPRITE_WIDTH ) &&
-					( target->GetPosY() + PLAYER_SPRITE_HEIGHT ) > playerList[playerNum].GetBulletData( bulletNum )->GetPosY() &&
-					target->GetPosY() < ( playerList[playerNum].GetBulletData( bulletNum )->GetPosY() + BULLET_SPRITE_HEIGHT ) ){
+				if ( collision( target->GetPosX(),
+					( target->GetPosX() + PLAYER_SPRITE_WIDTH ),
+					target->GetPosY(),
+					( target->GetPosY() + PLAYER_SPRITE_HEIGHT ),
+					playerList[playerNum].GetBulletData( bulletNum )->GetPosX() + BULLET_RADIUS,
+					playerList[playerNum].GetBulletData( bulletNum )->GetPosY() + BULLET_RADIUS,
+					BULLET_RADIUS ) == true ) {
 					//-----------------------------------------------------------------------------------------------------------
 					playerList[playerNum].DeleteBullet( bulletNum );
 					target->DeathProcessing();
@@ -72,4 +75,23 @@ void GameScene::HitManager( Player* target ){
 			}
 		}
 	}
+}
+
+bool GameScene::collision( int L, int R, int T, int B, int x, int y, int radius ) {
+	if ( L - radius > x || R + radius < x || T - radius > y || B + radius < y ) {
+		return false;
+	}
+	if ( L > x && T > y && !(( L - x ) * ( L - x ) + ( T - y ) * ( T - y ) < radius * radius )) {
+		return false;
+	}
+	if ( R < x && T > y && !(( R - x ) * ( R - x ) + ( T - y ) * ( T - y ) < radius * radius )) {
+		return false;
+	}
+	if ( L > x && B < y && !(( L - x ) * ( L - x ) + ( B - y ) * ( B - y ) < radius * radius )) {
+		return false;
+	}
+	if ( R < x && B < y && !(( R - x ) * ( R - x ) + ( B - y ) * ( B - y ) < radius * radius )) {
+		return false;
+	}
+	return true;
 }
