@@ -8,9 +8,10 @@ Player::Player( int playerNum, int keyUp, int keyRight, int keyLeft, int keyDown
 
 	posX = 100;
 	posY = 100;
-	speed = 4;
+	speed = PLAYER_SPEED;
 	shootingCoolTime = 0;
 	score = 0;
+	chargeCount = 0;
 
 	upMovingKey = keyUp;
 	rightMovingKey = keyRight;
@@ -72,14 +73,24 @@ void Player::Shoot() {
 		}
 	}
 
-	// 射撃キーが押されたら弾を生成
-	if( GetKeyStatus( shotKey ) == InputState::Pressed &&
-		shootingCoolTime > SHOOTING_COOL_TIME ){
-		for( int i = 0; i < BULLET_MAX; i++ ){
-			if( bullets[i] == nullptr ){
-				bullets[i] = new Bullet( posX, posY, dir, spriteList[1] );
-				shootingCoolTime = 0;
-				break;
+	if( shootingCoolTime > SHOOTING_COOL_TIME ){
+		if( GetKeyStatus( shotKey ) == InputState::Pressing ){
+			chargeCount++;
+		}
+		else if( GetKeyStatus( shotKey ) == InputState::Released ){
+			bool tempCharge = false;
+			if( chargeCount >= CHARGE_COUNT ){
+				tempCharge = true;
+			}
+
+			for( int i = 0; i < BULLET_MAX; i++ ){
+				if( bullets[i] == nullptr ){
+					bullets[i] = new Bullet( posX + PLAYER_SPRITE_WIDTH / 2 - BULLET_SPRITE_WIDTH / 2,
+						posY + PLAYER_SPRITE_HEIGHT / 2 - BULLET_SPRITE_HEIGHT / 2, dir, spriteList[1], tempCharge );
+					shootingCoolTime = 0;
+					chargeCount = 0;
+					break;
+				}
 			}
 		}
 	}

@@ -20,6 +20,9 @@ const int SHOOTING_COOL_TIME = 60;
 /// @brief 復活に必要な時間(フレーム)
 const int RESPAWN_REQUIRED_TIME = 120;
 
+/// @brief デフォルトの移動速度
+const int PLAYER_SPEED = 7;
+
 /// @brief プレイヤー
 class Player {
 public:
@@ -32,7 +35,7 @@ public:
 	/// @param keyDown 下移動に使用するキー
 	/// @param keyShot 射撃に使用するキー
 	/// @param keyBomb 爆弾に使用するキー
-	/// @param spritePath 読み込む画像のパス 
+	/// @param spritePath 読み込む画像のパス
 	Player( int playerNum, int keyUp, int keyRight, int keyLeft, int keyDown, int keyShot, int keyBomb, LPCTSTR spritePath );
 
 	/// @brief デストラクタ
@@ -52,7 +55,7 @@ public:
 
 	/// @brief 当たり判定
 	void Hit();
-	
+
 	/// @brief 死んでたら復活
 	void Respawn();
 
@@ -63,7 +66,7 @@ public:
 	/// @brief 現在のX座標を取得する
 	/// @return X座標
 	int GetPosX();
-	
+
 	/// @brief 現在のY座標を取得する
 	/// @return Y座標
 	int GetPosY();
@@ -112,6 +115,7 @@ private:
 	Bullet* bullets[BULLET_MAX];
 	int shootingCoolTime;
 	int score;
+	int chargeCount;
 
 	int upMovingKey;
 	int rightMovingKey;
