@@ -10,8 +10,15 @@
 FadeMode SceneBase::fadeMode = FadeMode::None;
 SceneList SceneBase::currentScene = SceneList::Title;
 
-Player* SceneBase::player1 = new Player( 1, KEY_INPUT_UP, KEY_INPUT_RIGHT, KEY_INPUT_LEFT, KEY_INPUT_DOWN, KEY_INPUT_Z, KEY_INPUT_X, spriteList[0] );
-Player* SceneBase::player2 = new Player( 2, KEY_INPUT_W, KEY_INPUT_D, KEY_INPUT_A, KEY_INPUT_S, KEY_INPUT_C, KEY_INPUT_V, spriteList[0] );
+//#define USE_CONTROLLER
+#ifdef USE_CONTROLLER
+Player* SceneBase::player1 = new Player( true, DX_INPUT_PAD1, 1, PAD_INPUT_UP, PAD_INPUT_RIGHT, PAD_INPUT_LEFT, PAD_INPUT_DOWN, PAD_INPUT_2, PAD_INPUT_1, PAD_INPUT_4, spriteList[0] );
+Player* SceneBase::player2 = new Player( true, DX_INPUT_PAD2, 2, PAD_INPUT_UP, PAD_INPUT_RIGHT, PAD_INPUT_LEFT, PAD_INPUT_DOWN, PAD_INPUT_2, PAD_INPUT_1, PAD_INPUT_4, spriteList[0] );
+#else
+Player* SceneBase::player1 = new Player( false, 0, 1, KEY_INPUT_UP, KEY_INPUT_RIGHT, KEY_INPUT_LEFT, KEY_INPUT_DOWN, KEY_INPUT_Z, KEY_INPUT_X, KEY_INPUT_C, spriteList[0] );
+Player* SceneBase::player2 = new Player( false, 0, 2, KEY_INPUT_W, KEY_INPUT_D, KEY_INPUT_A, KEY_INPUT_S, KEY_INPUT_J, KEY_INPUT_K, KEY_INPUT_L, spriteList[0] );
+#endif
+
 Player* SceneBase::playerList[PLAYER_MAX] {
 	player1,
 	player2

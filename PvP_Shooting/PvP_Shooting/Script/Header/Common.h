@@ -52,10 +52,10 @@ const int PLAYER_WIDTH = 192;
 const int PLAYER_HEIGHT = 192;
 
 /// @brief 弾画像の横幅
-const int BULLET_WIDTH = 32;
+const int BULLET_WIDTH = 64;
 
 /// @brief 弾画像の縦幅
-const int BULLET_HEIGHT = 32;
+const int BULLET_HEIGHT = 64;
 
 /// @brief ウィンドウの横幅
 const int WINDOW_WIDTH = 1920;

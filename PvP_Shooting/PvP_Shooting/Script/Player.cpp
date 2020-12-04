@@ -1,7 +1,9 @@
 ﻿
 #include "Header/Player.h"
 
-Player::Player( int playerNum, int keyUp, int keyRight, int keyLeft, int keyDown, int keyShot, int keyBomb, LPCTSTR spritePath ) {
+//#define USE_CONTROLLER
+
+Player::Player( bool isUsePad, int padNumber, int playerNum, int keyUp, int keyRight, int keyLeft, int keyDown, int keyShot, int keyBomb, int keyUlt, LPCTSTR spritePath ){
 	playerNumber = playerNum;
 	isAlive = true;
 	respawnCount = 0;
@@ -13,12 +15,15 @@ Player::Player( int playerNum, int keyUp, int keyRight, int keyLeft, int keyDown
 	chargeCount = 0;
 	for( int i = 0; i < ROUND_MAX; i++ )score[i] = 0;
 
+	usePad = isUsePad;
+	padNum = padNumber;
 	upMovingKey = keyUp;
 	rightMovingKey = keyRight;
 	leftMovingKey = keyLeft;
 	downMovingKey = keyDown;
 	shotKey = keyShot;
 	bombKey = keyBomb;
+	ultKey = keyUlt;
 	spriteFolderPath = spritePath;
 	dir = Direction::Down;
 
@@ -33,6 +38,26 @@ void Player::Move() {
 
 	if( isAlive == false ) return;
 
+#ifdef USE_CONTROLLER
+	if( GetPadStatus( playerNumber, upMovingKey ) == InputState::Pressing ){
+		posY -= speed;
+		dir = Direction::Up;
+	}
+	else if( GetPadStatus( playerNumber, downMovingKey ) == InputState::Pressing ){
+		posY += speed;
+		dir = Direction::Down;
+	}
+
+	if( GetPadStatus( playerNumber, rightMovingKey ) == InputState::Pressing ){
+		posX += speed;
+		dir = Direction::Right;
+	}
+	else if( GetPadStatus( playerNumber, leftMovingKey ) == InputState::Pressing ){
+		posX -= speed;
+		dir = Direction::Left;
+	}
+
+#else
 	if( GetKeyStatus( upMovingKey ) == InputState::Pressing ) {
 		posY -= speed;
 		dir = Direction::Up;
@@ -50,6 +75,7 @@ void Player::Move() {
 		posX -= speed;
 		dir = Direction::Left;
 	}
+#endif
 }
 
 void Player::Draw() {
@@ -75,11 +101,20 @@ void Player::Shoot() {
 		}
 	}
 
+	// 射撃キーが押されたら弾を生成
 	if( shootingCoolTime > SHOOTING_COOL_TIME ){
+#ifdef USE_CONTROLLER
+		if( GetPadStatus( playerNumber, shotKey ) == InputState::Pressing ){
+#else
 		if( GetKeyStatus( shotKey ) == InputState::Pressing ){
+#endif
 			chargeCount++;
 		}
+#ifdef USE_CONTROLLER
+		else if( GetPadStatus( playerNumber, shotKey ) == InputState::Released ){
+#else
 		else if( GetKeyStatus( shotKey ) == InputState::Released ){
+#endif
 			bool tempCharge = false;
 			if( chargeCount >= CHARGE_COUNT ){
 				tempCharge = true;
@@ -87,8 +122,8 @@ void Player::Shoot() {
 
 			for( int i = 0; i < BULLET_MAX; i++ ){
 				if( bullets[i] == nullptr ){
-					bullets[i] = new Bullet( posX + PLAYER_WIDTH / 2 - BULLET_SPRITE_WIDTH / 2,
-						posY + PLAYER_HEIGHT / 2 - BULLET_SPRITE_HEIGHT / 2, dir, spriteList[1], tempCharge );
+					bullets[i] = new Bullet( posX + PLAYER_WIDTH / 2 - BULLET_WIDTH / 2,
+						posY + PLAYER_HEIGHT / 2 - BULLET_HEIGHT / 2, dir, spriteList[1], tempCharge );
 					shootingCoolTime = 0;
 					chargeCount = 0;
 					break;

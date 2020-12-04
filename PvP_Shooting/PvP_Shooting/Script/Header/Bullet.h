@@ -7,12 +7,6 @@
 /// @brief 弾の最大数
 const int BULLET_MAX = 10;
 
-/// @brief 画像の横幅
-const int BULLET_SPRITE_WIDTH = 32;
-
-/// @brief 画像の縦幅
-const int BULLET_SPRITE_HEIGHT = 32;
-
 /// @brief チャージショットを撃つために必要な時間(フレーム)
 const int CHARGE_COUNT = 120;
 

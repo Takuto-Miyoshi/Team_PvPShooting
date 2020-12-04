@@ -22,15 +22,18 @@ class Player {
 public:
 
 	/// @brief コンストラクタ
-	/// @param playerNum 1か2
+	/// @param isUsePad パッドを使用するか
+	/// @param padNum 使用するコントローラー : キーボードの場合は0
+	/// @param playerNum 個体識別用
 	/// @param keyUp 上移動に使用するキー
 	/// @param keyRight 右移動に使用するキー
 	/// @param keyLeft 左移動に使用するキー
 	/// @param keyDown 下移動に使用するキー
 	/// @param keyShot 射撃に使用するキー
 	/// @param keyBomb 爆弾に使用するキー
+	/// @param keyUlt 必殺技に使用するキー
 	/// @param spritePath 読み込む画像のパス
-	Player( int playerNum, int keyUp, int keyRight, int keyLeft, int keyDown, int keyShot, int keyBomb, LPCTSTR spritePath );
+	Player( bool isUsePad, int padNumber, int playerNum, int keyUp, int keyRight, int keyLeft, int keyDown, int keyShot, int keyBomb, int keyUlt, LPCTSTR spritePath );
 
 	/// @brief デストラクタ
 	~Player();
@@ -120,12 +123,15 @@ private:
 	int chargeCount;
 	int score[3];
 
+	bool usePad;
+	int padNum;
 	int upMovingKey;
 	int rightMovingKey;
 	int leftMovingKey;
 	int downMovingKey;
 	int shotKey;
 	int bombKey;
+	int ultKey;
 	LPCTSTR spriteFolderPath;
 };
 

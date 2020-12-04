@@ -87,7 +87,7 @@ void GameScene::GameManager(){
 	isOperatable = false;
 
 	if( counter == 0 ){ Start(); return; }
-	if( counter >= 60 * 60 ){ End(); return; }
+	if( counter == 60 * 60 ){ End(); return; }
 
 	counter++;
 	isOperatable = true;
@@ -118,6 +118,7 @@ void GameScene::End(){
 	if( endCounter >= 60 ){
 		fadeMode = FadeMode::Out;
 		battleCount++;
+		counter++;
 	}
 	endCounter++;
 
