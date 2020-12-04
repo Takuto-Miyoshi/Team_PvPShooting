@@ -73,8 +73,6 @@ void Player::Shoot() {
 		}
 	}
 
-	DrawFormatString( 100, 100, COLOR_WHITE, "charge %d", chargeCount );
-
 	if( shootingCoolTime > SHOOTING_COOL_TIME ){
 		if( GetKeyStatus( shotKey ) == InputState::Pressing ){
 			chargeCount++;
