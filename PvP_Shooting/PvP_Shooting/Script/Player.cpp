@@ -11,6 +11,7 @@ Player::Player( int playerNum, int keyUp, int keyRight, int keyLeft, int keyDown
 	speed = 4;
 	shootingCoolTime = 0;
 	score = 0;
+	chargeCount = 0;
 
 	upMovingKey = keyUp;
 	rightMovingKey = keyRight;
@@ -72,14 +73,26 @@ void Player::Shoot() {
 		}
 	}
 
-	if( GetKeyStatus( shotKey ) == InputState::Released &&
-		shootingCoolTime > SHOOTING_COOL_TIME ){
-		for( int i = 0; i < BULLET_MAX; i++ ){
-			if( bullets[i] == nullptr ){
-				bullets[i] = new Bullet( posX + PLAYER_SPRITE_WIDTH / 2 - BULLET_SPRITE_WIDTH / 2,
-										 posY + PLAYER_SPRITE_HEIGHT / 2 - BULLET_SPRITE_HEIGHT / 2, dir, spriteList[1] );
-				shootingCoolTime = 0;
-				break;
+	DrawFormatString( 100, 100, COLOR_WHITE, "charge %d", chargeCount );
+
+	if( shootingCoolTime > SHOOTING_COOL_TIME ){
+		if( GetKeyStatus( shotKey ) == InputState::Pressing ){
+			chargeCount++;
+		}
+		else if( GetKeyStatus( shotKey ) == InputState::Released ){
+			bool tempCharge = false;
+			if( chargeCount >= CHARGE_COUNT ){
+				tempCharge = true;
+			}
+
+			for( int i = 0; i < BULLET_MAX; i++ ){
+				if( bullets[i] == nullptr ){
+					bullets[i] = new Bullet( posX + PLAYER_SPRITE_WIDTH / 2 - BULLET_SPRITE_WIDTH / 2,
+						posY + PLAYER_SPRITE_HEIGHT / 2 - BULLET_SPRITE_HEIGHT / 2, dir, spriteList[1], tempCharge );
+					shootingCoolTime = 0;
+					chargeCount = 0;
+					break;
+				}
 			}
 		}
 	}

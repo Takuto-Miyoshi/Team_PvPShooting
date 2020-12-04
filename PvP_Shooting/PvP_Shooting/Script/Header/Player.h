@@ -112,6 +112,7 @@ private:
 	Bullet* bullets[BULLET_MAX];
 	int shootingCoolTime;
 	int score;
+	int chargeCount;
 
 	int upMovingKey;
 	int rightMovingKey;

@@ -1,39 +1,48 @@
-
+ï»¿
 #ifndef BULLET_H
 #define BULLET_H
 
 #include "Header/Common.h"
 
-/// @brief ’e‚ÌÅ‘å”
+/// @brief å¼¾ã®æœ€å¤§æ•°
 const int BULLET_MAX = 10;
 
-/// @brief ‰æ‘œ‚Ì‰¡•
+/// @brief ç”»åƒã®æ¨ªå¹…
 const int BULLET_SPRITE_WIDTH = 32;
 
-/// @brief ‰æ‘œ‚Ìc•
+/// @brief ç”»åƒã®ç¸¦å¹…
 const int BULLET_SPRITE_HEIGHT = 32;
+
+/// @brief ãƒãƒ£ãƒ¼ã‚¸ã‚·ãƒ§ãƒƒãƒˆã‚’æ’ƒã¤ãŸã‚ã«å¿…è¦ãªæ™‚é–“(ãƒ•ãƒ¬ãƒ¼ãƒ )
+const int CHARGE_COUNT = 120;
+
+/// @brief ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®å¼¾é€Ÿåº¦
+const int BULLET_SPEED = 12;
+
+/// @brief ãƒãƒ£ãƒ¼ã‚¸ã‚·ãƒ§ãƒƒãƒˆã®é€Ÿåº¦
+const int BULLET_CHARGE_SPEED = 20;
 
 class Bullet{
 
 public:
-	/// @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-	/// @param dir i‚Ş•ûŒü
-	/// @param spritePath “Ç‚İ‚Ş‰æ‘œ‚ÌƒpƒX
-	Bullet( int InitPosX, int InitPosY, Direction direction, LPCTSTR spritePath );
+	/// @brief ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	/// @param dir é€²ã‚€æ–¹å‘
+	/// @param spritePath èª­ã¿è¾¼ã‚€ç”»åƒã®ãƒ‘ã‚¹
+	Bullet( int InitPosX, int InitPosY, Direction direction, LPCTSTR spritePath, bool isCharged );
 	~Bullet();
 
-	/// @brief ˆÚ“®
+	/// @brief ç§»å‹•
 	void Move();
-	
-	/// @brief •`‰æ
+
+	/// @brief æç”»
 	void Draw();
 
-	/// @brief XÀ•W‚ğæ“¾‚·‚é
-	/// @return XÀ•W
+	/// @brief Xåº§æ¨™ã‚’å–å¾—ã™ã‚‹
+	/// @return Xåº§æ¨™
 	int GetPosX();
 
-	/// @brief YÀ•W‚ğæ“¾‚·‚é
-	/// @return YÀ•W
+	/// @brief Yåº§æ¨™ã‚’å–å¾—ã™ã‚‹
+	/// @return Yåº§æ¨™
 	int GetPosY();
 
 private:
@@ -41,6 +50,7 @@ private:
 	int posY;
 	int speed;
 	Direction dir;
+	bool changeChargeShot;
 
 	LPCTSTR spriteFolderPath;
 };
