@@ -59,15 +59,15 @@ void GameScene::HitManager( Player* target ){
 			if( playerList[playerNum].GetBulletData( bulletNum ) != nullptr &&
 				target->GetPlayerNumber() != playerList[playerNum].GetPlayerNumber() &&
 				target->GetAlive() == true ){
-				// -------------------------------------------当たり判定---------------------------------------------------------
-				if ( collision( target->GetPosX(),
+				// ----------------------------------当たり判定---------------------------------
+				if ( Collision( target->GetPosX(),
 					( target->GetPosX() + PLAYER_SPRITE_WIDTH ),
 					target->GetPosY(),
 					( target->GetPosY() + PLAYER_SPRITE_HEIGHT ),
 					playerList[playerNum].GetBulletData( bulletNum )->GetPosX() + BULLET_RADIUS,
 					playerList[playerNum].GetBulletData( bulletNum )->GetPosY() + BULLET_RADIUS,
 					BULLET_RADIUS ) == true ) {
-					//-----------------------------------------------------------------------------------------------------------
+					//--------------------------------------------------------------------------
 					playerList[playerNum].DeleteBullet( bulletNum );
 					target->DeathProcessing();
 					playerList[playerNum].AddScore( 1 );
@@ -77,21 +77,22 @@ void GameScene::HitManager( Player* target ){
 	}
 }
 
-bool GameScene::collision( int L, int R, int T, int B, int x, int y, int radius ) {
-	if ( L - radius > x || R + radius < x || T - radius > y || B + radius < y ) {
+bool GameScene::Collision( int l, int r, int t, int b, int x, int y, int radius ) {
+	if( l - radius > x || r + radius < x || t - radius > y || b + radius < y ) {
 		return false;
 	}
-	if ( L > x && T > y && !(( L - x ) * ( L - x ) + ( T - y ) * ( T - y ) < radius * radius )) {
+	if( l > x && t > y && !( ( l - x ) * ( l - x ) + ( t - y ) * ( t - y ) < radius * radius ) ) {
 		return false;
 	}
-	if ( R < x && T > y && !(( R - x ) * ( R - x ) + ( T - y ) * ( T - y ) < radius * radius )) {
+	if( r < x && t > y && !( ( r - x ) * ( r - x ) + ( t - y ) * ( t - y ) < radius * radius ) ) {
 		return false;
 	}
-	if ( L > x && B < y && !(( L - x ) * ( L - x ) + ( B - y ) * ( B - y ) < radius * radius )) {
+	if( l > x && b < y && !( ( l - x ) * ( l - x ) + ( b - y ) * ( b - y ) < radius * radius ) ) {
 		return false;
 	}
-	if ( R < x && B < y && !(( R - x ) * ( R - x ) + ( B - y ) * ( B - y ) < radius * radius )) {
+	if( r < x && b < y && !( ( r - x ) * ( r - x ) + ( b - y ) * ( b - y ) < radius * radius ) ) {
 		return false;
 	}
+
 	return true;
 }

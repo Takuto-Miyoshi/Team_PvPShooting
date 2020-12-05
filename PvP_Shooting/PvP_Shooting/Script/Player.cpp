@@ -73,7 +73,7 @@ void Player::Draw() {
 		}
 	}
 	else {
-		if( invincibleCount >= 12 && invincibleCount < 24 || invincibleCount >= 36 && invincibleCount <48 ) {
+		if( invincibleCount >= 12 && invincibleCount < 24 || invincibleCount >= 36 && invincibleCount < 48 ) {
 			LoadGraphScreen( posX, posY, spriteFolderPath, false );
 		}
 	}

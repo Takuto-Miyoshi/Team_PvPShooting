@@ -32,15 +32,15 @@ private:
 	void HitManager( Player* target );
 
 	/// @brief 当たり判定の中身
-	/// @param L 攻撃された人の左
-	/// @param R 攻撃された人の右
-	/// @param T 攻撃された人の上	
-	/// @param B 攻撃された人の下 
+	/// @param l 攻撃された人の左
+	/// @param r 攻撃された人の右
+	/// @param t 攻撃された人の上	
+	/// @param b 攻撃された人の下 
 	/// @param x 弾のPosX		
 	/// @param y 弾のPosY
 	/// @param radius 弾の半径     
 	/// @return 条件に当てはまらなかったらtrue
-	bool collision(int L, int R, int T, int B, int x, int y, int radius);
+	bool Collision( int l, int r, int t, int b, int x, int y, int radius );
 };
 
 #endif
