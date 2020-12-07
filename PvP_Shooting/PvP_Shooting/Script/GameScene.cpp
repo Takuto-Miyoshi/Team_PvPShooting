@@ -42,7 +42,7 @@ void GameScene::Control() {
 	for( int i = 0; i < PLAYER_MAX; i++ ){
 		SceneBase::playerList[i]->Move();
 		SceneBase::playerList[i]->Shoot();
-		SceneBase::playerList[i]->Respawn();
+		SceneBase::playerList[i]->Invincible();
 		HitManager( SceneBase::playerList[i] );
 	}
 }
@@ -67,12 +67,15 @@ void GameScene::HitManager( Player* target ){
 			if( playerList[playerNum]->GetBulletData( bulletNum ) != nullptr &&
 				target->GetPlayerNumber() != playerList[playerNum]->GetPlayerNumber() &&
 				target->GetAlive() == true ){
-				// -------------------------------------------当たり判定---------------------------------------------------------
-				if( ( target->GetPosX() + PLAYER_WIDTH ) > playerList[playerNum]->GetBulletData( bulletNum )->GetPosX() &&
-					target->GetPosX() < ( playerList[playerNum]->GetBulletData( bulletNum )->GetPosX() + BULLET_WIDTH ) &&
-					( target->GetPosY() + PLAYER_HEIGHT ) > playerList[playerNum]->GetBulletData( bulletNum )->GetPosY() &&
-					target->GetPosY() < ( playerList[playerNum]->GetBulletData( bulletNum )->GetPosY() + BULLET_HEIGHT ) ){
-					//-----------------------------------------------------------------------------------------------------------
+				// ----------------------------------当たり判定---------------------------------
+				if ( Collision( target->GetPosX(),
+					( target->GetPosX() + PLAYER_WIDTH ),
+					target->GetPosY(),
+					( target->GetPosY() + PLAYER_HEIGHT ),
+					playerList[playerNum]->GetBulletData( bulletNum )->GetPosX() + BULLET_RADIUS,
+					playerList[playerNum]->GetBulletData( bulletNum )->GetPosY() + BULLET_RADIUS,
+					BULLET_RADIUS ) == true ) {
+					//--------------------------------------------------------------------------
 					playerList[playerNum]->DeleteBullet( bulletNum );
 					target->DeathProcessing();
 					playerList[playerNum]->AddScore( 1, SceneBase::battleCount + 1 );
@@ -80,6 +83,26 @@ void GameScene::HitManager( Player* target ){
 			}
 		}
 	}
+}
+
+bool GameScene::Collision( int l, int r, int t, int b, int x, int y, int radius ) {
+	if( l - radius > x || r + radius < x || t - radius > y || b + radius < y ) {
+		return false;
+	}
+	if( l > x && t > y && !( ( l - x ) * ( l - x ) + ( t - y ) * ( t - y ) < radius * radius ) ) {
+		return false;
+	}
+	if( r < x && t > y && !( ( r - x ) * ( r - x ) + ( t - y ) * ( t - y ) < radius * radius ) ) {
+		return false;
+	}
+	if( l > x && b < y && !( ( l - x ) * ( l - x ) + ( b - y ) * ( b - y ) < radius * radius ) ) {
+		return false;
+	}
+	if( r < x && b < y && !( ( r - x ) * ( r - x ) + ( b - y ) * ( b - y ) < radius * radius ) ) {
+		return false;
+	}
+
+	return true;
 }
 
 void GameScene::GameManager(){

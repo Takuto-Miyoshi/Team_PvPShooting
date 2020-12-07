@@ -11,8 +11,8 @@ const int PLAYER_MAX = 2;
 /// @brief 射撃のクールタイム(フレーム)
 const int SHOOTING_COOL_TIME = 60;
 
-/// @brief 復活に必要な時間(フレーム)
-const int RESPAWN_REQUIRED_TIME = 120;
+/// @brief 無敵時間(フレーム)
+const int INVINCIBLE_TIME = 60;
 
 /// @brief デフォルトの移動速度
 const int PLAYER_SPEED = 7;
@@ -54,7 +54,7 @@ public:
 	void Hit();
 
 	/// @brief 死んでたら復活
-	void Respawn();
+	void Invincible();
 
 	/// @brief 個体識別番号を取得
 	/// @return 番号
@@ -112,7 +112,7 @@ public:
 private:
 	int playerNumber;
 	bool isAlive;
-	int respawnCount;
+	int invincibleCount;
 
 	int posX;
 	int posY;

@@ -6,7 +6,7 @@
 Player::Player( bool isUsePad, int padNumber, int playerNum, int keyUp, int keyRight, int keyLeft, int keyDown, int keyShot, int keyBomb, int keyUlt, LPCTSTR spritePath ){
 	playerNumber = playerNum;
 	isAlive = true;
-	respawnCount = 0;
+	invincibleCount = 0;
 
 	posX = 100;
 	posY = 100;
@@ -35,8 +35,6 @@ Player::~Player() {
 }
 
 void Player::Move() {
-
-	if( isAlive == false ) return;
 
 #ifdef USE_CONTROLLER
 	if( GetPadStatus( playerNumber, upMovingKey ) == InputState::Pressing ){
@@ -75,16 +73,38 @@ void Player::Move() {
 		posX -= speed;
 		dir = Direction::Left;
 	}
+
+	if ( GetKeyStatus( upMovingKey ) == InputState::Pressing ) {
+		if ( GetKeyStatus( rightMovingKey ) == InputState::Pressing ) {
+			dir = Direction::UpperRight;
+		}
+		else if ( GetKeyStatus( leftMovingKey ) == InputState::Pressing ) {		
+			dir = Direction::UpperLeft;
+		}
+	}
+	else if ( GetKeyStatus( downMovingKey ) == InputState::Pressing ) {
+		if ( GetKeyStatus( rightMovingKey ) == InputState::Pressing ) {
+			dir = Direction::LowerRight;
+		}
+		else if ( GetKeyStatus( leftMovingKey ) == InputState::Pressing ) {
+			dir = Direction::LowerLeft;
+		}
+	}
 #endif
 }
 
 void Player::Draw() {
 
-	if( isAlive == false ) return;
-
-	LoadGraphScreen( posX, posY, spriteFolderPath, false );
-	for( int i = 0; i < BULLET_MAX; i++ ){
-		if( bullets[i] != nullptr ) bullets[i]->Draw();
+	if ( isAlive == true ) {
+		LoadGraphScreen( posX, posY, spriteFolderPath, false );
+		for ( int i = 0; i < BULLET_MAX; i++ ) {
+			if ( bullets[i] != nullptr ) bullets[i]->Draw();
+		}
+	}
+	else {
+		if( invincibleCount >= 12 && invincibleCount < 24 || invincibleCount >= 36 && invincibleCount < 48 ) {
+			LoadGraphScreen( posX, posY, spriteFolderPath, false );
+		}
 	}
 }
 
@@ -146,12 +166,12 @@ void Player::Hit(){
 
 }
 
-void Player::Respawn(){
+void Player::Invincible(){
 
 	if( isAlive == false ){
-		respawnCount++;
-		if( respawnCount > RESPAWN_REQUIRED_TIME ){
-			respawnCount = 0;
+		invincibleCount++;
+		if( invincibleCount > INVINCIBLE_TIME ){
+			invincibleCount = 0;
 			isAlive = true;
 		}
 	}
