@@ -1,15 +1,26 @@
 ﻿
+#include "Header/Common.h"
+#include "Header/SceneBase.h"
 #include "Header/GameScene.h"
+#include "Header/Player.h"
 
-Player player1( 1, KEY_INPUT_UP, KEY_INPUT_RIGHT, KEY_INPUT_LEFT, KEY_INPUT_DOWN, KEY_INPUT_Z, KEY_INPUT_X, spriteList[0]);
-Player player2( 2, KEY_INPUT_W, KEY_INPUT_D, KEY_INPUT_A, KEY_INPUT_S, KEY_INPUT_C, KEY_INPUT_V, spriteList[0] );
-Player playerList[PLAYER_MAX] {
-	player1,
-	player2
-};
+int GameScene::counter = 0;
+int GameScene::startCounter = 0;
+int GameScene::endCounter = 0;
+bool GameScene::isOperatable = false;
 
 GameScene::GameScene() {
-
+	counter = 0;
+	startCounter = 0;
+	endCounter = 0;
+	for( int p = 0; p < PLAYER_MAX; p++ ){
+		for( int b = 0; b < BULLET_MAX; b++ ){
+			playerList[p]->DeleteBullet( b );
+		}
+		playerList[p]->SetPosY( WINDOW_HEIGHT / 2 - PLAYER_HEIGHT / 2 );
+	}
+	playerList[0]->SetPosX( 200 );
+	playerList[1]->SetPosX( WINDOW_WIDTH - 200 - PLAYER_WIDTH );
 }
 
 GameScene::~GameScene() {
@@ -18,37 +29,34 @@ GameScene::~GameScene() {
 
 void GameScene::Execute() {
 
+	GameManager();
 	Control();
 	Draw();
 }
 
 void GameScene::Control() {
 
-	for ( int i = 0; i < PLAYER_MAX; i++ ){
-		playerList[i].Move();
-		playerList[i].Shoot();
-		playerList[i].Invincible();
-		HitManager( &playerList[i] );
-	}
+	if( fadeMode != FadeMode::None ) return;
+	if( isOperatable != true )return;
 
-
-	if ( fadeMode != FadeMode::None ) return;
-
-	if ( CheckHitKey( KEY_INPUT_2 ) ) {
-		fadeMode = FadeMode::Out;
+	for( int i = 0; i < PLAYER_MAX; i++ ){
+		SceneBase::playerList[i]->Move();
+		SceneBase::playerList[i]->Shoot();
+		SceneBase::playerList[i]->Invincible();
+		HitManager( SceneBase::playerList[i] );
 	}
 }
 
 void GameScene::Draw() {
 
 	for( int i = 0; i < PLAYER_MAX; i++ ){
-		playerList[i].Draw();
+		playerList[i]->Draw();
 	}
 
 	DrawString( 10, 10, "OnPlay", COLOR_RED );
-	DrawString( 10, 30, "Press 2 to Result Scene", COLOR_RED );
 
-	SceneFade( SceneList::Result, 255 / 120, 255 / 60, COLOR_WHITE, COLOR_BLUE, 30 );
+	if( battleCount >= 3 )SceneFade( SceneList::Result, 255, 255 / 60, COLOR_BLACK, COLOR_BLUE );
+	else SceneFade( SceneList::Setting, 255, 255 / 60, COLOR_BLACK, COLOR_GREEN );
 }
 
 void GameScene::HitManager( Player* target ){
@@ -56,21 +64,21 @@ void GameScene::HitManager( Player* target ){
 	for( int playerNum = 0; playerNum < PLAYER_MAX; playerNum++ ){
 		for( int bulletNum = 0; bulletNum < BULLET_MAX; bulletNum++ ){
 			// 例外は弾く
-			if( playerList[playerNum].GetBulletData( bulletNum ) != nullptr &&
-				target->GetPlayerNumber() != playerList[playerNum].GetPlayerNumber() &&
+			if( playerList[playerNum]->GetBulletData( bulletNum ) != nullptr &&
+				target->GetPlayerNumber() != playerList[playerNum]->GetPlayerNumber() &&
 				target->GetAlive() == true ){
 				// ----------------------------------当たり判定---------------------------------
 				if ( Collision( target->GetPosX(),
-					( target->GetPosX() + PLAYER_SPRITE_WIDTH ),
+					( target->GetPosX() + PLAYER_WIDTH ),
 					target->GetPosY(),
-					( target->GetPosY() + PLAYER_SPRITE_HEIGHT ),
-					playerList[playerNum].GetBulletData( bulletNum )->GetPosX() + BULLET_RADIUS,
-					playerList[playerNum].GetBulletData( bulletNum )->GetPosY() + BULLET_RADIUS,
+					( target->GetPosY() + PLAYER_HEIGHT ),
+					playerList[playerNum]->GetBulletData( bulletNum )->GetPosX() + BULLET_RADIUS,
+					playerList[playerNum]->GetBulletData( bulletNum )->GetPosY() + BULLET_RADIUS,
 					BULLET_RADIUS ) == true ) {
 					//--------------------------------------------------------------------------
-					playerList[playerNum].DeleteBullet( bulletNum );
+					playerList[playerNum]->DeleteBullet( bulletNum );
 					target->DeathProcessing();
-					playerList[playerNum].AddScore( 1 );
+					playerList[playerNum]->AddScore( 1, SceneBase::battleCount + 1 );
 				}
 			}
 		}
@@ -95,4 +103,47 @@ bool GameScene::Collision( int l, int r, int t, int b, int x, int y, int radius 
 	}
 
 	return true;
+}
+
+void GameScene::GameManager(){
+
+	isOperatable = false;
+
+	if( counter == 0 ){ Start(); return; }
+	if( counter == 60 * 60 ){ End(); return; }
+
+	counter++;
+	isOperatable = true;
+
+	DrawFormatString( WINDOW_WIDTH / 2 - CenterAdjustment( 3 ), 100, COLOR_GREEN, "%2d", 60 - counter / 60 );
+}
+
+void GameScene::Start(){
+
+	static LPCTSTR countDownText = "   3   ";
+
+	switch( startCounter ){
+	case 0: countDownText = "   3   "; break;
+	case 60:countDownText = "   2   "; break;
+	case 120:countDownText = "   1   "; break;
+	case 180:countDownText = "Start!!"; break;
+	case 210:counter++; break;
+	}
+
+	startCounter++;
+
+	DrawString( WINDOW_WIDTH / 2 - CenterAdjustment( 7 ), WINDOW_HEIGHT / 2, countDownText, COLOR_RED );
+
+}
+
+void GameScene::End(){
+
+	if( endCounter >= 60 ){
+		fadeMode = FadeMode::Out;
+		battleCount++;
+		counter++;
+	}
+	endCounter++;
+
+	DrawString( WINDOW_WIDTH / 2 - CenterAdjustment( 8 ), WINDOW_HEIGHT / 2, "Finish!!", COLOR_RED );
 }

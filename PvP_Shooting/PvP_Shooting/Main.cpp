@@ -18,6 +18,8 @@ int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	// グラフィックの描画先を裏画面にセット
 	SetDrawScreen ( DX_SCREEN_BACK );
 
+	SetFontSize( FONT_SIZE );
+
 	// メインループ
 	while ( true )
 	{
@@ -27,6 +29,7 @@ int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		// 入力状態を更新
 		if ( UpdateKeyState() != 0 ) break;
 		if ( UpdateMouseButtonState() != 0 ) break;
+		if ( UpdatePadState() != 0 )break;
 
 		SceneBase::CreateScene();
 		SceneBase::ExecuteScene();

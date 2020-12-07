@@ -69,10 +69,25 @@ InputState GetMouseButtonStatus( int mouseButtonCode );
 /// @param mouseButtonCode 入力の無効/有効を切り替えたいマウスボタンのコード
 void MouseButtonInputEnabledToggle( int mouseButtonCode );
 
+/// @brief パッドの入力状態を更新する
+/// @return 0以外はエラー
+int UpdatePadState();
+
+/// @brief パッドボタンの入力状態を取得する
+/// @param padNum パッドの識別番号
+/// @param padCode 入力状態を取得したいボタンのコード
+/// @return InputStateで返す
+InputState GetPadStatus( int padNum, int padCode );
+
 /// @brief 対象が画面外にいるか判定する
 /// @param posX 対象のX座標
 /// @param posY 対象のY座標
 /// @return 画面外ならtrue
 bool IsOutsideWindow( int posX, int posY );
+
+/// @brief 中央揃え用 : 文字列を表示する時にX座標に返り値を減算すると中央に表示できる
+/// @param Length 文字数 : 全角文字は2文字としてカウントする
+/// @return ずらす量
+int CenterAdjustment( int length );
 
 #endif // !FUNCTION_H

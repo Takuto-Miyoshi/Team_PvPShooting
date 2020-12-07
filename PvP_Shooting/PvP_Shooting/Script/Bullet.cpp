@@ -1,12 +1,14 @@
-
+﻿
 #include "Header/Bullet.h"
 
-Bullet::Bullet( int InitPosX, int InitPosY, Direction direction, LPCTSTR spritePath ) {
+Bullet::Bullet( int InitPosX, int InitPosY, Direction direction, LPCTSTR spritePath, bool isCharged ) {
 	posX = InitPosX;
 	posY = InitPosY;
-	speed = 4;
 	dir = direction;
 	spriteFolderPath = spritePath;
+
+	changeChargeShot = isCharged;
+	speed = ( changeChargeShot == true ) ? BULLET_CHARGE_SPEED : BULLET_SPEED;
 }
 
 Bullet::~Bullet(){

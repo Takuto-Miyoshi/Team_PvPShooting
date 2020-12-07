@@ -7,12 +7,15 @@ InputState keyState[256];
 /// @brief マウスボタンが何フレーム入力されているか保存する
 InputState mouseState[MOUSEBUTTON_UPDATE_RANGE] = {};
 
+/// @brief ボタンが何フレーム入力されているか保存する
+InputState padState[2][8];
+
 bool Fade( FadeMode fademode, unsigned int fadePower, int fadeColor, int waitTime ) {
 
 	const int ALPHA_MAX = 255;
 	const int ALPHA_MIN = 0;
 	const int ALPHA_INVALID = -1;
-	
+
 	static int alpha = ALPHA_INVALID;
 	static int waitTimeCount = 0;
 
@@ -127,6 +130,54 @@ void MouseButtonInputEnabledToggle( int mouseButtonCode ) {
 	mouseState[mouseButtonCode] = ( mouseState[mouseButtonCode] == InputState::Invalid ) ? InputState::NotPressed : InputState::Invalid;
 }
 
+int UpdatePadState(){
+	char currentPadState[2][8];
+
+	currentPadState[0][0] = ( ( GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_DOWN ) == 0 ) ? 0 : 1;
+	currentPadState[0][1] = ( ( GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_LEFT ) == 0 ) ? 0 : 1;
+	currentPadState[0][2] = ( ( GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_RIGHT ) == 0 ) ? 0 : 1;
+	currentPadState[0][3] = ( ( GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_UP ) == 0 ) ? 0 : 1;
+	currentPadState[0][4] = ( ( GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_1 ) == 0 ) ? 0 : 1;
+	currentPadState[0][5] = ( ( GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_2 ) == 0 ) ? 0 : 1;
+	currentPadState[0][6] = ( ( GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_3 ) == 0 ) ? 0 : 1;
+	currentPadState[0][7] = ( ( GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4 ) == 0 ) ? 0 : 1;
+
+	currentPadState[1][0] = ( ( GetJoypadInputState( DX_INPUT_PAD2 ) & PAD_INPUT_DOWN ) == 0 ) ? 0 : 1;
+	currentPadState[1][1] = ( ( GetJoypadInputState( DX_INPUT_PAD2 ) & PAD_INPUT_LEFT ) == 0 ) ? 0 : 1;
+	currentPadState[1][2] = ( ( GetJoypadInputState( DX_INPUT_PAD2 ) & PAD_INPUT_RIGHT ) == 0 ) ? 0 : 1;
+	currentPadState[1][3] = ( ( GetJoypadInputState( DX_INPUT_PAD2 ) & PAD_INPUT_UP ) == 0 ) ? 0 : 1;
+	currentPadState[1][4] = ( ( GetJoypadInputState( DX_INPUT_PAD2 ) & PAD_INPUT_1 ) == 0 ) ? 0 : 1;
+	currentPadState[1][5] = ( ( GetJoypadInputState( DX_INPUT_PAD2 ) & PAD_INPUT_2 ) == 0 ) ? 0 : 1;
+	currentPadState[1][6] = ( ( GetJoypadInputState( DX_INPUT_PAD2 ) & PAD_INPUT_3 ) == 0 ) ? 0 : 1;
+	currentPadState[1][7] = ( ( GetJoypadInputState( DX_INPUT_PAD2 ) & PAD_INPUT_4 ) == 0 ) ? 0 : 1;
+
+
+	for( int i = 0; i < 8; i++ ){
+		for( int p = 0; p < 2; p++ )padState[p][i] = UpdateInputState( currentPadState[p][i], padState[p][i] );
+	}
+
+	return 0;
+}
+
+InputState GetPadStatus( int padNum, int padCode ){
+
+	int convertedPadCode = -1;
+
+	switch( padCode ){
+	case PAD_INPUT_DOWN:	convertedPadCode = 0; break;
+	case PAD_INPUT_LEFT:	convertedPadCode = 1; break;
+	case PAD_INPUT_RIGHT:	convertedPadCode = 2; break;
+	case PAD_INPUT_UP:		convertedPadCode = 3; break;
+	case PAD_INPUT_1:		convertedPadCode = 4; break;
+	case PAD_INPUT_2:		convertedPadCode = 5; break;
+	case PAD_INPUT_3:		convertedPadCode = 6; break;
+	case PAD_INPUT_4:		convertedPadCode = 7; break;
+	default:break;
+	}
+
+	return padState[padNum - 1][convertedPadCode];
+}
+
 bool IsOutsideWindow( int posX, int posY ){
 
 	if( posX < 0 || posX > WINDOW_WIDTH ||
@@ -135,4 +186,8 @@ bool IsOutsideWindow( int posX, int posY ){
 	}
 
 	return false;
+}
+
+int CenterAdjustment( int length ){
+	return GetFontSize() * length / 4;
 }
