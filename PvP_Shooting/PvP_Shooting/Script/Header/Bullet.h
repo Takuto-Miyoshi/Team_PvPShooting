@@ -25,7 +25,7 @@ public:
 	/// @brief コンストラクタ
 	/// @param dir 進む方向
 	/// @param spritePath 読み込む画像のパス
-	Bullet( int InitPosX, int InitPosY, Direction direction, LPCTSTR spritePath, bool isCharged );
+	Bullet( int initPosX, int initPosY, Direction direction, LPCTSTR spritePath, bool isCharged );
 
 	~Bullet();
 

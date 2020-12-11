@@ -133,24 +133,15 @@ void MouseButtonInputEnabledToggle( int mouseButtonCode ) {
 int UpdatePadState(){
 	char currentPadState[2][8];
 
-	currentPadState[0][0] = ( ( GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_DOWN ) == 0 ) ? 0 : 1;
-	currentPadState[0][1] = ( ( GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_LEFT ) == 0 ) ? 0 : 1;
-	currentPadState[0][2] = ( ( GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_RIGHT ) == 0 ) ? 0 : 1;
-	currentPadState[0][3] = ( ( GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_UP ) == 0 ) ? 0 : 1;
-	currentPadState[0][4] = ( ( GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_1 ) == 0 ) ? 0 : 1;
-	currentPadState[0][5] = ( ( GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_2 ) == 0 ) ? 0 : 1;
-	currentPadState[0][6] = ( ( GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_3 ) == 0 ) ? 0 : 1;
-	currentPadState[0][7] = ( ( GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4 ) == 0 ) ? 0 : 1;
+	for( int p = 0; p < 2; p++ ){
+	int buttonTemp = 1;
+		for( int b = 0; b < 8; b++ ){
+			currentPadState[p][b] = ( ( GetJoypadInputState( p + 1 ) & buttonTemp ) == 0 ) ? 0 : 1;
 
-	currentPadState[1][0] = ( ( GetJoypadInputState( DX_INPUT_PAD2 ) & PAD_INPUT_DOWN ) == 0 ) ? 0 : 1;
-	currentPadState[1][1] = ( ( GetJoypadInputState( DX_INPUT_PAD2 ) & PAD_INPUT_LEFT ) == 0 ) ? 0 : 1;
-	currentPadState[1][2] = ( ( GetJoypadInputState( DX_INPUT_PAD2 ) & PAD_INPUT_RIGHT ) == 0 ) ? 0 : 1;
-	currentPadState[1][3] = ( ( GetJoypadInputState( DX_INPUT_PAD2 ) & PAD_INPUT_UP ) == 0 ) ? 0 : 1;
-	currentPadState[1][4] = ( ( GetJoypadInputState( DX_INPUT_PAD2 ) & PAD_INPUT_1 ) == 0 ) ? 0 : 1;
-	currentPadState[1][5] = ( ( GetJoypadInputState( DX_INPUT_PAD2 ) & PAD_INPUT_2 ) == 0 ) ? 0 : 1;
-	currentPadState[1][6] = ( ( GetJoypadInputState( DX_INPUT_PAD2 ) & PAD_INPUT_3 ) == 0 ) ? 0 : 1;
-	currentPadState[1][7] = ( ( GetJoypadInputState( DX_INPUT_PAD2 ) & PAD_INPUT_4 ) == 0 ) ? 0 : 1;
-
+			if( buttonTemp >= 16 ) buttonTemp += 16;
+			else buttonTemp *= 2;
+		}
+	}
 
 	for( int i = 0; i < 8; i++ ){
 		for( int p = 0; p < 2; p++ )padState[p][i] = UpdateInputState( currentPadState[p][i], padState[p][i] );
