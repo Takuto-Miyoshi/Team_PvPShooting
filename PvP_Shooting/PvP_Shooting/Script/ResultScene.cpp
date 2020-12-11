@@ -55,9 +55,9 @@ void ResultScene::DrawResult(){
 	// 結果
 	LPCTSTR winnerString = "";
 	switch( winner ){
-	case 0:winnerString = "ひきわけ";
-	case 1:winnerString = "1Pの勝ち";
-	case 2:winnerString = "2Pの勝ち";
+	case 0:winnerString = "ひきわけ"; break;
+	case 1:winnerString = "1Pの勝ち"; break;
+	case 2:winnerString = "2Pの勝ち"; break;
 	}
 	DrawString( WINDOW_WIDTH / 2 - CenterAdjustment( 8 ), WINDOW_HEIGHT / 2, winnerString, COLOR_WHITE );
 }

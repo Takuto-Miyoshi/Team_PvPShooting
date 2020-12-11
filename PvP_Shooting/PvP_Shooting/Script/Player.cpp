@@ -1,7 +1,7 @@
 ﻿
 #include "Header/Player.h"
 
-//#define USE_CONTROLLER
+#define USE_CONTROLLER
 
 Player::Player( bool isUsePad, int padNumber, int playerNum, int keyUp, int keyRight, int keyLeft, int keyDown, int keyShot, int keyBomb, int keyUlt, LPCTSTR spritePath ){
 	playerNumber = playerNum;
@@ -55,6 +55,23 @@ void Player::Move() {
 		dir = Direction::Left;
 	}
 
+	if( GetPadStatus( playerNumber, upMovingKey ) == InputState::Pressing ) {
+		if( GetPadStatus( playerNumber, rightMovingKey ) == InputState::Pressing ) {
+			dir = Direction::UpperRight;
+		}
+		else if( GetPadStatus( playerNumber, leftMovingKey ) == InputState::Pressing ) {
+			dir = Direction::UpperLeft;
+		}
+	}
+	else if( GetPadStatus( playerNumber, downMovingKey ) == InputState::Pressing ) {
+		if( GetPadStatus( playerNumber, rightMovingKey ) == InputState::Pressing ) {
+			dir = Direction::LowerRight;
+		}
+		else if( GetPadStatus( playerNumber, leftMovingKey ) == InputState::Pressing ) {
+			dir = Direction::LowerLeft;
+		}
+	}
+
 #else
 	if( GetKeyStatus( upMovingKey ) == InputState::Pressing ) {
 		posY -= speed;
@@ -74,23 +91,29 @@ void Player::Move() {
 		dir = Direction::Left;
 	}
 
-	if ( GetKeyStatus( upMovingKey ) == InputState::Pressing ) {
-		if ( GetKeyStatus( rightMovingKey ) == InputState::Pressing ) {
+	if( GetKeyStatus( upMovingKey ) == InputState::Pressing ) {
+		if( GetKeyStatus( rightMovingKey ) == InputState::Pressing ) {
 			dir = Direction::UpperRight;
 		}
-		else if ( GetKeyStatus( leftMovingKey ) == InputState::Pressing ) {		
+		else if( GetKeyStatus( leftMovingKey ) == InputState::Pressing ) {
 			dir = Direction::UpperLeft;
 		}
 	}
-	else if ( GetKeyStatus( downMovingKey ) == InputState::Pressing ) {
-		if ( GetKeyStatus( rightMovingKey ) == InputState::Pressing ) {
+	else if( GetKeyStatus( downMovingKey ) == InputState::Pressing ) {
+		if( GetKeyStatus( rightMovingKey ) == InputState::Pressing ) {
 			dir = Direction::LowerRight;
 		}
-		else if ( GetKeyStatus( leftMovingKey ) == InputState::Pressing ) {
+		else if( GetKeyStatus( leftMovingKey ) == InputState::Pressing ) {
 			dir = Direction::LowerLeft;
 		}
 	}
 #endif
+
+	// 画面外なら戻す
+	if( posY < 0 ) posY = 0;
+	if( posY > WINDOW_HEIGHT - PLAYER_HEIGHT ) posY = WINDOW_HEIGHT - PLAYER_HEIGHT;
+	if( posX < 0 ) posX = 0;
+	if( posX > WINDOW_WIDTH - PLAYER_WIDTH ) posX = WINDOW_WIDTH - PLAYER_WIDTH;
 }
 
 void Player::Draw() {

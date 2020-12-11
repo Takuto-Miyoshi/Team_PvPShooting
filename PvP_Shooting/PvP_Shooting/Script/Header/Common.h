@@ -43,6 +43,9 @@ const LPCSTR spriteList[] = {
 	"Sprite/Test_StagePreview.png"	// ステージ3のプレビュー
 };
 
+/// @brief フレームレート
+const int FRAME_RATE = 60;
+
 /// @brief ステージプレビューの横幅
 const int PREVIEW_WIDTH = 300;
 
@@ -72,6 +75,9 @@ const int FONT_SIZE = 42;
 
 /// @brief ラウンド数
 const int ROUND_MAX = 3;
+
+/// @brief プレイ時間(秒)
+const int PLAY_TIME = 60;
 
 const int COLOR_WHITE = GetColor(255, 255, 255);
 const int COLOR_BLACK = GetColor(0, 0, 0);

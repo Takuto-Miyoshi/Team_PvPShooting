@@ -10,7 +10,7 @@
 FadeMode SceneBase::fadeMode = FadeMode::None;
 SceneList SceneBase::currentScene = SceneList::Title;
 
-//#define USE_CONTROLLER
+#define USE_CONTROLLER
 #ifdef USE_CONTROLLER
 Player* SceneBase::player1 = new Player( true, DX_INPUT_PAD1, 1, PAD_INPUT_UP, PAD_INPUT_RIGHT, PAD_INPUT_LEFT, PAD_INPUT_DOWN, PAD_INPUT_2, PAD_INPUT_1, PAD_INPUT_4, spriteList[0] );
 Player* SceneBase::player2 = new Player( true, DX_INPUT_PAD2, 2, PAD_INPUT_UP, PAD_INPUT_RIGHT, PAD_INPUT_LEFT, PAD_INPUT_DOWN, PAD_INPUT_2, PAD_INPUT_1, PAD_INPUT_4, spriteList[0] );
