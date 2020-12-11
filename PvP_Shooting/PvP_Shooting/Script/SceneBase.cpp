@@ -12,11 +12,11 @@ SceneList SceneBase::currentScene = SceneList::Title;
 
 #define USE_CONTROLLER
 #ifdef USE_CONTROLLER
-Player* SceneBase::player1 = new Player( true, DX_INPUT_PAD1, 1, PAD_INPUT_UP, PAD_INPUT_RIGHT, PAD_INPUT_LEFT, PAD_INPUT_DOWN, PAD_INPUT_2, PAD_INPUT_1, PAD_INPUT_4, spriteList[0] );
-Player* SceneBase::player2 = new Player( true, DX_INPUT_PAD2, 2, PAD_INPUT_UP, PAD_INPUT_RIGHT, PAD_INPUT_LEFT, PAD_INPUT_DOWN, PAD_INPUT_2, PAD_INPUT_1, PAD_INPUT_4, spriteList[0] );
+Player* SceneBase::player1 = new Player( true, DX_INPUT_PAD1, 1, PAD_INPUT_UP, PAD_INPUT_RIGHT, PAD_INPUT_LEFT, PAD_INPUT_DOWN, PAD_INPUT_2, PAD_INPUT_1, PAD_INPUT_4, Sprite::player1 );
+Player* SceneBase::player2 = new Player( true, DX_INPUT_PAD2, 2, PAD_INPUT_UP, PAD_INPUT_RIGHT, PAD_INPUT_LEFT, PAD_INPUT_DOWN, PAD_INPUT_2, PAD_INPUT_1, PAD_INPUT_4, Sprite::player2 );
 #else
-Player* SceneBase::player1 = new Player( false, 0, 1, KEY_INPUT_UP, KEY_INPUT_RIGHT, KEY_INPUT_LEFT, KEY_INPUT_DOWN, KEY_INPUT_Z, KEY_INPUT_X, KEY_INPUT_C, spriteList[0] );
-Player* SceneBase::player2 = new Player( false, 0, 2, KEY_INPUT_W, KEY_INPUT_D, KEY_INPUT_A, KEY_INPUT_S, KEY_INPUT_J, KEY_INPUT_K, KEY_INPUT_L, spriteList[0] );
+Player* SceneBase::player1 = new Player( false, 0, 1, KEY_INPUT_UP, KEY_INPUT_RIGHT, KEY_INPUT_LEFT, KEY_INPUT_DOWN, KEY_INPUT_Z, KEY_INPUT_X, KEY_INPUT_C, Sprite::player1 );
+Player* SceneBase::player2 = new Player( false, 0, 2, KEY_INPUT_W, KEY_INPUT_D, KEY_INPUT_A, KEY_INPUT_S, KEY_INPUT_J, KEY_INPUT_K, KEY_INPUT_L, Sprite::player2 );
 #endif
 
 Player* SceneBase::playerList[PLAYER_MAX] {
@@ -36,9 +36,9 @@ SceneBase* SceneBase::pSceneBase[4] = {
 };
 
 Stage SceneBase::stageList[3] {
-	{ 1, spriteList[2] },
-	{ 2, spriteList[3] },
-	{ 3, spriteList[4] }
+	{ 1, Sprite::stgPreview1 },
+	{ 2, Sprite::stgPreview2 },
+	{ 3, Sprite::stgPreview3 }
 };
 
 int SceneBase::previousScene = 0;
@@ -55,8 +55,15 @@ SceneBase::~SceneBase() {
 
 }
 
-enum SceneList SceneBase::GetCurrentScene() {
-	return currentScene;
+int SceneBase::GetCurrentScene() {
+	switch( currentScene )
+	{
+	case SceneList::Title:return 0; break;
+	case SceneList::Setting:return 1; break;
+	case SceneList::OnPlay:return 2; break;
+	case SceneList::Result:return 3; break;
+	default:return 0; break;
+	}
 }
 
 void SceneBase::ReleaseScene() {
@@ -65,25 +72,26 @@ void SceneBase::ReleaseScene() {
 }
 
 void SceneBase::CreateScene() {
+
 	// シーン処理を始める前のシーンを取得する
-	previousScene = currentScene;
+	previousScene = GetCurrentScene();
 
 	// 移行先のシーンがnullならnewする
-	if ( pSceneBase[currentScene] != nullptr ) return;
+	if ( pSceneBase[GetCurrentScene()] != nullptr ) return;
 
 	switch ( currentScene )
 	{
 	case SceneList::Title:
-		pSceneBase[currentScene] = new TitleScene();
+		pSceneBase[GetCurrentScene()] = new TitleScene();
 		break;
 	case SceneList::Setting:
-		pSceneBase[currentScene] = new SettingScene();
+		pSceneBase[GetCurrentScene()] = new SettingScene();
 		break;
 	case SceneList::OnPlay:
-		pSceneBase[currentScene] = new GameScene();
+		pSceneBase[GetCurrentScene()] = new GameScene();
 		break;
 	case SceneList::Result:
-		pSceneBase[currentScene] = new ResultScene();
+		pSceneBase[GetCurrentScene()] = new ResultScene();
 		break;
 	default:
 		break;
@@ -98,7 +106,7 @@ void SceneBase::ExecuteScene() {
 
 void SceneBase::ReleaseCurrentScene() {
 	// シーンに変化があるなら今のシーンはdeleteする
-	if ( previousScene != SceneBase::GetCurrentScene() ) {
+	if ( previousScene != GetCurrentScene() ) {
 		delete pSceneBase[previousScene];
 		pSceneBase[previousScene] = nullptr;
 	}

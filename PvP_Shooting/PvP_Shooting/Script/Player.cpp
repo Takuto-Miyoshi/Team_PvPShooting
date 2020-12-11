@@ -25,7 +25,7 @@ Player::Player( bool isUsePad, int padNumber, int playerNum, int keyUp, int keyR
 	bombKey = keyBomb;
 	ultKey = keyUlt;
 	spriteFolderPath = spritePath;
-	dir = Direction::Down;
+	dir = ( playerNum == 1 ) ? Direction::Right : Direction::Left;
 
 	for( int i = 0; i < BULLET_MAX; i++ )bullets[i] = nullptr;
 }
@@ -119,14 +119,14 @@ void Player::Move() {
 void Player::Draw() {
 
 	if ( isAlive == true ) {
-		LoadGraphScreen( posX, posY, spriteFolderPath, false );
+		LoadGraphScreen( posX, posY, spriteFolderPath, true );
 		for ( int i = 0; i < BULLET_MAX; i++ ) {
 			if ( bullets[i] != nullptr ) bullets[i]->Draw();
 		}
 	}
 	else {
 		if( invincibleCount >= 12 && invincibleCount < 24 || invincibleCount >= 36 && invincibleCount < 48 ) {
-			LoadGraphScreen( posX, posY, spriteFolderPath, false );
+			LoadGraphScreen( posX, posY, spriteFolderPath, true );
 		}
 	}
 }
@@ -166,7 +166,7 @@ void Player::Shoot() {
 			for( int i = 0; i < BULLET_MAX; i++ ){
 				if( bullets[i] == nullptr ){
 					bullets[i] = new Bullet( posX + PLAYER_WIDTH / 2 - BULLET_WIDTH / 2,
-						posY + PLAYER_HEIGHT / 2 - BULLET_HEIGHT / 2, dir, spriteList[1], tempCharge );
+						posY + PLAYER_HEIGHT / 2 - BULLET_HEIGHT / 2, dir, Sprite::bullet, tempCharge );
 					shootingCoolTime = 0;
 					chargeCount = 0;
 					break;
@@ -195,6 +195,7 @@ void Player::Invincible(){
 		invincibleCount++;
 		if( invincibleCount > INVINCIBLE_TIME ){
 			invincibleCount = 0;
+			shootingCoolTime = SHOOTING_COOL_TIME;
 			isAlive = true;
 		}
 	}

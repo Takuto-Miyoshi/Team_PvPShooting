@@ -44,9 +44,9 @@ void SettingScene::SetStage(){
 	DrawFormatString( WINDOW_WIDTH / 2 - CenterAdjustment( 7 ), 100, COLOR_BLUE, "Round %d", SceneBase::battleCount + 1 );
 
 	// ステージプレビュー
-	LoadGraphScreen( WINDOW_WIDTH / 2 - PREVIEW_WIDTH * 2 - PREVIEW_WIDTH / 2,	WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 2, spriteList[2], false );
-	LoadGraphScreen( WINDOW_WIDTH / 2 - PREVIEW_WIDTH / 2,						WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 2, spriteList[3], false );
-	LoadGraphScreen( WINDOW_WIDTH / 2 + PREVIEW_WIDTH + PREVIEW_WIDTH / 2,		WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 2, spriteList[4], false );
+	LoadGraphScreen( WINDOW_WIDTH / 2 - PREVIEW_WIDTH * 2 - PREVIEW_WIDTH / 2,	WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 2, stageList[0].preview, false );
+	LoadGraphScreen( WINDOW_WIDTH / 2 - PREVIEW_WIDTH / 2,						WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 2, stageList[1].preview, false );
+	LoadGraphScreen( WINDOW_WIDTH / 2 + PREVIEW_WIDTH + PREVIEW_WIDTH / 2,		WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 2, stageList[2].preview, false );
 
 	static int currentSelection = 0;
 	static int triangleX = -500;

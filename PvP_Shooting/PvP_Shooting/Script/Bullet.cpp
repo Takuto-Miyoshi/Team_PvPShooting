@@ -19,31 +19,31 @@ void Bullet::Move(){
 
 	switch ( dir )
 	{
-	case Up:
+	case Direction::Up:
 		posY -= speed;
 		break;
-	case Right:
+	case Direction::Right:
 		posX += speed;
 		break;
-	case Left:
+	case Direction::Left:
 		posX -= speed;
 		break;
-	case Down:
+	case Direction::Down:
 		posY += speed;
 		break;
-	case UpperRight:
+	case Direction::UpperRight:
 		posX += speed;
 		posY -= speed;
 		break;
-	case UpperLeft:
+	case Direction::UpperLeft:
 		posX -= speed;
 		posY -= speed;
 		break;
-	case LowerRight:
+	case Direction::LowerRight:
 		posX += speed;
 		posY += speed;
 		break;
-	case LowerLeft:
+	case Direction::LowerLeft:
 		posX -= speed;
 		posY += speed;
 		break;
