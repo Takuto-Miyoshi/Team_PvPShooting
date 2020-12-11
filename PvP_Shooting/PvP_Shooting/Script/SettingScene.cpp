@@ -3,6 +3,8 @@
 #include "Header/SceneBase.h"
 #include "Header/SettingScene.h"
 
+#define USE_CONTROLLER
+
 SettingScene::SettingScene() {
 	settingStep = 0;
 }
@@ -27,8 +29,13 @@ void SettingScene::Control() {
 
 	if( fadeMode != FadeMode::None ) return;
 
-	if( GetKeyStatus( KEY_INPUT_RETURN ) == InputState::Pressed )settingStep++;
-	else if( GetKeyStatus( KEY_INPUT_SPACE ) == InputState::Pressed )settingStep--;
+#ifdef USE_CONTROLLER
+	if( GetPadStatus( player1->GetPlayerNumber(), player1->shotKey ) == InputState::Pressed )settingStep++;
+	else if( GetPadStatus( player1->GetPlayerNumber(), player1->bombKey ) == InputState::Pressed )settingStep--;
+#else
+	if( GetKeyStatus( player1->shotKey ) == InputState::Pressed )settingStep++;
+	else if( GetKeyStatus( player1->bombKey ) == InputState::Pressed )settingStep--;
+#endif
 }
 
 void SettingScene::Draw() {
@@ -52,8 +59,13 @@ void SettingScene::SetStage(){
 	static int triangleX = -500;
 
 	// カーソル表示
-	if( GetKeyStatus( KEY_INPUT_RIGHT ) == InputState::Pressed )currentSelection++;
-	else if( GetKeyStatus( KEY_INPUT_LEFT ) == InputState::Pressed )currentSelection--;
+#ifdef USE_CONTROLLER
+	if( GetPadStatus( player1->GetPlayerNumber(), player1->rightMovingKey ) == InputState::Pressed )currentSelection++;
+	else if( GetPadStatus( player1->GetPlayerNumber(), player1->leftMovingKey ) == InputState::Pressed )currentSelection--;
+#else
+	if( GetKeyStatus( player1->rightMovingKey ) == InputState::Pressed )currentSelection++;
+	else if( GetKeyStatus( player1->leftMovingKey ) == InputState::Pressed )currentSelection--;
+#endif
 
 	switch( currentSelection )	{
 	case -1	:currentSelection = 2;	break;

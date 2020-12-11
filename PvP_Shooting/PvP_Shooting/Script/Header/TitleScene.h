@@ -3,9 +3,9 @@
 #define SC_TITLE_H
 
 /// @brief ルールの画像
-const LPCSTR RuleSprite[] {
-	"Sprite/Test_Player.png",	// テスト用プレイヤー
-	"Sprite/Test_Bullet.png"	// テスト用弾
+const LPCTSTR RuleSprite[] {
+	"Sprite/Test_Player1.png",	// テスト用プレイヤー
+	"Sprite/Test_Player2.png"	// テスト用弾
 };
 
 // タイトルシーン
