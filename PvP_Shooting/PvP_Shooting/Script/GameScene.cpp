@@ -110,7 +110,7 @@ void GameScene::GameManager(){
 	isOperatable = false;
 
 	if( counter == 0 ){ Start(); return; }
-	if( counter == 60 * 60 ){ End(); return; }
+	if( counter == FRAME_RATE * PLAY_TIME ){ End(); return; }
 
 	counter++;
 	isOperatable = true;
@@ -124,10 +124,10 @@ void GameScene::Start(){
 
 	switch( startCounter ){
 	case 0: countDownText = "   3   "; break;
-	case 60:countDownText = "   2   "; break;
-	case 120:countDownText = "   1   "; break;
-	case 180:countDownText = "Start!!"; break;
-	case 210:counter++; break;
+	case FRAME_RATE:countDownText = "   2   "; break;
+	case FRAME_RATE * 2:countDownText = "   1   "; break;
+	case FRAME_RATE * 3:countDownText = "Start!!"; break;
+	case FRAME_RATE * 4:counter++; break;
 	}
 
 	startCounter++;
@@ -138,7 +138,7 @@ void GameScene::Start(){
 
 void GameScene::End(){
 
-	if( endCounter >= 60 ){
+	if( endCounter >= FRAME_RATE ){
 		fadeMode = FadeMode::Out;
 		battleCount++;
 		counter++;

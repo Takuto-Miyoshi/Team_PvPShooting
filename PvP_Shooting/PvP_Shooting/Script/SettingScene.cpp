@@ -3,6 +3,8 @@
 #include "Header/SceneBase.h"
 #include "Header/SettingScene.h"
 
+#define USE_CONTROLLER
+
 SettingScene::SettingScene() {
 	settingStep = 0;
 }
@@ -27,8 +29,13 @@ void SettingScene::Control() {
 
 	if( fadeMode != FadeMode::None ) return;
 
-	if( GetKeyStatus( KEY_INPUT_RETURN ) == InputState::Pressed )settingStep++;
-	else if( GetKeyStatus( KEY_INPUT_SPACE ) == InputState::Pressed )settingStep--;
+#ifdef USE_CONTROLLER
+	if( GetPadStatus( player1->GetPlayerNumber(), player1->shotKey ) == InputState::Pressed )settingStep++;
+	else if( GetPadStatus( player1->GetPlayerNumber(), player1->bombKey ) == InputState::Pressed )settingStep--;
+#else
+	if( GetKeyStatus( player1->shotKey ) == InputState::Pressed )settingStep++;
+	else if( GetKeyStatus( player1->bombKey ) == InputState::Pressed )settingStep--;
+#endif
 }
 
 void SettingScene::Draw() {
@@ -44,16 +51,21 @@ void SettingScene::SetStage(){
 	DrawFormatString( WINDOW_WIDTH / 2 - CenterAdjustment( 7 ), 100, COLOR_BLUE, "Round %d", SceneBase::battleCount + 1 );
 
 	// ステージプレビュー
-	LoadGraphScreen( WINDOW_WIDTH / 2 - PREVIEW_WIDTH * 2 - PREVIEW_WIDTH / 2,	WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 2, spriteList[2], false );
-	LoadGraphScreen( WINDOW_WIDTH / 2 - PREVIEW_WIDTH / 2,						WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 2, spriteList[3], false );
-	LoadGraphScreen( WINDOW_WIDTH / 2 + PREVIEW_WIDTH + PREVIEW_WIDTH / 2,		WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 2, spriteList[4], false );
+	LoadGraphScreen( WINDOW_WIDTH / 2 - PREVIEW_WIDTH * 2 - PREVIEW_WIDTH / 2,	WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 2, stageList[0].preview, false );
+	LoadGraphScreen( WINDOW_WIDTH / 2 - PREVIEW_WIDTH / 2,						WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 2, stageList[1].preview, false );
+	LoadGraphScreen( WINDOW_WIDTH / 2 + PREVIEW_WIDTH + PREVIEW_WIDTH / 2,		WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 2, stageList[2].preview, false );
 
 	static int currentSelection = 0;
 	static int triangleX = -500;
 
 	// カーソル表示
-	if( GetKeyStatus( KEY_INPUT_RIGHT ) == InputState::Pressed )currentSelection++;
-	else if( GetKeyStatus( KEY_INPUT_LEFT ) == InputState::Pressed )currentSelection--;
+#ifdef USE_CONTROLLER
+	if( GetPadStatus( player1->GetPlayerNumber(), player1->rightMovingKey ) == InputState::Pressed )currentSelection++;
+	else if( GetPadStatus( player1->GetPlayerNumber(), player1->leftMovingKey ) == InputState::Pressed )currentSelection--;
+#else
+	if( GetKeyStatus( player1->rightMovingKey ) == InputState::Pressed )currentSelection++;
+	else if( GetKeyStatus( player1->leftMovingKey ) == InputState::Pressed )currentSelection--;
+#endif
 
 	switch( currentSelection )	{
 	case -1	:currentSelection = 2;	break;

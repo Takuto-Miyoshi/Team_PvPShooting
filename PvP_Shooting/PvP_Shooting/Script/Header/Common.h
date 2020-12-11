@@ -9,7 +9,7 @@
 #include "Function.h"
 
 /// @brief シーンの一覧
-enum SceneList {
+enum class SceneList {
 	Title,		// タイトル画面
 	Setting,	// ルール設定画面
 	OnPlay,		// ゲーム中の画面
@@ -17,7 +17,7 @@ enum SceneList {
 };
 
 /// @brief 方向
-enum Direction {
+enum class Direction {
 	Up,
 	Right,
 	Left,
@@ -34,14 +34,18 @@ struct Stage{
 	LPCTSTR preview;	// ステージのスクリーンショット
 };
 
-/// @brief 画像ファイル
-const LPCSTR spriteList[] = {
-	"Sprite/Test_Player.png",		// テスト用プレイヤー
-	"Sprite/Test_Bullet.png",		// テスト用弾
-	"Sprite/Test_StagePreview.png",	// ステージ1のプレビュー
-	"Sprite/Test_StagePreview.png",	// ステージ2のプレビュー
-	"Sprite/Test_StagePreview.png"	// ステージ3のプレビュー
-};
+/// @brief 画像リスト
+namespace Sprite{
+	const static LPCTSTR player1	 = "Sprite/Test_Player1.png";
+	const static LPCTSTR player2	 = "Sprite/Test_Player2.png";
+	const static LPCTSTR bullet		 = "Sprite/Test_Bullet.png";
+	const static LPCTSTR stgPreview1 = "Sprite/Test_StagePreview.png";
+	const static LPCTSTR stgPreview2 = "Sprite/Test_StagePreview.png";
+	const static LPCTSTR stgPreview3 = "Sprite/Test_StagePreview.png";
+}
+
+/// @brief フレームレート
+const int FRAME_RATE = 60;
 
 /// @brief ステージプレビューの横幅
 const int PREVIEW_WIDTH = 300;
@@ -72,6 +76,9 @@ const int FONT_SIZE = 42;
 
 /// @brief ラウンド数
 const int ROUND_MAX = 3;
+
+/// @brief プレイ時間(秒)
+const int PLAY_TIME = 60;
 
 const int COLOR_WHITE = GetColor(255, 255, 255);
 const int COLOR_BLACK = GetColor(0, 0, 0);

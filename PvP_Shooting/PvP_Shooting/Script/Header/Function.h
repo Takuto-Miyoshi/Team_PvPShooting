@@ -3,14 +3,14 @@
 #define FUNCTION_H
 
 /// @brief フェードの状態
-enum FadeMode {
+enum class FadeMode {
 	None,	// フェードなし
 	In,		// フェードイン中
 	Out		// フェードアウト中
 };
 
 /// @brief キーボード、マウスの入力状態
-enum InputState {
+enum class InputState {
 	Invalid = -1,	// 無効
 	NotPressed,		// 押されていない
 	Pressed,		// 押された瞬間

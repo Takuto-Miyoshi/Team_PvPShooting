@@ -109,6 +109,14 @@ public:
 	/// @brief 死んだときの処理
 	void DeathProcessing();
 
+public:
+	int upMovingKey;
+	int rightMovingKey;
+	int leftMovingKey;
+	int downMovingKey;
+	int shotKey;
+	int bombKey;
+
 private:
 	int playerNumber;
 	bool isAlive;
@@ -125,12 +133,6 @@ private:
 
 	bool usePad;
 	int padNum;
-	int upMovingKey;
-	int rightMovingKey;
-	int leftMovingKey;
-	int downMovingKey;
-	int shotKey;
-	int bombKey;
 	int ultKey;
 	LPCTSTR spriteFolderPath;
 };

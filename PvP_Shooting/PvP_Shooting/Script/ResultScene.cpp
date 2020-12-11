@@ -3,6 +3,8 @@
 #include "Header/SceneBase.h"
 #include "Header/ResultScene.h"
 
+#define USE_CONTROLLER
+
 ResultScene::ResultScene() {
 
 }
@@ -20,7 +22,11 @@ void ResultScene::Control() {
 
 	if ( fadeMode != FadeMode::None ) return;
 
-	if( CheckHitKey( KEY_INPUT_3 ) ) fadeMode = FadeMode::Out;
+#ifdef USE_CONTROLLER
+	if( GetPadStatus( player1->GetPlayerNumber(), player1->shotKey ) == InputState::Pressed ) fadeMode = FadeMode::Out;
+#else
+	if( GetKeyStatus( player1->shotKey ) == InputState::Pressed ) fadeMode = FadeMode::Out;
+#endif
 }
 
 void ResultScene::Draw() {
@@ -55,9 +61,9 @@ void ResultScene::DrawResult(){
 	// 結果
 	LPCTSTR winnerString = "";
 	switch( winner ){
-	case 0:winnerString = "ひきわけ";
-	case 1:winnerString = "1Pの勝ち";
-	case 2:winnerString = "2Pの勝ち";
+	case 0:winnerString = "ひきわけ"; break;
+	case 1:winnerString = "1Pの勝ち"; break;
+	case 2:winnerString = "2Pの勝ち"; break;
 	}
 	DrawString( WINDOW_WIDTH / 2 - CenterAdjustment( 8 ), WINDOW_HEIGHT / 2, winnerString, COLOR_WHITE );
 }

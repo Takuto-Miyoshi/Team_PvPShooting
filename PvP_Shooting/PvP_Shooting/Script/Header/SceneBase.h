@@ -16,7 +16,7 @@ public:
 
 	/// @brief 現在のシーンを取得する
 	/// @return 現在のシーン
-	static enum SceneList GetCurrentScene();
+	static int GetCurrentScene();
 
 	/// @brief 現在のシーンを削除する :アプリの終了前に呼び出す
 	static void ReleaseScene();
