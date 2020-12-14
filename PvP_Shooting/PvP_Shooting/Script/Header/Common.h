@@ -42,6 +42,10 @@ namespace Sprite{
 	const static LPCTSTR stgPreview1 = "Sprite/Test_StagePreview.png";
 	const static LPCTSTR stgPreview2 = "Sprite/Test_StagePreview.png";
 	const static LPCTSTR stgPreview3 = "Sprite/Test_StagePreview.png";
+	const static LPCTSTR titleScreen = "Sprite/Title_Screen.png";
+	const static LPCTSTR characterInfoScreen = "Sprite/CharacterInfo_Screen.png";
+	const static LPCTSTR resultNapoleonScreen = "Sprite/ResultNapoleon_Screen.png";
+	const static LPCTSTR resultNobunagaScreen = "Sprite/ResultNobunaga_Screen.png";
 }
 
 /// @brief フレームレート
