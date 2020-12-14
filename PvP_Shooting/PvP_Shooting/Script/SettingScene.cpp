@@ -19,15 +19,14 @@ void SettingScene::Execute() {
 
 void SettingScene::Control() {
 
-	switch( settingStep ){
-	case -1:settingStep = 0;
-	case 0:SetStage();		 break;
-	case 1:Confirm( false ); break;
-	case 2:Confirm( true );	 break;
-	default:settingStep = 0; break;
-	}
-
 	if( fadeMode != FadeMode::None ) return;
+
+	switch( settingStep ){
+	case -2:fadeMode = FadeMode::Out; return; break;
+	case -1:settingStep = 0;
+	case 0:SetStage(); break;
+	default:Confirm(); return; break;
+	}
 
 #ifdef USE_CONTROLLER
 	if( GetPadStatus( player1->GetPlayerNumber(), player1->shotKey ) == InputState::Pressed )settingStep++;
@@ -82,13 +81,42 @@ void SettingScene::SetStage(){
 	SceneBase::SetStage( SceneBase::stageList[currentSelection] );
 }
 
-void SettingScene::Confirm( bool confirmed ){
+void SettingScene::Confirm(){
 
 	LoadGraphScreen( 300, WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 2, SceneBase::GetStage().preview, false );
-	LPCSTR temp = "READY?";
-	if( confirmed == true ){
-		temp = "START!!";
-		fadeMode = FadeMode::Out;
+
+	static int currentSelection = 0;
+	static int triangleY = WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 3 + 100 + GetFontSize() / 2;
+
+	// カーソル表示
+#ifdef USE_CONTROLLER
+	if( GetPadStatus( player1->GetPlayerNumber(), player1->downMovingKey ) == InputState::Pressed )currentSelection++;
+	else if( GetPadStatus( player1->GetPlayerNumber(), player1->upMovingKey ) == InputState::Pressed )currentSelection--;
+#else
+	if( GetKeyStatus( player1->downMovingKey ) == InputState::Pressed )currentSelection++;
+	else if( GetKeyStatus( player1->upMovingKey ) == InputState::Pressed )currentSelection--;
+#endif
+
+	switch( currentSelection )	{
+	case -1:currentSelection = 1;	break;
+	case 0:triangleY = WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 3 + 100 + GetFontSize() / 2; break;
+	case 1:triangleY = WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 3 + 200 + GetFontSize() / 2; break;
+	default:currentSelection = 0;	break;
 	}
-	DrawString( WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 3, temp, COLOR_GREEN, COLOR_RED );
+
+	DrawTriangle( WINDOW_WIDTH / 2, triangleY + 25,
+			 	  WINDOW_WIDTH / 2 + 50, triangleY,
+			 	  WINDOW_WIDTH / 2, triangleY - 25, COLOR_RED, true );
+
+	DrawString( WINDOW_WIDTH / 2 + 200 - CenterAdjustment( 26 ), WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 3, "このステージでいいですか？", COLOR_GREEN, COLOR_RED );
+	DrawString( WINDOW_WIDTH / 2 + 200 - CenterAdjustment( 4 ), WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 3 + 100, "はい", COLOR_GREEN, COLOR_RED );
+	DrawString( WINDOW_WIDTH / 2 + 200 - CenterAdjustment( 6 ), WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 3 + 200, "いいえ", COLOR_GREEN, COLOR_RED );
+
+#ifdef USE_CONTROLLER
+	if( GetPadStatus( player1->GetPlayerNumber(), player1->shotKey ) == InputState::Pressed ){
+#else
+	if( GetKeyStatus( player1->shotKey ) == InputState::Pressed )currentSelection++{
+#endif
+		settingStep = ( currentSelection == 0 ) ? -2 : 0;
+	}
 }

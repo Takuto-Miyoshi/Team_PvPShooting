@@ -59,11 +59,11 @@ void ResultScene::DrawResult(){
 	}
 
 	// 結果
-	LPCTSTR winnerString = "";
+	LPCTSTR winnerScreen = "";
 	switch( winner ){
-	case 0:winnerString = "ひきわけ"; break;
-	case 1:winnerString = "1Pの勝ち"; break;
-	case 2:winnerString = "2Pの勝ち"; break;
+	case 0:winnerScreen = Sprite::resultNobunagaScreen; break;
+	case 1:winnerScreen = Sprite::resultNobunagaScreen; break;
+	case 2:winnerScreen = Sprite::resultNapoleonScreen; break;
 	}
-	DrawString( WINDOW_WIDTH / 2 - CenterAdjustment( 8 ), WINDOW_HEIGHT / 2, winnerString, COLOR_WHITE );
+	LoadGraphScreen( 0, 0, winnerScreen, false );
 }

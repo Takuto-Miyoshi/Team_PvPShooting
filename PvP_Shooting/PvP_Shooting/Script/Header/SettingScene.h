@@ -27,8 +27,7 @@ private:
 	void Draw();
 
 	/// @brief ステージ確認
-	/// @param currentStep 呼び出した時のsettingStep
-	void Confirm( bool confirmed );
+	void Confirm();
 
 private:
 	int settingStep;
