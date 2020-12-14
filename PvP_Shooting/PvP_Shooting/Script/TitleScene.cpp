@@ -3,7 +3,7 @@
 #include "Header/SceneBase.h"
 #include "Header/TitleScene.h"
 
-#define USE_CONTROLLER
+// #define USE_CONTROLLER
 
 /// @brief ルールの画像
 const LPCTSTR TitleScene::ruleSprite[] {

@@ -34,6 +34,13 @@ struct Stage{
 	LPCTSTR preview;	// ステージのスクリーンショット
 };
 
+struct Animation{
+	LPCTSTR* waitUp;
+	LPCTSTR* waitDown;
+	LPCTSTR waitLeft;
+	LPCTSTR waitRight;
+};
+
 /// @brief 画像リスト
 namespace Sprite{
 	const static LPCTSTR player1	 = "Sprite/Test_Player1.png";
@@ -44,8 +51,156 @@ namespace Sprite{
 	const static LPCTSTR stgPreview3 = "Sprite/Test_StagePreview.png";
 	const static LPCTSTR titleScreen = "Sprite/Title_Screen.png";
 	const static LPCTSTR characterInfoScreen = "Sprite/CharacterInfo_Screen.png";
-	const static LPCTSTR resultNapoleonScreen = "Sprite/ResultNapoleon_Screen.png";
 	const static LPCTSTR resultNobunagaScreen = "Sprite/ResultNobunaga_Screen.png";
+	const static LPCTSTR resultNapoleonScreen = "Sprite/ResultNapoleon_Screen.png";
+
+	namespace Nobunaga{
+		const static LPCTSTR waitUp[] = {
+			"Sprite/Nobunaga/Wait/up1.png",
+			"Sprite/Nobunaga/Wait/up2.png"
+		};
+
+		const static LPCTSTR waitDown[] = {
+			"Sprite/Nobunaga/Wait/down1.png",
+			"Sprite/Nobunaga/Wait/down2.png"
+		};
+
+		const static LPCTSTR waitLeft[] = {
+			"Sprite/Nobunaga/Wait/left1.png",
+			"Sprite/Nobunaga/Wait/left2.png"
+		};
+
+		const static LPCTSTR waitRight[] = {
+			"Sprite/Nobunaga/Wait/right1.png",
+			"Sprite/Nobunaga/Wait/right2.png"
+		};
+
+		const static LPCTSTR walkUp[] = {
+			"Sprite/Nobunaga/Walk/up1.png",
+			"Sprite/Nobunaga/Walk/up2.png",
+			"Sprite/Nobunaga/Walk/up3.png"
+		};
+
+		const static LPCTSTR walkDown[] = {
+			"Sprite/Nobunaga/Walk/down1.png",
+			"Sprite/Nobunaga/Walk/down2.png",
+			"Sprite/Nobunaga/Walk/down3.png"
+		};
+
+		const static LPCTSTR walkLeft[] = {
+			"Sprite/Nobunaga/Walk/left1.png",
+			"Sprite/Nobunaga/Walk/left2.png",
+			"Sprite/Nobunaga/Walk/left3.png"
+		};
+
+		const static LPCTSTR walkRight[] = {
+			"Sprite/Nobunaga/Walk/right1.png",
+			"Sprite/Nobunaga/Walk/right2.png",
+			"Sprite/Nobunaga/Walk/right3.png"
+		};
+
+		const static LPCTSTR attackUp[] = {
+			"Sprite/Nobunaga/Attack/up1.png",
+			"Sprite/Nobunaga/Attack/up2.png",
+			"Sprite/Nobunaga/Attack/up3.png",
+			"Sprite/Nobunaga/Attack/up4.png"
+		};
+
+		const static LPCTSTR attackDown[] = {
+			"Sprite/Nobunaga/Attack/down1.png",
+			"Sprite/Nobunaga/Attack/down2.png",
+			"Sprite/Nobunaga/Attack/down3.png",
+			"Sprite/Nobunaga/Attack/down4.png"
+		};
+
+		const static LPCTSTR attackLeft[] = {
+			"Sprite/Nobunaga/Attack/left1.png",
+			"Sprite/Nobunaga/Attack/left2.png",
+			"Sprite/Nobunaga/Attack/left3.png",
+			"Sprite/Nobunaga/Attack/left4.png"
+		};
+
+		const static LPCTSTR attackRight[] = {
+			"Sprite/Nobunaga/Attack/right1.png",
+			"Sprite/Nobunaga/Attack/right2.png",
+			"Sprite/Nobunaga/Attack/right3.png",
+			"Sprite/Nobunaga/Attack/right4.png"
+		};
+	}
+
+	namespace Napoleon{
+		const static LPCTSTR waitUp[] = {
+			"Sprite/Napoleon/Wait/up1.png",
+			"Sprite/Napoleon/Wait/up2.png"
+		};
+
+		const static LPCTSTR waitDown[] = {
+			"Sprite/Napoleon/Wait/down1.png",
+			"Sprite/Napoleon/Wait/down2.png"
+		};
+
+		const static LPCTSTR waitLeft[] = {
+			"Sprite/Napoleon/Wait/left1.png",
+			"Sprite/Napoleon/Wait/left2.png"
+		};
+
+		const static LPCTSTR waitRight[] = {
+			"Sprite/Napoleon/Wait/right1.png",
+			"Sprite/Napoleon/Wait/right2.png"
+		};
+
+		const static LPCTSTR walkUp[] = {
+			"Sprite/Napoleon/Walk/up1.png",
+			"Sprite/Napoleon/Walk/up2.png",
+			"Sprite/Napoleon/Walk/up3.png"
+		};
+
+		const static LPCTSTR walkDown[] = {
+			"Sprite/Napoleon/Walk/down1.png",
+			"Sprite/Napoleon/Walk/down2.png",
+			"Sprite/Napoleon/Walk/down3.png"
+		};
+
+		const static LPCTSTR walkLeft[] = {
+			"Sprite/Napoleon/Walk/left1.png",
+			"Sprite/Napoleon/Walk/left2.png",
+			"Sprite/Napoleon/Walk/left3.png"
+		};
+
+		const static LPCTSTR walkRight[] = {
+			"Sprite/Napoleon/Walk/right1.png",
+			"Sprite/Napoleon/Walk/right2.png",
+			"Sprite/Napoleon/Walk/right3.png"
+		};
+
+		const static LPCTSTR attackUp[] = {
+			"Sprite/Napoleon/Attack/up1.png",
+			"Sprite/Napoleon/Attack/up1.png",
+			"Sprite/Napoleon/Attack/up2.png",
+			"Sprite/Napoleon/Attack/up2.png"
+		};
+
+		const static LPCTSTR attackDown[] = {
+			"Sprite/Napoleon/Attack/down1.png",
+			"Sprite/Napoleon/Attack/down1.png",
+			"Sprite/Napoleon/Attack/down2.png",
+			"Sprite/Napoleon/Attack/down2.png"
+		};
+
+		const static LPCTSTR attackLeft[] = {
+			"Sprite/Napoleon/Attack/left1.png",
+			"Sprite/Napoleon/Attack/left1.png",
+			"Sprite/Napoleon/Attack/left2.png",
+			"Sprite/Napoleon/Attack/left2.png"
+		};
+
+		const static LPCTSTR attackRight[] = {
+			"Sprite/Napoleon/Attack/right1.png",
+			"Sprite/Napoleon/Attack/right1.png",
+			"Sprite/Napoleon/Attack/right2.png",
+			"Sprite/Napoleon/Attack/right2.png"
+		};
+	}
 }
 
 /// @brief フレームレート
@@ -83,6 +238,18 @@ const int ROUND_MAX = 3;
 
 /// @brief プレイ時間(秒)
 const int PLAY_TIME = 60;
+
+/// @brief 待機アニメーションのコマ数
+const int WAIT_FRAME = 2;
+
+/// @brief 移動アニメーションのコマ数
+const int WALK_FRAME = 3;
+
+/// @brief 攻撃アニメーションのコマ数
+const int ATTACK_FRAME = 4;
+
+/// @brief アニメーションの更新頻度
+const int TIME_CHANGE_ANIMATION = 12;
 
 const int COLOR_WHITE = GetColor(255, 255, 255);
 const int COLOR_BLACK = GetColor(0, 0, 0);

@@ -22,7 +22,6 @@ class Player {
 public:
 
 	/// @brief コンストラクタ
-	/// @param isUsePad パッドを使用するか
 	/// @param padNum 使用するコントローラー : キーボードの場合は0
 	/// @param playerNum 個体識別用
 	/// @param keyUp 上移動に使用するキー
@@ -32,8 +31,7 @@ public:
 	/// @param keyShot 射撃に使用するキー
 	/// @param keyBomb 爆弾に使用するキー
 	/// @param keyUlt 必殺技に使用するキー
-	/// @param spritePath 読み込む画像のパス
-	Player( bool isUsePad, int padNumber, int playerNum, int keyUp, int keyRight, int keyLeft, int keyDown, int keyShot, int keyBomb, int keyUlt, LPCTSTR spritePath );
+	Player( int padNum, int playerNum, int keyUp, int keyRight, int keyLeft, int keyDown, int keyShot, int keyBomb, int keyUlt );
 
 	/// @brief デストラクタ
 	~Player();
@@ -131,10 +129,15 @@ private:
 	int chargeCount;
 	int score[3];
 
-	bool usePad;
-	int padNum;
+	int padNumber;
 	int ultKey;
-	LPCTSTR spriteFolderPath;
+	LPCTSTR spritePath;	// 描画する画像のパス
+
+	int spriteNumber; // 画像の何番目を表示するか
+	int animationCounter;	// アニメーションの変更タイミング
+
+	bool isMoved;		// 移動中か
+	bool isAttacked;	// 攻撃中か
 };
 
 #endif // !PLAYER_H

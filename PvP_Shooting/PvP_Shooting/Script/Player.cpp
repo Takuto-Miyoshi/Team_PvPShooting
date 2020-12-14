@@ -1,9 +1,9 @@
 ﻿
 #include "Header/Player.h"
 
-#define USE_CONTROLLER
+// #define USE_CONTROLLER
 
-Player::Player( bool isUsePad, int padNumber, int playerNum, int keyUp, int keyRight, int keyLeft, int keyDown, int keyShot, int keyBomb, int keyUlt, LPCTSTR spritePath ){
+Player::Player( int padNum, int playerNum, int keyUp, int keyRight, int keyLeft, int keyDown, int keyShot, int keyBomb, int keyUlt ){
 	playerNumber = playerNum;
 	isAlive = true;
 	invincibleCount = 0;
@@ -15,8 +15,7 @@ Player::Player( bool isUsePad, int padNumber, int playerNum, int keyUp, int keyR
 	chargeCount = 0;
 	for( int i = 0; i < ROUND_MAX; i++ )score[i] = 0;
 
-	usePad = isUsePad;
-	padNum = padNumber;
+	padNumber = padNum;
 	upMovingKey = keyUp;
 	rightMovingKey = keyRight;
 	leftMovingKey = keyLeft;
@@ -24,10 +23,15 @@ Player::Player( bool isUsePad, int padNumber, int playerNum, int keyUp, int keyR
 	shotKey = keyShot;
 	bombKey = keyBomb;
 	ultKey = keyUlt;
-	spriteFolderPath = spritePath;
+	spritePath = "";
 	dir = ( playerNum == 1 ) ? Direction::Right : Direction::Left;
 
 	for( int i = 0; i < BULLET_MAX; i++ )bullets[i] = nullptr;
+
+	isMoved = false;
+	isAttacked = false;
+	spriteNumber = 0;
+	animationCounter = 0;
 }
 
 Player::~Player() {
@@ -35,6 +39,10 @@ Player::~Player() {
 }
 
 void Player::Move() {
+
+	isMoved = false;
+	int tempX = posX;
+	int tempY = posY;
 
 #ifdef USE_CONTROLLER
 	if( GetPadStatus( playerNumber, upMovingKey ) == InputState::Pressing ){
@@ -109,6 +117,9 @@ void Player::Move() {
 	}
 #endif
 
+	// 移動したかの判定
+	if( tempX != posX || tempY != posY ) isMoved = true;
+
 	// 画面外なら戻す
 	if( posY < 0 ) posY = 0;
 	if( posY > WINDOW_HEIGHT - PLAYER_HEIGHT ) posY = WINDOW_HEIGHT - PLAYER_HEIGHT;
@@ -118,16 +129,176 @@ void Player::Move() {
 
 void Player::Draw() {
 
-	if ( isAlive == true ) {
-		LoadGraphScreen( posX, posY, spriteFolderPath, true );
-		for ( int i = 0; i < BULLET_MAX; i++ ) {
-			if ( bullets[i] != nullptr ) bullets[i]->Draw();
+	// 生きていないなら描画しない
+	if( isAlive == false ) return;
+
+	// アニメーション
+	// 攻撃
+	if( isAttacked == true ){
+		if( spriteNumber >= ATTACK_FRAME ){
+			isAttacked = false;
+		}
+		else if( playerNumber == 1 ){
+			switch( dir )
+			{
+			case Direction::Up:
+			case Direction::UpperRight:
+			case Direction::UpperLeft:
+				spritePath = Sprite::Nobunaga::attackUp[spriteNumber];
+				break;
+			case Direction::Down:
+			case Direction::LowerRight:
+			case Direction::LowerLeft:
+				spritePath = Sprite::Nobunaga::attackDown[spriteNumber];
+				break;
+			case Direction::Right:
+				spritePath = Sprite::Nobunaga::attackRight[spriteNumber];
+				break;
+			case Direction::Left:
+				spritePath = Sprite::Nobunaga::attackLeft[spriteNumber];
+				break;
+			default:break;
+			}
+		}
+		else{
+			switch( dir )
+			{
+			case Direction::Up:
+			case Direction::UpperRight:
+			case Direction::UpperLeft:
+				spritePath = Sprite::Napoleon::attackUp[spriteNumber];
+				break;
+			case Direction::Down:
+			case Direction::LowerRight:
+			case Direction::LowerLeft:
+				spritePath = Sprite::Napoleon::attackDown[spriteNumber];
+				break;
+			case Direction::Right:
+				spritePath = Sprite::Napoleon::attackRight[spriteNumber];
+				break;
+			case Direction::Left:
+				spritePath = Sprite::Napoleon::attackLeft[spriteNumber];
+				break;
+			default:break;
+			}
 		}
 	}
-	else {
-		if( invincibleCount >= 12 && invincibleCount < 24 || invincibleCount >= 36 && invincibleCount < 48 ) {
-			LoadGraphScreen( posX, posY, spriteFolderPath, true );
+	// 移動
+	else if( isMoved == true ){
+		if( spriteNumber >= WALK_FRAME ){
+			spriteNumber = 1;
 		}
+		else if( playerNumber == 1 ){
+			switch( dir )
+			{
+			case Direction::Up:
+			case Direction::UpperRight:
+			case Direction::UpperLeft:
+				spritePath = Sprite::Nobunaga::walkUp[spriteNumber];
+				break;
+			case Direction::Down:
+			case Direction::LowerRight:
+			case Direction::LowerLeft:
+				spritePath = Sprite::Nobunaga::walkDown[spriteNumber];
+				break;
+			case Direction::Right:
+				spritePath = Sprite::Nobunaga::walkRight[spriteNumber];
+				break;
+			case Direction::Left:
+				spritePath = Sprite::Nobunaga::walkLeft[spriteNumber];
+				break;
+			default:break;
+			}
+		}
+		else{
+			switch( dir )
+			{
+			case Direction::Up:
+			case Direction::UpperRight:
+			case Direction::UpperLeft:
+				spritePath = Sprite::Napoleon::walkUp[spriteNumber];
+				break;
+			case Direction::Down:
+			case Direction::LowerRight:
+			case Direction::LowerLeft:
+				spritePath = Sprite::Napoleon::walkDown[spriteNumber];
+				break;
+			case Direction::Right:
+				spritePath = Sprite::Napoleon::walkRight[spriteNumber];
+				break;
+			case Direction::Left:
+				spritePath = Sprite::Napoleon::walkLeft[spriteNumber];
+				break;
+			default:break;
+			}
+		}
+	}
+	// 待機
+	else{
+		if( spriteNumber >= WAIT_FRAME ){
+			spriteNumber = 0;
+		}
+		else if( playerNumber == 1 ){
+			switch( dir )
+			{
+			case Direction::Up:
+			case Direction::UpperRight:
+			case Direction::UpperLeft:
+				spritePath = Sprite::Nobunaga::waitUp[spriteNumber];
+				break;
+			case Direction::Down:
+			case Direction::LowerRight:
+			case Direction::LowerLeft:
+				spritePath = Sprite::Nobunaga::waitDown[spriteNumber];
+				break;
+			case Direction::Right:
+				spritePath = Sprite::Nobunaga::waitRight[spriteNumber];
+				break;
+			case Direction::Left:
+				spritePath = Sprite::Nobunaga::waitLeft[spriteNumber];
+				break;
+			default:break;
+			}
+		}
+		else{
+			switch( dir )
+			{
+			case Direction::Up:
+			case Direction::UpperRight:
+			case Direction::UpperLeft:
+				spritePath = Sprite::Napoleon::waitUp[spriteNumber];
+				break;
+			case Direction::Down:
+			case Direction::LowerRight:
+			case Direction::LowerLeft:
+				spritePath = Sprite::Napoleon::waitDown[spriteNumber];
+				break;
+			case Direction::Right:
+				spritePath = Sprite::Napoleon::waitRight[spriteNumber];
+				break;
+			case Direction::Left:
+				spritePath = Sprite::Napoleon::waitLeft[spriteNumber];
+				break;
+			default:break;
+			}
+		}
+	}
+
+	LoadGraphScreen( posX, posY, spritePath, true );
+
+	animationCounter++;
+	if( animationCounter >= TIME_CHANGE_ANIMATION ){
+		animationCounter = 0;
+		spriteNumber++;
+	}
+
+	for( int i = 0; i < BULLET_MAX; i++ ) {
+		if( bullets[i] != nullptr ) bullets[i]->Draw();
+	}
+
+	// 点滅
+	if( invincibleCount >= 12 && invincibleCount < 24 || invincibleCount >= 36 && invincibleCount < 48 ) {
+		LoadGraphScreen( posX, posY, spritePath, true );
 	}
 }
 
@@ -169,6 +340,8 @@ void Player::Shoot() {
 						posY + PLAYER_HEIGHT / 2 - BULLET_HEIGHT / 2, dir, Sprite::bullet, tempCharge );
 					shootingCoolTime = 0;
 					chargeCount = 0;
+					isAttacked = true;
+					spriteNumber = 0;
 					break;
 				}
 			}
