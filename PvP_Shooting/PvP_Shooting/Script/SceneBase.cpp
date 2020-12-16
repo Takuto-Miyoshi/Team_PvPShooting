@@ -113,6 +113,10 @@ void SceneBase::ReleaseCurrentScene() {
 	}
 }
 
+Player* SceneBase::GetPlayerData( int playerNumber ){
+	return playerList[playerNumber];
+}
+
 void SceneBase::SceneFade( SceneList destinationScene, int fadePower, int fadeColor, int waitTime) {
 	if ( fadeMode == FadeMode::In ) {
 		if ( FadeIn( fadePower, fadeColor, waitTime ) ) {

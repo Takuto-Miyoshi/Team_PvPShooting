@@ -28,6 +28,15 @@
     <Filter Include="Other\Header">
       <UniqueIdentifier>{e02fce09-254a-4134-b8e4-bb043aed9ba8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Stage">
+      <UniqueIdentifier>{2c7a7d05-17e1-475c-980a-c561b6109bf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage\Header">
+      <UniqueIdentifier>{fa4c8c3b-ba2b-4595-9fb6-bbde1b4cabe8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage\Source">
+      <UniqueIdentifier>{77bf2885-a856-495d-a911-a652cb87c577}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Script\GameScene.cpp">
@@ -57,6 +66,30 @@
     <ClCompile Include="Script\SettingScene.cpp">
       <Filter>Scene\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Script\Box.cpp">
+      <Filter>Stage\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Car.cpp">
+      <Filter>Stage\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Explosion.cpp">
+      <Filter>Stage\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Stone.cpp">
+      <Filter>Stage\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Tunnel.cpp">
+      <Filter>Stage\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Tree.cpp">
+      <Filter>Stage\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Flag.cpp">
+      <Filter>Stage\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\ObjectBase.cpp">
+      <Filter>Stage\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\Header\GameScene.h">
@@ -85,6 +118,30 @@
     </ClInclude>
     <ClInclude Include="Script\Header\SettingScene.h">
       <Filter>Scene\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Header\Box.h">
+      <Filter>Stage\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Header\Car.h">
+      <Filter>Stage\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Header\Explosion.h">
+      <Filter>Stage\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Header\Stone.h">
+      <Filter>Stage\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Header\Tunnel.h">
+      <Filter>Stage\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Header\Tree.h">
+      <Filter>Stage\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Header\Flag.h">
+      <Filter>Stage\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Header\ObjectBase.h">
+      <Filter>Stage\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

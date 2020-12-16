@@ -30,6 +30,11 @@ public:
 	/// @brief シーンの変化があった場合に現在のシーンをdeleteする
 	static void ReleaseCurrentScene();
 
+	/// @brief プレイヤーのデータを取得する
+	/// @param playerNumber プレイヤーリストに登録された番号
+	/// @return プレイヤーデータ
+	static Player* GetPlayerData( int playerNumber );
+
 private:
 
 	virtual void Execute() = 0;

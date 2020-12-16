@@ -1,10 +1,12 @@
 ﻿
 #include "Header/Bullet.h"
+#include "Header/GameScene.h"
 
 Bullet::Bullet( int playerNum, int InitPosX, int InitPosY, Direction direction, bool isCharged ) {
 	playerNumber = playerNum;
 	posX = InitPosX;
 	posY = InitPosY;
+	centerY = 0;
 	dir = direction;
 	spritePath = "";
 
@@ -53,6 +55,7 @@ void Bullet::Move(){
 	}
 
 	spriteNumber = ( changeChargeShot == true ) ? 1 : 0;
+	centerY = posY + BULLET_HEIGHT / 2;
 }
 
 void Bullet::Draw() {
@@ -117,15 +120,15 @@ void Bullet::Draw() {
 		default:break;
 		}
 	}
-	
+
 	LoadGraphScreen( posX, posY, spritePath, true );
 }
 
-int Bullet::GetPosX(){
+int Bullet::GetPosX()const{
 	return posX;
 }
 
-int Bullet::GetPosY(){
+int Bullet::GetPosY()const{
 	return posY;
 }
 

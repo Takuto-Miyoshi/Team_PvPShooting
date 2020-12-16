@@ -20,25 +20,41 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Script\Box.cpp" />
     <ClCompile Include="Script\Bullet.cpp" />
+    <ClCompile Include="Script\Car.cpp" />
+    <ClCompile Include="Script\Explosion.cpp" />
+    <ClCompile Include="Script\Flag.cpp" />
     <ClCompile Include="Script\Function.cpp" />
     <ClCompile Include="Script\GameScene.cpp" />
+    <ClCompile Include="Script\ObjectBase.cpp" />
     <ClCompile Include="Script\Player.cpp" />
     <ClCompile Include="Script\ResultScene.cpp" />
     <ClCompile Include="Script\SceneBase.cpp" />
     <ClCompile Include="Script\SettingScene.cpp" />
+    <ClCompile Include="Script\Stone.cpp" />
     <ClCompile Include="Script\TitleScene.cpp" />
+    <ClCompile Include="Script\Tunnel.cpp" />
+    <ClCompile Include="Script\Tree.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Header\Box.h" />
     <ClInclude Include="Script\Header\Bullet.h" />
+    <ClInclude Include="Script\Header\Car.h" />
     <ClInclude Include="Script\Header\Common.h" />
+    <ClInclude Include="Script\Header\Explosion.h" />
+    <ClInclude Include="Script\Header\Flag.h" />
     <ClInclude Include="Script\Header\Function.h" />
     <ClInclude Include="Script\Header\GameScene.h" />
+    <ClInclude Include="Script\Header\ObjectBase.h" />
     <ClInclude Include="Script\Header\Player.h" />
     <ClInclude Include="Script\Header\ResultScene.h" />
     <ClInclude Include="Script\Header\SceneBase.h" />
     <ClInclude Include="Script\Header\SettingScene.h" />
+    <ClInclude Include="Script\Header\Stone.h" />
     <ClInclude Include="Script\Header\TitleScene.h" />
+    <ClInclude Include="Script\Header\Tunnel.h" />
+    <ClInclude Include="Script\Header\Tree.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -117,6 +133,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(DxLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
