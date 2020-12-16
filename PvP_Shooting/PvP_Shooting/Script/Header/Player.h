@@ -4,6 +4,7 @@
 
 #include "Common.h"
 #include "Bullet.h"
+#include "ObjectBase.h"
 
 /// @brief プレイヤーの数
 const int PLAYER_MAX = 2;
@@ -18,7 +19,7 @@ const int INVINCIBLE_TIME = 60;
 const int PLAYER_SPEED = 7;
 
 /// @brief プレイヤー
-class Player {
+class Player : public ObjectBase {
 public:
 
 	/// @brief コンストラクタ
@@ -45,10 +46,12 @@ public:
 	/// @brief 射撃
 	void Shoot();
 
+	void Control();
+
 	/// @brief 爆弾
 	void Bomb();
 
-	/// @brief 当たり判定
+	/// @brief ギミックとの当たり判定
 	void Hit();
 
 	/// @brief 死んでたら復活
@@ -66,6 +69,38 @@ public:
 	/// @return Y座標
 	int GetPosY()const;
 
+	/// @brief 自身の中心Y座標を取得する
+	/// @return 現在の中心Y座標
+	int GetCenterY()const;
+
+	/// @brief 自身の横幅を取得する
+	/// @return 画像の横幅
+	int GetSpriteWidth() const{ return PLAYER_WIDTH; }
+
+	/// @brief 自身の縦幅を取得する
+	/// @return 画像の縦幅
+	int GetSpriteHeight() const{ return PLAYER_HEIGHT; }
+
+	/// @brief 当たり判定の上からのずれ幅を取得する
+	/// @return 上からのずれ幅
+	int GetHitOffsetUY() const{ return PLAYER_OFFSET_UY; }
+
+	/// @brief 当たり判定の下からのずれ幅を取得する
+	/// @return 上からのずれ幅
+	int GetHitOffsetDY() const{ return PLAYER_OFFSET_DY; }
+
+	/// @brief 当たり判定の横のずれ幅を取得する
+	/// @return 横のずれ幅
+	int GetHitOffsetX() const { return PLAYER_OFFSET_X; }
+
+	/// @brief 現在の画像が何番目か取得する
+	/// @return 画像番号
+	int GetSpriteNumber() const { return spriteNumber; }
+
+	/// @brief 画像番号を設定する
+	/// @param value 設定する番号
+	void SetSpriteNumber( int value ) { spriteNumber = value; }
+
 	/// @brief X座標を設定する
 	/// @param x X座標
 	void SetPosX( int x );
@@ -82,6 +117,10 @@ public:
 	/// @brief 生存状態を取得する
 	/// @return 生きていたらtrue
 	bool GetAlive()const;
+
+	/// @brief オブジェクトの種類を取得する
+	/// @return タグの名前
+	Tag GetTag() const { return Tag::Player; }
 
 	/// @brief 生存状態を設定する
 	/// @param state 生きている状態にするならtrue
@@ -107,6 +146,10 @@ public:
 	/// @brief 死んだときの処理
 	void DeathProcessing();
 
+	/// @brief 向きに応じて１歩下がる
+	void BackStep();
+private:
+
 public:
 	int upMovingKey;
 	int rightMovingKey;
@@ -122,6 +165,7 @@ private:
 
 	int posX;
 	int posY;
+	int centerY;
 	int speed;
 	Direction dir;
 	Bullet* bullets[BULLET_MAX];

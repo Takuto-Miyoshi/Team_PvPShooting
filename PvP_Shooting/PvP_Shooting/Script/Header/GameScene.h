@@ -2,8 +2,7 @@
 #ifndef SC_ONPLAY_H
 #define SC_ONPLAY_H
 
-#include "Header/Common.h"
-#include "Header/SceneBase.h"
+#include "SceneBase.h"
 
 // ゲーム中のシーン
 class GameScene : public SceneBase {
@@ -18,6 +17,33 @@ public:
 	/// @brief メインループで呼び出すもの
 	void Execute();
 
+	/// @brief 描画するオブジェクトを登録する
+	/// @return 保存した配列番号 : -1 => 枠なし
+	static int EntryObject( ObjectBase* object );
+
+
+	/// @brief objectVaultの情報を取得する
+	/// @param arrayNum 配列番号
+	/// @return ObjectBase*
+	static ObjectBase* GetObjectData( int arrayNum );
+
+	/// @brief すべてのオブジェクトを解放
+	static void ReleaseObject();
+
+	/// @brief 指定した番号のオブジェクトを解放
+	/// @param arrayNum 配列番号
+	static void ReleaseObject( int arrayNum );
+
+	/// @brief 当たり判定の中身
+	/// @param l 攻撃された人の左
+	/// @param r 攻撃された人の右
+	/// @param t 攻撃された人の上
+	/// @param b 攻撃された人の下
+	/// @param x 弾のPosX
+	/// @param y 弾のPosY
+	/// @param radius 弾の半径
+	/// @return 当たっていたらtrue
+	static bool Collision( int l, int r, int t, int b, int x, int y, int radius );
 private:
 
 	/// @brief ゲーム処理
@@ -26,20 +52,9 @@ private:
 	/// @brief 描画処理
 	void Draw();
 
-	/// @brief 当たり判定
+	/// @brief プレイヤーと弾の当たり判定
 	/// @param target 攻撃された人
 	void HitManager( Player* target );
-
-	/// @brief 当たり判定の中身
-	/// @param l 攻撃された人の左
-	/// @param r 攻撃された人の右
-	/// @param t 攻撃された人の上	
-	/// @param b 攻撃された人の下 
-	/// @param x 弾のPosX		
-	/// @param y 弾のPosY
-	/// @param radius 弾の半径     
-	/// @return 条件に当てはまらなかったらtrue
-	bool Collision( int l, int r, int t, int b, int x, int y, int radius );
 
 	/// @brief ゲーム開始からの経過時間によって処理を行う
 	void GameManager();
@@ -50,12 +65,16 @@ private:
 	/// @brief 終了処理 : 最後に呼び出す
 	void End();
 
+	/// @brief オブジェクトを保存している変数を整列する
+	static void SortObjectVault();
+
 private:
 
 	static int counter;
 	static int startCounter;
 	static int endCounter;
 	static bool isOperatable;
+	static ObjectBase* objectVault[OBJECT_MAX];
 };
 
 #endif

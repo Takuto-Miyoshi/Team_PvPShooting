@@ -1,6 +1,7 @@
 ﻿
 #include "Script/Header/Common.h"
 #include "Script/Header/SceneBase.h"
+#include "Script/Header/GameScene.h"
 
 // プログラムは WinMain から始まります
 int WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow )
@@ -8,7 +9,7 @@ int WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	SetOutApplicationLogValidFlag( false );
 
 	SetGraphMode ( WINDOW_WIDTH, WINDOW_HEIGHT, 32, 60 );
-	ChangeWindowMode ( false ); // ウィンドウモードに変更
+	ChangeWindowMode ( true ); // ウィンドウモードに変更
 
 	if ( DxLib_Init () == -1 )	// ＤＸライブラリ初期化処理
 	{
@@ -44,6 +45,7 @@ int WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		ScreenFlip ();
 	}
 
+	GameScene::ReleaseObject();
 	SceneBase::ReleaseScene();
 	DxLib_End ();				// ＤＸライブラリ使用の終了処理
 

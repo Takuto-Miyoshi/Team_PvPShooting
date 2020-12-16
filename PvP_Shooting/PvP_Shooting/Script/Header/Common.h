@@ -28,24 +28,29 @@ enum class Direction {
 	LowerLeft
 };
 
+// オブジェクトタグ
+enum class Tag{
+	Player,
+	Stone,
+	Tree,
+	Flag,
+	Box,
+	Car,
+	Tunnel,
+	Explosion
+};
+
 /// @brief ステージの情報
 struct Stage{
 	int number;			// ステージ番号
 	LPCTSTR preview;	// ステージのスクリーンショット
 };
 
-struct Animation{
-	LPCTSTR* waitUp;
-	LPCTSTR* waitDown;
-	LPCTSTR waitLeft;
-	LPCTSTR waitRight;
-};
-
 /// @brief 画像リスト
 namespace Sprite{
-	const static LPCTSTR player1	 = "Sprite/Test_Player1.png";
-	const static LPCTSTR player2	 = "Sprite/Test_Player2.png";
-	const static LPCTSTR bullet		 = "Sprite/Test_Bullet.png";
+	const static LPCTSTR player1 = "Sprite/Test_Player1.png";
+	const static LPCTSTR player2 = "Sprite/Test_Player2.png";
+	const static LPCTSTR bullet = "Sprite/Test_Bullet.png";
 	const static LPCTSTR stgPreview1 = "Sprite/Test_StagePreview.png";
 	const static LPCTSTR stgPreview2 = "Sprite/Test_StagePreview.png";
 	const static LPCTSTR stgPreview3 = "Sprite/Test_StagePreview.png";
@@ -54,24 +59,44 @@ namespace Sprite{
 	const static LPCTSTR resultNobunagaScreen = "Sprite/ResultNobunaga_Screen.png";
 	const static LPCTSTR resultNapoleonScreen = "Sprite/ResultNapoleon_Screen.png";
 
+	const static int waitFrame = 4;			// 待機モーションの枚数
+	const static int walkFrame = 3;			// 移動モーションの枚数
+	const static int attackFrame = 4;		// 攻撃モーションの枚数
+	const static int treeFrame = 3;			// 木の画像数
+	const static int flagFrame = 3;			// 旗の画像数
+	const static int boxFrame = 3;			// 木箱の画像数
+	const static int tunnelFrame = 2;		// トンネルの画像数
+	const static int carFrame = 4;			// 車の画像数
+	const static int explosionFrame = 8;	// 爆発の画像数
+
+	// 信長の画像
 	namespace Nobunaga{
+
 		const static LPCTSTR waitUp[] = {
 			"Sprite/Nobunaga/Wait/up1.png",
+			"Sprite/Nobunaga/Wait/up1.png",
+			"Sprite/Nobunaga/Wait/up2.png",
 			"Sprite/Nobunaga/Wait/up2.png"
 		};
 
 		const static LPCTSTR waitDown[] = {
 			"Sprite/Nobunaga/Wait/down1.png",
+			"Sprite/Nobunaga/Wait/down1.png",
+			"Sprite/Nobunaga/Wait/down2.png",
 			"Sprite/Nobunaga/Wait/down2.png"
 		};
 
 		const static LPCTSTR waitLeft[] = {
 			"Sprite/Nobunaga/Wait/left1.png",
+			"Sprite/Nobunaga/Wait/left1.png",
+			"Sprite/Nobunaga/Wait/left2.png",
 			"Sprite/Nobunaga/Wait/left2.png"
 		};
 
 		const static LPCTSTR waitRight[] = {
 			"Sprite/Nobunaga/Wait/right1.png",
+			"Sprite/Nobunaga/Wait/right1.png",
+			"Sprite/Nobunaga/Wait/right2.png",
 			"Sprite/Nobunaga/Wait/right2.png"
 		};
 
@@ -132,7 +157,7 @@ namespace Sprite{
 			"Sprite/Nobunaga/ChargeBullet/Up.png"
 		};
 
-		const static LPCTSTR bulletDown[] = { 
+		const static LPCTSTR bulletDown[] = {
 			"Sprite/Nobunaga/NormalBullet/Down.png",
 			"Sprite/Nobunaga/ChargeBullet/Down.png"
 		};
@@ -151,7 +176,7 @@ namespace Sprite{
 			"Sprite/Nobunaga/NormalBullet/Upper_Left.png",
 			"Sprite/Nobunaga/ChargeBullet/Upper_Left.png"
 		};
-		
+
 		const static LPCTSTR bulletUpperRight[] = {
 			"Sprite/Nobunaga/NormalBullet/Upper_Right.png",
 			"Sprite/Nobunaga/ChargeBullet/Upper_Right.png"
@@ -168,24 +193,33 @@ namespace Sprite{
 		};
 	}
 
+	// ナポレオンの画像
 	namespace Napoleon{
 		const static LPCTSTR waitUp[] = {
 			"Sprite/Napoleon/Wait/up1.png",
+			"Sprite/Napoleon/Wait/up1.png",
+			"Sprite/Napoleon/Wait/up2.png",
 			"Sprite/Napoleon/Wait/up2.png"
 		};
 
 		const static LPCTSTR waitDown[] = {
 			"Sprite/Napoleon/Wait/down1.png",
+			"Sprite/Napoleon/Wait/down1.png",
+			"Sprite/Napoleon/Wait/down2.png",
 			"Sprite/Napoleon/Wait/down2.png"
 		};
 
 		const static LPCTSTR waitLeft[] = {
 			"Sprite/Napoleon/Wait/left1.png",
+			"Sprite/Napoleon/Wait/left1.png",
+			"Sprite/Napoleon/Wait/left2.png",
 			"Sprite/Napoleon/Wait/left2.png"
 		};
 
 		const static LPCTSTR waitRight[] = {
 			"Sprite/Napoleon/Wait/right1.png",
+			"Sprite/Napoleon/Wait/right1.png",
+			"Sprite/Napoleon/Wait/right2.png",
 			"Sprite/Napoleon/Wait/right2.png"
 		};
 
@@ -281,6 +315,52 @@ namespace Sprite{
 			"Sprite/Napoleon/ChargeBullet/Lower_Right.png"
 		};
 	}
+
+	// ギミックの画像
+	namespace Gimmick{
+		const static LPCTSTR tree[] = {
+			"Sprite/Gimmick/tree1.png",
+			"Sprite/Gimmick/tree2.png",
+			"Sprite/Gimmick/tree3.png"
+		};
+
+		const static LPCTSTR flag[] = {
+			"Sprite/Gimmick/flag1.png",
+			"Sprite/Gimmick/flag2.png",
+			"Sprite/Gimmick/flag3.png"
+		};
+
+		const static LPCTSTR stone = "Sprite/Gimmick/stone.png";
+
+		const static LPCTSTR box[] = {
+			"Sprite/Gimmick/box1.png",
+			"Sprite/Gimmick/box2.png",
+			"Sprite/Gimmick/box3.png"
+		};
+
+		const static LPCTSTR tunnel[] = {
+			"Sprite/Gimmick/tunnelLeft.png",
+			"Sprite/Gimmick/tunnelRight.png"
+		};
+
+		const static LPCTSTR car[] = {
+			"Sprite/Gimmick/car1.png",
+			"Sprite/Gimmick/car2.png",
+			"Sprite/Gimmick/car3.png",
+			"Sprite/Gimmick/car4.png"
+		};
+
+		const static LPCTSTR explosion[] = {
+			"Sprite/Gimmick/explosion1.png",
+			"Sprite/Gimmick/explosion2.png",
+			"Sprite/Gimmick/explosion3.png",
+			"Sprite/Gimmick/explosion4.png",
+			"Sprite/Gimmick/explosion5.png",
+			"Sprite/Gimmick/explosion6.png",
+			"Sprite/Gimmick/explosion7.png",
+			"Sprite/Gimmick/explosion8.png"
+		};
+	}
 }
 
 /// @brief フレームレート
@@ -298,11 +378,20 @@ const int PLAYER_HITBOX_WIDTH = 96;
 /// @brief プレイヤーの当たり判定の縦幅
 const int PLAYER_HITBOX_HEIGHT = 144;
 
+/// @brief プレイヤーのX軸判定のずらす量
+const int PLAYER_OFFSET_X = 35;
+
 /// @brief プレイヤー画像の横幅
-const int PLAYER_WIDTH = 192;
+const int PLAYER_WIDTH = 192 - PLAYER_OFFSET_X * 2;
 
 /// @brief プレイヤー画像の縦幅
 const int PLAYER_HEIGHT = 192;
+
+/// @brief プレイヤーのY軸判定の上からずらす量
+const int PLAYER_OFFSET_UY = PLAYER_HEIGHT - PLAYER_HEIGHT / 3;
+
+/// @brief プレイヤーのY軸判定の下からずらす量
+const int PLAYER_OFFSET_DY = 0;
 
 /// @brief 弾画像の横幅
 const int BULLET_WIDTH = 64;
@@ -325,6 +414,90 @@ const int BULLET_VERTICAL_HEIGHT = 56;
 /// @brief 弾の当たり判定の半径
 const int BULLET_RADIUS = 48;
 
+/// @brief 木箱の横幅
+const int BOX_WIDTH = 192;
+
+/// @brief 木箱の縦幅
+const int BOX_HEIGHT = 176;
+
+/// @brief 木箱のY軸判定の上からずらす量
+const int BOX_OFFSET_UY = BOX_HEIGHT / 2;
+
+/// @brief 木箱のY軸判定の下からずらす量
+const int BOX_OFFSET_DY = BOX_HEIGHT / 4;
+
+/// @brief 車の横幅
+const int CAR_WIDTH = 652;
+
+/// @brief 車の縦幅
+const int CAR_HEIGHT = 361;
+
+/// @brief 車のY軸判定の上からずらす量
+const int CAR_OFFSET_UY = CAR_HEIGHT / 5 * 2;
+
+/// @brief 車のY軸判定の下からずらす量
+const int CAR_OFFSET_DY = CAR_HEIGHT / 5;
+
+/// @brief 爆発の横幅
+const int EXPLOSION_WIDTH = 400;
+
+/// @brief 爆発の縦幅
+const int EXPLOSION_HEIGHT = 400;
+
+/// @brief 爆発のY軸判定の上からずらす量
+const int EXPLOSION_OFFSET_UY = EXPLOSION_HEIGHT / 2;
+
+/// @brief 爆発のY軸判定の下からずらす量
+const int EXPLOSION_OFFSET_DY = 0;
+
+/// @brief 旗の横幅
+const int FLAG_WIDTH = 84;
+
+/// @brief 旗の縦幅
+const int FLAG_HEIGHT = 303;
+
+/// @brief 旗のY軸判定の上からずらす量
+const int FLAG_OFFSET_UY = FLAG_HEIGHT - FLAG_HEIGHT / 8;
+
+/// @brief 旗のY軸判定の下からずらす量
+const int FLAG_OFFSET_DY = 0;
+
+/// @brief 石の横幅
+const int STONE_WIDTH = 172;
+
+/// @brief 石の縦幅
+const int STONE_HEIGHT = 113;
+
+/// @brief 石のY軸判定の上からずらす量
+const int STONE_OFFSET_UY = STONE_HEIGHT / 10 * 4;
+
+/// @brief 石のY軸判定の下からずらす量
+const int STONE_OFFSET_DY = STONE_HEIGHT / 4;
+
+/// @brief トンネルの横幅
+const int TUNNEL_WIDTH = 64;
+
+/// @brief トンネルの縦幅
+const int TUNNEL_HEIGHT = 1080;
+
+/// @brief トンネルのY軸判定の上からずらす量
+const int TUNNEL_OFFSET_UY = 0;
+
+/// @brief トンネルのY軸判定の下からずらす量
+const int TUNNEL_OFFSET_DY = 0;
+
+/// @brief 木の横幅
+const int TREE_WIDTH = 313;
+
+/// @brief 木の縦幅
+const int TREE_HEIGHT = 253;
+
+/// @brief 木のY軸判定の上からずらす量
+const int TREE_OFFSET_UY = TREE_HEIGHT / 4 * 3;
+
+/// @brief 木のY軸判定の下からずらす量
+const int TREE_OFFSET_DY = TREE_HEIGHT / 6;
+
 /// @brief ウィンドウの横幅
 const int WINDOW_WIDTH = 1920;
 
@@ -340,17 +513,8 @@ const int ROUND_MAX = 3;
 /// @brief プレイ時間(秒)
 const int PLAY_TIME = 60;
 
-/// @brief 待機アニメーションのコマ数
-const int WAIT_FRAME = 2;
-
-/// @brief 移動アニメーションのコマ数
-const int WALK_FRAME = 3;
-
-/// @brief 攻撃アニメーションのコマ数
-const int ATTACK_FRAME = 4;
-
-/// @brief アニメーションの更新頻度
-const int TIME_CHANGE_ANIMATION = 12;
+/// @brief 描画可能なオブジェクトの数
+const int OBJECT_MAX = 50;
 
 const int COLOR_WHITE = GetColor(255, 255, 255);
 const int COLOR_BLACK = GetColor(0, 0, 0);

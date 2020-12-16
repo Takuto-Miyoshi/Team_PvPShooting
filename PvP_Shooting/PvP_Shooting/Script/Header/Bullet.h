@@ -22,7 +22,7 @@ public:
 	/// @brief コンストラクタ
 	/// @param dir 進む方向
 	/// @param spritePath 読み込む画像のパス
-	Bullet( int playerNumber, int initPosX, int initPosY, Direction direction, bool isCharged );
+	Bullet( int playerNum, int InitPosX, int InitPosY, Direction direction, bool isCharged );
 
 	~Bullet();
 
@@ -34,11 +34,11 @@ public:
 
 	/// @brief X座標を取得する
 	/// @return X座標
-	int GetPosX();
+	int GetPosX()const;
 
 	/// @brief Y座標を取得する
 	/// @return Y座標
-	int GetPosY();
+	int GetPosY()const;
 
 	/// @brief 方向を取得する
 	/// @return 方向
@@ -48,6 +48,7 @@ private:
 	int playerNumber;
 	int posX;
 	int posY;
+	int centerY;
 	int speed;
 	Direction dir;
 	bool changeChargeShot;

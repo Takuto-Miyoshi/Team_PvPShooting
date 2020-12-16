@@ -1,5 +1,6 @@
 ﻿
 #include "Header/Player.h"
+#include "Header/GameScene.h"
 
 // #define USE_CONTROLLER
 
@@ -10,6 +11,7 @@ Player::Player( int padNum, int playerNum, int keyUp, int keyRight, int keyLeft,
 
 	posX = 100;
 	posY = 100;
+	centerY = 0;
 	speed = PLAYER_SPEED;
 	shootingCoolTime = 0;
 	chargeCount = 0;
@@ -32,6 +34,8 @@ Player::Player( int padNum, int playerNum, int keyUp, int keyRight, int keyLeft,
 	isAttacked = false;
 	spriteNumber = 0;
 	animationCounter = 0;
+
+	GameScene::EntryObject( this );
 }
 
 Player::~Player() {
@@ -125,17 +129,17 @@ void Player::Move() {
 	if( posY > WINDOW_HEIGHT - PLAYER_HEIGHT ) posY = WINDOW_HEIGHT - PLAYER_HEIGHT;
 	if( posX < 0 ) posX = 0;
 	if( posX > WINDOW_WIDTH - PLAYER_WIDTH ) posX = WINDOW_WIDTH - PLAYER_WIDTH;
+
+	// 位置調整
+	centerY = posY + PLAYER_HEIGHT / 2;
 }
 
 void Player::Draw() {
 
-	// 生きていないなら描画しない
-	if( isAlive == false ) return;
-
 	// アニメーション
 	// 攻撃
 	if( isAttacked == true ){
-		if( spriteNumber >= ATTACK_FRAME ){
+		if( spriteNumber >= Sprite::attackFrame ){
 			isAttacked = false;
 		}
 		else if( playerNumber == 1 ){
@@ -185,7 +189,7 @@ void Player::Draw() {
 	}
 	// 移動
 	else if( isMoved == true ){
-		if( spriteNumber >= WALK_FRAME ){
+		if( spriteNumber >= Sprite::walkFrame ){
 			spriteNumber = 1;
 		}
 		else if( playerNumber == 1 ){
@@ -235,7 +239,7 @@ void Player::Draw() {
 	}
 	// 待機
 	else{
-		if( spriteNumber >= WAIT_FRAME ){
+		if( spriteNumber >= Sprite::waitFrame ){
 			spriteNumber = 0;
 		}
 		else if( playerNumber == 1 ){
@@ -284,22 +288,21 @@ void Player::Draw() {
 		}
 	}
 
-	LoadGraphScreen( posX, posY, spritePath, true );
+	// 点滅
+	if( isAlive == true || ( invincibleCount >= 12 && invincibleCount < 24 || invincibleCount >= 36 && invincibleCount < 48 ) ) {
+		LoadGraphScreen( posX - PLAYER_OFFSET_X, posY, spritePath, true );
+	}
 
 	animationCounter++;
-	if( animationCounter >= TIME_CHANGE_ANIMATION ){
+	if( animationCounter >= 6 ){
 		animationCounter = 0;
 		spriteNumber++;
 	}
 
-	for( int i = 0; i < BULLET_MAX; i++ ) {
-		if( bullets[i] != nullptr ) bullets[i]->Draw();
+	for( int i = 0; i < BULLET_MAX; i++ ){
+		if( bullets[i] != nullptr )bullets[i]->Draw();
 	}
 
-	// 点滅
-	if( invincibleCount >= 12 && invincibleCount < 24 || invincibleCount >= 36 && invincibleCount < 48 ) {
-		LoadGraphScreen( posX, posY, spritePath, true );
-	}
 }
 
 void Player::Shoot() {
@@ -352,13 +355,68 @@ void Player::Shoot() {
 	}
 }
 
+void Player::Control(){
+
+}
+
 void Player::Bomb(){
 
 }
 
 void Player::Hit(){
 
+	for( int i = 0; i < OBJECT_MAX; i++ ){
+		ObjectBase* objData = GameScene::GetObjectData( i );
+		if( objData != nullptr ){
+			if( GetTag() != objData->GetTag() ){
+				// プレイヤーとトンネルの判定
+				if( objData->GetTag() == Tag::Tunnel ){
+					if( posX < TUNNEL_WIDTH || posX > WINDOW_WIDTH - TUNNEL_WIDTH - PLAYER_WIDTH ) BackStep();
+				}
+				// プレイヤーとオブジェクトの判定
+				else if( ( ( posX + PLAYER_WIDTH ) > objData->GetPosX() ) && ( posX < ( objData->GetPosX() + objData->GetSpriteWidth() ) ) &&
+					( posY + PLAYER_HEIGHT ) > ( objData->GetPosY() + objData->GetHitOffsetUY() ) && ( ( posY + GetHitOffsetUY() ) < ( objData->GetPosY() + objData->GetSpriteHeight() ) ) ){
 
+					BackStep();
+				}
+
+				// 弾とオブジェクトの判定
+				for( int b = 0; b < BULLET_MAX; b++ ){
+					if( bullets[b] != nullptr ){
+						if( objData->GetTag() == Tag::Tunnel ){
+							if( bullets[b]->GetPosX() < TUNNEL_WIDTH || bullets[b]->GetPosX() > WINDOW_WIDTH - TUNNEL_WIDTH - BULLET_WIDTH ) DeleteBullet( b );
+						}
+						else{
+							if( GameScene::Collision(
+								objData->GetPosX(),
+								objData->GetPosX() + objData->GetSpriteWidth(),
+								objData->GetPosY() + objData->GetHitOffsetUY(),
+								objData->GetPosY() + objData->GetSpriteHeight() - objData->GetHitOffsetDY(),
+								bullets[b]->GetPosX() + BULLET_RADIUS,
+								bullets[b]->GetPosY() + BULLET_RADIUS,
+								BULLET_RADIUS ) == true ){
+								switch( objData->GetTag() )
+								{
+								case Tag::Flag:
+									break;
+								case Tag::Tree:
+									objData->SetSpriteNumber( objData->GetSpriteNumber() + 1 );
+									if( objData->GetSpriteNumber() < Sprite::treeFrame ) DeleteBullet( b );
+									break;
+								case Tag::Box:
+									objData->SetSpriteNumber( objData->GetSpriteNumber() + 1 );
+									if( objData->GetSpriteNumber() < Sprite::boxFrame ) DeleteBullet( b );
+									break;
+								default: DeleteBullet( b );
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 void Player::Invincible(){
@@ -383,6 +441,10 @@ int Player::GetPosX()const{
 
 int Player::GetPosY()const{
 	return posY;
+}
+
+int Player::GetCenterY()const{
+	return centerY;
 }
 
 void Player::SetPosX( int x ){
@@ -433,5 +495,33 @@ void Player::DeathProcessing(){
 	isAlive = false;
 	for( int i = 0; i < BULLET_MAX; i++ ){
 		DeleteBullet( i );
+	}
+}
+
+void Player::BackStep(){
+	switch( dir )
+	{
+	case Direction::Up: posY += speed; break;
+	case Direction::Down:posY -= speed; break;
+	case Direction::Right:posX -= speed; break;
+	case Direction::Left:posX += speed; break;
+	case Direction::UpperRight:
+		posY += speed;
+		posX -= speed;
+		break;
+	case Direction::UpperLeft:
+		posY += speed;
+		posX += speed;
+		break;
+	case Direction::LowerRight:
+		posY -= speed;
+		posX -= speed;
+		break;
+	case Direction::LowerLeft:
+		posY -= speed;
+		posX += speed;
+		break;
+	default:
+		break;
 	}
 }

@@ -1,13 +1,21 @@
 ﻿
-#include "Header/Common.h"
-#include "Header/SceneBase.h"
 #include "Header/GameScene.h"
+#include "Header/Common.h"
+#include "Header/ObjectBase.h"
 #include "Header/Player.h"
+
+#include "Header/Stone.h"
+#include "Header/Flag.h"
+#include "Header/Tree.h"
+#include "Header/Explosion.h"
+#include "Header/Box.h"
+#include "Header/Tunnel.h"
 
 int GameScene::counter = 0;
 int GameScene::startCounter = 0;
 int GameScene::endCounter = 0;
 bool GameScene::isOperatable = false;
+ObjectBase* GameScene::objectVault[OBJECT_MAX];
 
 GameScene::GameScene() {
 	counter = 0;
@@ -19,8 +27,11 @@ GameScene::GameScene() {
 		}
 		playerList[p]->SetPosY( WINDOW_HEIGHT / 2 - PLAYER_HEIGHT / 2 );
 	}
+
 	playerList[0]->SetPosX( 200 );
 	playerList[1]->SetPosX( WINDOW_WIDTH - 200 - PLAYER_WIDTH );
+
+	Stone* obj = new Stone( 500, 500 );
 }
 
 GameScene::~GameScene() {
@@ -45,12 +56,21 @@ void GameScene::Control() {
 		SceneBase::playerList[i]->Invincible();
 		HitManager( SceneBase::playerList[i] );
 	}
+
+	for( int obj = 0; obj < OBJECT_MAX; obj++ ){
+		if( objectVault[obj] != nullptr ){
+			objectVault[obj]->Control();
+		}
+	}
 }
 
 void GameScene::Draw() {
 
-	for( int i = 0; i < PLAYER_MAX; i++ ){
-		playerList[i]->Draw();
+	SortObjectVault();
+	for( int obj = 0; obj < OBJECT_MAX; obj++ ){
+		if( objectVault[obj] != nullptr ){
+			objectVault[obj]->Draw();
+		}
 	}
 
 	DrawString( 10, 10, "OnPlay", COLOR_RED );
@@ -65,6 +85,7 @@ void GameScene::Draw() {
 void GameScene::HitManager( Player* target ){
 
 	for( int playerNum = 0; playerNum < PLAYER_MAX; playerNum++ ){
+		playerList[playerNum]->Hit();
 		for( int bulletNum = 0; bulletNum < BULLET_MAX; bulletNum++ ){
 			// 例外は弾く
 			if( playerList[playerNum]->GetBulletData( bulletNum ) != nullptr &&
@@ -162,7 +183,7 @@ void GameScene::Start(){
 	static LPCTSTR countDownText = "   3   ";
 
 	switch( startCounter ){
-	case 0: countDownText = "   3   "; break;
+	case 0: countDownText = "   3   ";	break;
 	case FRAME_RATE:countDownText = "   2   "; break;
 	case FRAME_RATE * 2:countDownText = "   1   "; break;
 	case FRAME_RATE * 3:countDownText = "Start!!"; break;
@@ -185,4 +206,47 @@ void GameScene::End(){
 	endCounter++;
 
 	DrawString( WINDOW_WIDTH / 2 - CenterAdjustment( 8 ), WINDOW_HEIGHT / 2, "Finish!!", COLOR_RED );
+}
+
+int GameScene::EntryObject( ObjectBase* object ){
+	for( int i = 0; i < OBJECT_MAX; i++ ){
+		if( objectVault[i] == nullptr ){
+			objectVault[i] = object;
+			return i;
+		}
+	}
+
+	return -1;
+}
+
+void GameScene::SortObjectVault(){
+	for( int obj = 0; obj < OBJECT_MAX - 1; obj++ ){
+		for( int i = obj + 1; i < OBJECT_MAX; i++ ){
+			if( objectVault[obj] == nullptr ) break;
+
+			if( objectVault[i] != nullptr ){
+				if( objectVault[obj]->GetCenterY() > objectVault[i]->GetCenterY() ){
+					ObjectBase* temp = objectVault[obj];
+					objectVault[obj] = objectVault[i];
+					objectVault[i] = temp;
+				}
+			}
+		}
+	}
+}
+
+ObjectBase* GameScene::GetObjectData( int arrayNum ){
+	return objectVault[arrayNum];
+}
+
+void GameScene::ReleaseObject(){
+	for( int i = 0; i < OBJECT_MAX; i++ ){
+		delete objectVault[i];
+		objectVault[i] = nullptr;
+	}
+}
+
+void GameScene::ReleaseObject( int arrayNum ){
+	delete objectVault[arrayNum];
+	objectVault[arrayNum] = nullptr;
 }
