@@ -115,7 +115,7 @@ void SettingScene::Confirm(){
 #ifdef USE_CONTROLLER
 	if( GetPadStatus( player1->GetPlayerNumber(), player1->shotKey ) == InputState::Pressed ){
 #else
-	if( GetKeyStatus( player1->shotKey ) == InputState::Pressed )currentSelection++{
+	if( GetKeyStatus( player1->shotKey ) == InputState::Pressed ){
 #endif
 		settingStep = ( currentSelection == 0 ) ? -2 : 0;
 	}

@@ -71,12 +71,12 @@ void GameScene::HitManager( Player* target ){
 				target->GetPlayerNumber() != playerList[playerNum]->GetPlayerNumber() &&
 				target->GetAlive() == true ){
 				// ----------------------------------当たり判定---------------------------------
-				if ( Collision( target->GetPosX(),
-					( target->GetPosX() + PLAYER_WIDTH ),
-					target->GetPosY(),
-					( target->GetPosY() + PLAYER_HEIGHT ),
-					playerList[playerNum]->GetBulletData( bulletNum )->GetPosX() + BULLET_RADIUS,
-					playerList[playerNum]->GetBulletData( bulletNum )->GetPosY() + BULLET_RADIUS,
+				if( Collision( ( target->GetPosX() - PLAYER_HITBOX_WIDTH / 2 ),
+					( target->GetPosX() + PLAYER_HITBOX_WIDTH / 2 ),
+					( target->GetPosY() - PLAYER_HITBOX_HEIGHT / 2 ),
+					( target->GetPosY() + PLAYER_HITBOX_HEIGHT / 2 ),
+					playerList[playerNum]->GetBulletData( bulletNum )->GetPosX(),
+					playerList[playerNum]->GetBulletData( bulletNum )->GetPosY(),
 					BULLET_RADIUS ) == true ) {
 					//--------------------------------------------------------------------------
 					playerList[playerNum]->DeleteBullet( bulletNum );
