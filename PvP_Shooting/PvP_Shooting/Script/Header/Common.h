@@ -293,7 +293,7 @@ const int PREVIEW_WIDTH = 300;
 const int PREVIEW_HEIGHT = 300;
 
 /// @brief プレイヤーの当たり判定の横幅
-const int PLAYER_HITBOX_WIDTH = 100;
+const int PLAYER_HITBOX_WIDTH = 96;
 
 /// @brief プレイヤーの当たり判定の縦幅
 const int PLAYER_HITBOX_HEIGHT = 144;
@@ -309,6 +309,18 @@ const int BULLET_WIDTH = 64;
 
 /// @brief 弾画像の縦幅
 const int BULLET_HEIGHT = 64;
+
+/// @brief 弾の水平方向の当たり判定の横幅
+const int BULLET_HORIZONTAL_WIDTH = 96;
+
+/// @brief 弾の水平方向の当たり判定の縦幅
+const int BULLET_HORIZONTAL_HEIGHT = 160;
+
+/// @brief 弾の垂直方向の当たり判定の横幅
+const int BULLET_VERTICAL_WIDTH = 100;
+
+/// @brief 弾の垂直方向の当たり判定の縦幅
+const int BULLET_VERTICAL_HEIGHT = 56;
 
 /// @brief 弾の当たり判定の半径
 const int BULLET_RADIUS = 48;

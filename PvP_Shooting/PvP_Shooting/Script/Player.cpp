@@ -336,7 +336,8 @@ void Player::Shoot() {
 
 			for( int i = 0; i < BULLET_MAX; i++ ){
 				if( bullets[i] == nullptr ){
-					bullets[i] = bullets[i] = new Bullet( playerNumber, posX, posY, dir, tempCharge );
+					bullets[i] = new Bullet( playerNumber, posX, posY, dir, tempCharge );
+					shootingCoolTime = 0;
 					chargeCount = 0;
 					isAttacked = true;
 					spriteNumber = 0;

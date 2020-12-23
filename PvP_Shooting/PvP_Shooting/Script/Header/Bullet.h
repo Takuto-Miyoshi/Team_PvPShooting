@@ -40,6 +40,10 @@ public:
 	/// @return Y座標
 	int GetPosY();
 
+	/// @brief 方向を取得する
+	/// @return 方向
+	Direction GetDirection();
+
 private:
 	int playerNumber;
 	int posX;

@@ -52,12 +52,7 @@ void Bullet::Move(){
 		break;
 	}
 
-	if( changeChargeShot == true ) {
-		spriteNumber = 1;
-	}
-	else {
-		spriteNumber = 0;
-	}
+	spriteNumber = ( changeChargeShot == true ) ? 1 : 0;
 }
 
 void Bullet::Draw() {
@@ -132,4 +127,8 @@ int Bullet::GetPosX(){
 
 int Bullet::GetPosY(){
 	return posY;
+}
+
+Direction Bullet::GetDirection() {
+	return dir;
 }
