@@ -3,7 +3,7 @@
 #include "Header/SceneBase.h"
 #include "Header/ResultScene.h"
 
-// #define USE_CONTROLLER
+#define USE_CONTROLLER
 
 ResultScene::ResultScene() {
 
@@ -20,12 +20,12 @@ void ResultScene::Execute() {
 
 void ResultScene::Control() {
 
-	if ( fadeMode != FadeMode::None ) return;
+	if( fadeMode != FadeMode::None ) return;
 
 #ifdef USE_CONTROLLER
-	if( GetPadStatus( player1->GetPlayerNumber(), player1->shotKey ) == InputState::Pressed ) fadeMode = FadeMode::Out;
+	if( GetPadStatus( player1->GetPlayerNumber(), PAD_INPUT_8 ) == InputState::Pressed )fadeMode = FadeMode::Out;
 #else
-	if( GetKeyStatus( player1->shotKey ) == InputState::Pressed ) fadeMode = FadeMode::Out;
+	if( GetKeyStatus( KEY_INPUT_RETURN ) == InputState::Pressed )fadeMode = FadeMode::Out;
 #endif
 }
 
@@ -61,9 +61,9 @@ void ResultScene::DrawResult(){
 	// 結果
 	LPCTSTR winnerScreen = "";
 	switch( winner ){
-	case 0:winnerScreen = Sprite::resultNobunagaScreen; break;
-	case 1:winnerScreen = Sprite::resultNobunagaScreen; break;
-	case 2:winnerScreen = Sprite::resultNapoleonScreen; break;
+	case 0:winnerScreen = Sprite::UI::resultDraw; break;
+	case 1:winnerScreen = Sprite::UI::resultNobunaga; break;
+	case 2:winnerScreen = Sprite::UI::resultNapoleon; break;
 	}
 	LoadGraphScreen( 0, 0, winnerScreen, false );
 }

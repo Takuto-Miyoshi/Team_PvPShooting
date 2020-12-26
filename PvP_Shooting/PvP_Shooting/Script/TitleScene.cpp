@@ -3,11 +3,13 @@
 #include "Header/SceneBase.h"
 #include "Header/TitleScene.h"
 
-// #define USE_CONTROLLER
+#define USE_CONTROLLER
 
 /// @brief ルールの画像
 const LPCTSTR TitleScene::ruleSprite[] {
-	Sprite::characterInfoScreen
+	Sprite::UI::descriptionControl,
+	Sprite::UI::descriptionRule1,
+	Sprite::UI::descriptionRule2
 };
 
 TitleScene::TitleScene() {
@@ -58,7 +60,7 @@ void TitleScene::Control() {
 
 void TitleScene::Draw() {
 
-	LoadGraphScreen( 0, 0, Sprite::titleScreen, false );
+	LoadGraphScreen( 0, 0, Sprite::UI::titleScreen, false );
 
 	if( ruleShowing == true ) LoadGraphScreen( 0, 0, ruleSprite[spriteCounter], false );
 

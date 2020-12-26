@@ -2,7 +2,7 @@
 #include "Header/Player.h"
 #include "Header/GameScene.h"
 
-// #define USE_CONTROLLER
+#define USE_CONTROLLER
 
 Player::Player( int padNum, int playerNum, int keyUp, int keyRight, int keyLeft, int keyDown, int keyShot, int keyBomb, int keyUlt ){
 	playerNumber = playerNum;

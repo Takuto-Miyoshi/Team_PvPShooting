@@ -3,10 +3,30 @@
 #include "Header/SceneBase.h"
 #include "Header/SettingScene.h"
 
-// #define USE_CONTROLLER
+#define USE_CONTROLLER
 
 SettingScene::SettingScene() {
 	settingStep = 0;
+
+	destinationScene = SceneList::OnPlay;
+
+	preview.x1 = WINDOW_WIDTH / 2 - PREVIEW_WIDTH - 150;
+	preview.y1 = WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 2;
+	preview.x2 = WINDOW_WIDTH / 2 + 150;
+	preview.y2 = WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 2;
+	preview.handle1 = LoadGraph( stageList[0].preview );
+	preview.handle2 = LoadGraph( stageList[1].preview );
+	preview.currentSelection = 0;
+
+	confirm.x1 = WINDOW_WIDTH / 2 + 200;
+	confirm.x2 = WINDOW_WIDTH / 2 + 200;
+	confirm.y1 = WINDOW_HEIGHT / 2 - 70;
+	confirm.y2 = WINDOW_HEIGHT / 2 + 60;
+	confirm.handle1 = LoadGraph( Sprite::UI::selectYes );
+	confirm.handle2 = LoadGraph( Sprite::UI::selectNo );
+	confirm.currentSelection = 0;
+
+	SceneBase::SetStage( SceneBase::stageList[preview.currentSelection] );
 }
 
 SettingScene::~SettingScene() {
@@ -21,102 +41,133 @@ void SettingScene::Control() {
 
 	if( fadeMode != FadeMode::None ) return;
 
-	switch( settingStep ){
-	case -2:fadeMode = FadeMode::Out; return; break;
-	case -1:settingStep = 0;
-	case 0:SetStage(); break;
-	default:Confirm(); return; break;
+#ifdef USE_CONTROLLER
+	if( GetPadStatus( player1->GetPlayerNumber(), PAD_INPUT_8 ) == InputState::Pressed ) {
+#else
+	if( GetKeyStatus( KEY_INPUT_RETURN ) == InputState::Pressed ) {
+#endif
+		destinationScene = SceneList::Title;
+		fadeMode = FadeMode::Out;
+		return;
 	}
 
-#ifdef USE_CONTROLLER
-	if( GetPadStatus( player1->GetPlayerNumber(), player1->shotKey ) == InputState::Pressed )settingStep++;
-	else if( GetPadStatus( player1->GetPlayerNumber(), player1->bombKey ) == InputState::Pressed )settingStep--;
-#else
-	if( GetKeyStatus( player1->shotKey ) == InputState::Pressed )settingStep++;
-	else if( GetKeyStatus( player1->bombKey ) == InputState::Pressed )settingStep--;
-#endif
+	switch( settingStep )
+	{
+	case 0: SetStage(); break;
+	case 1: Confirm(); break;
+	default: settingStep = 0; break;
+	}
 }
 
 void SettingScene::Draw() {
 
-	DrawString( 10, 10, "Setting", COLOR_RED );
+	SettingScene::DrawBackground();
 
-	SceneFade( SceneList::OnPlay, 255 / 60, 255 / 60, COLOR_WHITE, COLOR_BLACK );
+	// ラウンド数表示
+	LoadGraphScreen( 0, 0, Sprite::UI::roundInfo[battleCount], true );
+
+	switch( settingStep )
+	{
+	case 0:
+		// プレビュー表示
+		DrawExtendGraph( preview.x1 - 50, preview.y1 - 50, preview.x1 + PREVIEW_WIDTH + 50, preview.y1 + PREVIEW_HEIGHT + 50, preview.handle1, false );
+		DrawGraph( preview.x2, preview.y2, preview.handle2, false );
+		break;
+	case 1:
+		// 確認
+		LoadGraphScreen( 0, WINDOW_HEIGHT / 2 - 256, Sprite::UI::alternativeBack, false );
+		LoadGraphScreen( 300, WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 2, SceneBase::GetStage().preview, false );
+		DrawExtendGraph( confirm.x1 - 32, confirm.y1 - 10, confirm.x1 + 352, confirm.y1 + 110, confirm.handle1, true );
+		DrawGraph( confirm.x2, confirm.y2, confirm.handle2, true );
+		break;
+	}
+
+	SceneFade( destinationScene, 255 / 30, 255 / 30, COLOR_WHITE, COLOR_BLACK );
 }
 
 void SettingScene::SetStage(){
 
-	// ラウンド数表示
-	DrawFormatString( WINDOW_WIDTH / 2 - CenterAdjustment( 7 ), 100, COLOR_BLUE, "Round %d", SceneBase::battleCount + 1 );
-
-	// ステージプレビュー
-	LoadGraphScreen( WINDOW_WIDTH / 2 - PREVIEW_WIDTH * 2 - PREVIEW_WIDTH / 2,	WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 2, stageList[0].preview, false );
-	LoadGraphScreen( WINDOW_WIDTH / 2 - PREVIEW_WIDTH / 2,						WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 2, stageList[1].preview, false );
-	LoadGraphScreen( WINDOW_WIDTH / 2 + PREVIEW_WIDTH + PREVIEW_WIDTH / 2,		WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 2, stageList[2].preview, false );
-
-	static int currentSelection = 0;
-	static int triangleX = -500;
-
-	// カーソル表示
+	// 方向キーで情報を入れ替える
 #ifdef USE_CONTROLLER
-	if( GetPadStatus( player1->GetPlayerNumber(), player1->rightMovingKey ) == InputState::Pressed )currentSelection++;
-	else if( GetPadStatus( player1->GetPlayerNumber(), player1->leftMovingKey ) == InputState::Pressed )currentSelection--;
+	if( GetPadStatus( player1->GetPlayerNumber(), player1->rightMovingKey ) == InputState::Pressed ||
+		GetPadStatus( player1->GetPlayerNumber(), player1->leftMovingKey ) == InputState::Pressed ){
 #else
-	if( GetKeyStatus( player1->rightMovingKey ) == InputState::Pressed )currentSelection++;
-	else if( GetKeyStatus( player1->leftMovingKey ) == InputState::Pressed )currentSelection--;
+	if( GetKeyStatus( player1->rightMovingKey ) == InputState::Pressed ||
+		GetKeyStatus( player1->leftMovingKey ) == InputState::Pressed ){
 #endif
+		SettingScene::ReplaceData( &preview );
 
-	switch( currentSelection )	{
-	case -1	:currentSelection = 2;	break;
-	case 0	:triangleX = -PREVIEW_WIDTH * 2; break;
-	case 1	:triangleX = 0;					 break;
-	case 2	:triangleX =  PREVIEW_WIDTH * 2; break;
-	default	:currentSelection = 0;	break;
+		SceneBase::SetStage( SceneBase::stageList[preview.currentSelection] );
 	}
 
-	DrawTriangle( WINDOW_WIDTH / 2 + triangleX + 50, WINDOW_HEIGHT / 2 - 350,
-				  WINDOW_WIDTH / 2 + triangleX,		 WINDOW_HEIGHT / 2 - 250,
-				  WINDOW_WIDTH / 2 + triangleX - 50, WINDOW_HEIGHT / 2 - 350, COLOR_RED, true );
-
-	SceneBase::SetStage( SceneBase::stageList[currentSelection] );
+#ifdef USE_CONTROLLER
+	if( GetPadStatus( player1->GetPlayerNumber(), player1->shotKey ) == InputState::Pressed )settingStep++;
+#else
+	if( GetKeyStatus( player1->shotKey ) == InputState::Pressed )settingStep++;
+#endif
 }
 
 void SettingScene::Confirm(){
 
-	LoadGraphScreen( 300, WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 2, SceneBase::GetStage().preview, false );
-
-	static int currentSelection = 0;
-	static int triangleY = WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 3 + 100 + GetFontSize() / 2;
-
-	// カーソル表示
+	// 方向キーで情報を入れ替える
 #ifdef USE_CONTROLLER
-	if( GetPadStatus( player1->GetPlayerNumber(), player1->downMovingKey ) == InputState::Pressed )currentSelection++;
-	else if( GetPadStatus( player1->GetPlayerNumber(), player1->upMovingKey ) == InputState::Pressed )currentSelection--;
+	if( GetPadStatus( player1->GetPlayerNumber(), player1->upMovingKey ) == InputState::Pressed ||
+		GetPadStatus( player1->GetPlayerNumber(), player1->downMovingKey ) == InputState::Pressed ){
 #else
-	if( GetKeyStatus( player1->downMovingKey ) == InputState::Pressed )currentSelection++;
-	else if( GetKeyStatus( player1->upMovingKey ) == InputState::Pressed )currentSelection--;
+	if( GetKeyStatus( player1->upMovingKey ) == InputState::Pressed ||
+		GetKeyStatus( player1->downMovingKey ) == InputState::Pressed ){
 #endif
-
-	switch( currentSelection )	{
-	case -1:currentSelection = 1;	break;
-	case 0:triangleY = WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 3 + 100 + GetFontSize() / 2; break;
-	case 1:triangleY = WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 3 + 200 + GetFontSize() / 2; break;
-	default:currentSelection = 0;	break;
+		SettingScene::ReplaceData( &confirm );
 	}
-
-	DrawTriangle( WINDOW_WIDTH / 2, triangleY + 25,
-			 	  WINDOW_WIDTH / 2 + 50, triangleY,
-			 	  WINDOW_WIDTH / 2, triangleY - 25, COLOR_RED, true );
-
-	DrawString( WINDOW_WIDTH / 2 + 200 - CenterAdjustment( 26 ), WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 3, "このステージでいいですか？", COLOR_GREEN, COLOR_RED );
-	DrawString( WINDOW_WIDTH / 2 + 200 - CenterAdjustment( 4 ), WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 3 + 100, "はい", COLOR_GREEN, COLOR_RED );
-	DrawString( WINDOW_WIDTH / 2 + 200 - CenterAdjustment( 6 ), WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 3 + 200, "いいえ", COLOR_GREEN, COLOR_RED );
 
 #ifdef USE_CONTROLLER
 	if( GetPadStatus( player1->GetPlayerNumber(), player1->shotKey ) == InputState::Pressed ){
 #else
 	if( GetKeyStatus( player1->shotKey ) == InputState::Pressed ){
 #endif
-		settingStep = ( currentSelection == 0 ) ? -2 : 0;
+		switch( confirm.currentSelection )
+		{
+		case 0:
+			fadeMode = FadeMode::Out;
+			break;
+		default:
+			settingStep--;
+			break;
+		}
 	}
+}
+
+void SettingScene::ReplaceData( AlternativeData* data ){
+	int temp = data->x1;
+	data->x1 = data->x2;
+	data->x2 = temp;
+
+	temp = data->y1;
+	data->y1 = data->y2;
+	data->y2 = temp;
+
+	temp = data->handle1;
+	data->handle1 = data->handle2;
+	data->handle2 = temp;
+
+	data->currentSelection++;
+	data->currentSelection = data->currentSelection % 2;
+}
+
+void SettingScene::DrawBackground(){
+
+	int x = -WINDOW_WIDTH / 2;
+
+	x += SceneBase::playerList[0]->GetScore( -1 ) * 48;
+	x -= SceneBase::playerList[1]->GetScore( -1 ) * 48;
+
+	if( x < -WINDOW_WIDTH ){
+		x = -WINDOW_WIDTH + 48;
+	}
+	else if( x > 0 ){
+		x = -48;
+	}
+
+	// 描画
+	LoadGraphScreen( x, 0, Sprite::UI::stageSelectScreen, false );
 }

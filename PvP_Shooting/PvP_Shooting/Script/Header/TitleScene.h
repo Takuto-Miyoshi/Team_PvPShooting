@@ -26,7 +26,7 @@ private:
 private:
 
 	int spriteCounter;
-	const int COUNTER_MAX = 1;
+	const int COUNTER_MAX = 3;	// 説明画面の枚数
 	bool ruleShowing;
 
 	/// @brief ルールの画像

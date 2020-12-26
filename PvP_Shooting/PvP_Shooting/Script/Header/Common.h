@@ -59,6 +59,33 @@ namespace Sprite{
 	const static LPCTSTR resultNobunagaScreen = "Sprite/ResultNobunaga_Screen.png";
 	const static LPCTSTR resultNapoleonScreen = "Sprite/ResultNapoleon_Screen.png";
 
+	namespace UI{
+		const static LPCTSTR titleScreen = "Sprite/UI/ScreenSprite/Title_Screen.png";
+
+		const static LPCTSTR descriptionControl = "Sprite/UI/ScreenSprite/Description_Control.png";
+		const static LPCTSTR descriptionRule1 = "Sprite/UI/ScreenSprite/Description_Rule1.png";
+		const static LPCTSTR descriptionRule2 = "Sprite/UI/ScreenSprite/Description_Rule2.png";
+
+		const static LPCTSTR stageSelectScreen = "Sprite/UI/ScreenSprite/StageSelectScreen.png";
+
+		const static LPCTSTR roundInfo[] = {
+			"Sprite/UI/ScreenSprite/RoundInfo1.png",
+			"Sprite/UI/ScreenSprite/RoundInfo2.png",
+			"Sprite/UI/ScreenSprite/RoundInfo3.png"
+		};
+
+		const static LPCTSTR stagePreview1 = "Sprite/UI/ScreenSprite/Stage1_Preview.png";
+		const static LPCTSTR stagePreview2 = "Sprite/UI/ScreenSprite/Stage2_Preview.png";
+
+		const static LPCTSTR resultDraw = "Sprite/UI/ScreenSprite/ResultDraw_Screen.png";
+		const static LPCTSTR resultNobunaga = "Sprite/UI/ScreenSprite/ResultNobunaga_Screen.png";
+		const static LPCTSTR resultNapoleon = "Sprite/UI/ScreenSprite/ResultNapoleon_Screen.png";
+
+		const static LPCTSTR selectNo = "Sprite/UI/Select_No.png";
+		const static LPCTSTR selectYes = "Sprite/UI/Select_Yes.png";
+		const static LPCTSTR alternativeBack = "Sprite/UI/AlternativeBack.png";
+	}
+
 	const static int waitFrame = 4;			// 待機モーションの枚数
 	const static int walkFrame = 3;			// 移動モーションの枚数
 	const static int attackFrame = 4;		// 攻撃モーションの枚数
@@ -367,10 +394,10 @@ namespace Sprite{
 const int FRAME_RATE = 60;
 
 /// @brief ステージプレビューの横幅
-const int PREVIEW_WIDTH = 300;
+const int PREVIEW_WIDTH = 493;
 
 /// @brief ステージプレビューの縦幅
-const int PREVIEW_HEIGHT = 300;
+const int PREVIEW_HEIGHT = 373;
 
 /// @brief プレイヤーの当たり判定の横幅
 const int PLAYER_HITBOX_WIDTH = 96;
