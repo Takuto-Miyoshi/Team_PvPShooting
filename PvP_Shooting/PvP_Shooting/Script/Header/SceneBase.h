@@ -83,7 +83,7 @@ protected:
 	static Player* player2;
 	static Player* playerList[PLAYER_MAX];
 
-	static Stage stageList[ROUND_MAX];
+	static Stage stageList[2];
 
 	static int battleCount;
 

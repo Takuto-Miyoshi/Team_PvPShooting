@@ -7,7 +7,7 @@
 #include "Header/GameScene.h"
 #include "Header/ResultScene.h"
 
-// #define USE_CONTROLLER
+#define USE_CONTROLLER
 
 FadeMode SceneBase::fadeMode = FadeMode::None;
 SceneList SceneBase::currentScene = SceneList::Title;
@@ -36,10 +36,9 @@ SceneBase* SceneBase::pSceneBase[4] = {
 	sc_result
 };
 
-Stage SceneBase::stageList[3] {
-	{ 1, Sprite::stgPreview1 },
-	{ 2, Sprite::stgPreview2 },
-	{ 3, Sprite::stgPreview3 }
+Stage SceneBase::stageList[2] {
+	{ 1, Sprite::UI::stagePreview1 },
+	{ 2, Sprite::UI::stagePreview2 }
 };
 
 int SceneBase::previousScene = 0;
