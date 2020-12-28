@@ -70,18 +70,54 @@ void GameScene::HitManager( Player* target ){
 			if( playerList[playerNum]->GetBulletData( bulletNum ) != nullptr &&
 				target->GetPlayerNumber() != playerList[playerNum]->GetPlayerNumber() &&
 				target->GetAlive() == true ){
-				// ----------------------------------当たり判定---------------------------------
-				if ( Collision( target->GetPosX(),
-					( target->GetPosX() + PLAYER_WIDTH ),
-					target->GetPosY(),
-					( target->GetPosY() + PLAYER_HEIGHT ),
-					playerList[playerNum]->GetBulletData( bulletNum )->GetPosX() + BULLET_RADIUS,
-					playerList[playerNum]->GetBulletData( bulletNum )->GetPosY() + BULLET_RADIUS,
-					BULLET_RADIUS ) == true ) {
-					//--------------------------------------------------------------------------
-					playerList[playerNum]->DeleteBullet( bulletNum );
-					target->DeathProcessing();
-					playerList[playerNum]->AddScore( 1, SceneBase::battleCount + 1 );
+				if( target->GetPlayerNumber() == 1 ) {
+					// ------------------信長とナポレオンの弾の当たり判定--------------------
+					if( Collision( ( target->GetPosX() - PLAYER_HITBOX_WIDTH / 2 ),
+						( target->GetPosX() + PLAYER_HITBOX_WIDTH / 2 ),
+						( target->GetPosY() - PLAYER_HITBOX_HEIGHT / 2 ),
+						( target->GetPosY() + PLAYER_HITBOX_HEIGHT / 2 ),
+						playerList[playerNum]->GetBulletData( bulletNum )->GetPosX(),
+						playerList[playerNum]->GetBulletData( bulletNum )->GetPosY(),
+						BULLET_RADIUS ) == true ) {
+						//-------------------------------------------------------------------
+						playerList[playerNum]->DeleteBullet( bulletNum );
+						target->DeathProcessing();
+						playerList[playerNum]->AddScore( 1, SceneBase::battleCount + 1 );
+					}
+				}
+				else {
+					switch( playerList[playerNum]->GetBulletData( bulletNum )->GetDirection() ) {
+					case Direction::Up:
+					case Direction::Down:
+					case Direction::UpperLeft:
+					case Direction::UpperRight:
+					case Direction::LowerLeft:
+					case Direction::LowerRight:
+						// --------------------ナポレオンと信長の弾(上下と斜め)の当たり判定---------------------------------------------------------------------------------------
+						if( ( target->GetPosX() + PLAYER_HITBOX_WIDTH / 2 ) > ( playerList[playerNum]->GetBulletData( bulletNum )->GetPosX() - BULLET_VERTICAL_WIDTH / 2 ) &&
+							( target->GetPosX() - PLAYER_HITBOX_WIDTH / 2 ) < ( playerList[playerNum]->GetBulletData( bulletNum )->GetPosX() + BULLET_VERTICAL_WIDTH / 2 ) &&
+							( target->GetPosY() + PLAYER_HITBOX_HEIGHT / 2 ) > ( playerList[playerNum]->GetBulletData( bulletNum )->GetPosY() - BULLET_VERTICAL_HEIGHT / 2 ) &&
+							( target->GetPosY() - PLAYER_HITBOX_HEIGHT / 2 ) < ( playerList[playerNum]->GetBulletData( bulletNum )->GetPosY() + BULLET_VERTICAL_HEIGHT / 2 ) ) {
+							//----------------------------------------------------------------------------------------------------------------------------------------------------
+							playerList[playerNum]->DeleteBullet( bulletNum );
+							target->DeathProcessing();
+							playerList[playerNum]->AddScore( 1, SceneBase::battleCount + 1 );
+						}
+						break;
+					case Direction::Right:
+					case Direction::Left:
+						// --------------------ナポレオンと信長の弾(左右)の当たり判定-----------------------------------------------------------------------------------------------
+						if( ( target->GetPosX() + PLAYER_HITBOX_WIDTH / 2 ) > ( playerList[playerNum]->GetBulletData( bulletNum )->GetPosX() - BULLET_HORIZONTAL_WIDTH / 2 ) &&
+							( target->GetPosX() - PLAYER_HITBOX_WIDTH / 2 ) < ( playerList[playerNum]->GetBulletData( bulletNum )->GetPosX() + BULLET_HORIZONTAL_WIDTH / 2 ) &&
+							( target->GetPosY() + PLAYER_HITBOX_HEIGHT / 2 ) > ( playerList[playerNum]->GetBulletData( bulletNum )->GetPosY() - BULLET_HORIZONTAL_HEIGHT / 2 ) &&
+							( target->GetPosY() - PLAYER_HITBOX_HEIGHT / 2 ) < ( playerList[playerNum]->GetBulletData( bulletNum )->GetPosY() + BULLET_HORIZONTAL_HEIGHT / 2 ) ) {
+							//------------------------------------------------------------------------------------------------------------------------------------------------------
+							playerList[playerNum]->DeleteBullet( bulletNum );
+							target->DeathProcessing();
+							playerList[playerNum]->AddScore( 1, SceneBase::battleCount + 1 );
+						}
+						break;
+					}
 				}
 			}
 		}

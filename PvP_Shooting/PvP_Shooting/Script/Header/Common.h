@@ -126,6 +126,46 @@ namespace Sprite{
 			"Sprite/Nobunaga/Attack/right3.png",
 			"Sprite/Nobunaga/Attack/right4.png"
 		};
+
+		const static LPCTSTR bulletUp[] = {
+			"Sprite/Nobunaga/NormalBullet/Up.png",
+			"Sprite/Nobunaga/ChargeBullet/Up.png"
+		};
+
+		const static LPCTSTR bulletDown[] = { 
+			"Sprite/Nobunaga/NormalBullet/Down.png",
+			"Sprite/Nobunaga/ChargeBullet/Down.png"
+		};
+
+		const static LPCTSTR bulletLeft[] = {
+			"Sprite/Nobunaga/NormalBullet/Left.png",
+			"Sprite/Nobunaga/ChargeBullet/Left.png"
+		};
+
+		const static LPCTSTR bulletRight[] = {
+			"Sprite/Nobunaga/NormalBullet/Right.png",
+			"Sprite/Nobunaga/ChargeBullet/Right.png"
+		};
+
+		const static LPCTSTR bulletUpperLeft[] = {
+			"Sprite/Nobunaga/NormalBullet/Upper_Left.png",
+			"Sprite/Nobunaga/ChargeBullet/Upper_Left.png"
+		};
+		
+		const static LPCTSTR bulletUpperRight[] = {
+			"Sprite/Nobunaga/NormalBullet/Upper_Right.png",
+			"Sprite/Nobunaga/ChargeBullet/Upper_Right.png"
+		};
+
+		const static LPCTSTR bulletLowerLeft[] = {
+			"Sprite/Nobunaga/NormalBullet/Lower_Left.png",
+			"Sprite/Nobunaga/ChargeBullet/Lower_Left.png"
+		};
+
+		const static LPCTSTR bulletLowerRight[] = {
+			"Sprite/Nobunaga/NormalBullet/Lower_Right.png",
+			"Sprite/Nobunaga/ChargeBullet/Lower_Right.png"
+		};
 	}
 
 	namespace Napoleon{
@@ -200,6 +240,46 @@ namespace Sprite{
 			"Sprite/Napoleon/Attack/right2.png",
 			"Sprite/Napoleon/Attack/right2.png"
 		};
+
+		const static LPCTSTR bulletUp[] = {
+			"Sprite/Napoleon/NormalBullet/Up.png",
+			"Sprite/Napoleon/ChargeBullet/Up.png"
+		};
+
+		const static LPCTSTR bulletDown[] = {
+			"Sprite/Napoleon/NormalBullet/Down.png",
+			"Sprite/Napoleon/ChargeBullet/Down.png"
+		};
+
+		const static LPCTSTR bulletLeft[] = {
+			"Sprite/Napoleon/NormalBullet/Left.png",
+			"Sprite/Napoleon/ChargeBullet/Left.png"
+		};
+
+		const static LPCTSTR bulletRight[] = {
+			"Sprite/Napoleon/NormalBullet/Right.png",
+			"Sprite/Napoleon/ChargeBullet/Right.png"
+		};
+
+		const static LPCTSTR bulletUpperLeft[] = {
+			"Sprite/Napoleon/NormalBullet/Upper_Left.png",
+			"Sprite/Napoleon/ChargeBullet/Upper_Left.png"
+		};
+
+		const static LPCTSTR bulletUpperRight[] = {
+			"Sprite/Napoleon/NormalBullet/Upper_Right.png",
+			"Sprite/Napoleon/ChargeBullet/Upper_Right.png"
+		};
+
+		const static LPCTSTR bulletLowerLeft[] = {
+			"Sprite/Napoleon/NormalBullet/Lower_Left.png",
+			"Sprite/Napoleon/ChargeBullet/Lower_Left.png"
+		};
+
+		const static LPCTSTR bulletLowerRight[] = {
+			"Sprite/Napoleon/NormalBullet/Lower_Right.png",
+			"Sprite/Napoleon/ChargeBullet/Lower_Right.png"
+		};
 	}
 }
 
@@ -212,6 +292,12 @@ const int PREVIEW_WIDTH = 300;
 /// @brief ステージプレビューの縦幅
 const int PREVIEW_HEIGHT = 300;
 
+/// @brief プレイヤーの当たり判定の横幅
+const int PLAYER_HITBOX_WIDTH = 96;
+
+/// @brief プレイヤーの当たり判定の縦幅
+const int PLAYER_HITBOX_HEIGHT = 144;
+
 /// @brief プレイヤー画像の横幅
 const int PLAYER_WIDTH = 192;
 
@@ -223,6 +309,21 @@ const int BULLET_WIDTH = 64;
 
 /// @brief 弾画像の縦幅
 const int BULLET_HEIGHT = 64;
+
+/// @brief 弾の水平方向の当たり判定の横幅
+const int BULLET_HORIZONTAL_WIDTH = 96;
+
+/// @brief 弾の水平方向の当たり判定の縦幅
+const int BULLET_HORIZONTAL_HEIGHT = 160;
+
+/// @brief 弾の垂直方向の当たり判定の横幅
+const int BULLET_VERTICAL_WIDTH = 100;
+
+/// @brief 弾の垂直方向の当たり判定の縦幅
+const int BULLET_VERTICAL_HEIGHT = 56;
+
+/// @brief 弾の当たり判定の半径
+const int BULLET_RADIUS = 48;
 
 /// @brief ウィンドウの横幅
 const int WINDOW_WIDTH = 1920;

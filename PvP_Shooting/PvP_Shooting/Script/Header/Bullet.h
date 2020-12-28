@@ -16,16 +16,13 @@ const int BULLET_SPEED = 13;
 /// @brief チャージショットの速度
 const int BULLET_CHARGE_SPEED = 26;
 
-/// @brief 弾の当たり判定の半径
-const int BULLET_RADIUS = 32;
-
 class Bullet{
 
 public:
 	/// @brief コンストラクタ
 	/// @param dir 進む方向
 	/// @param spritePath 読み込む画像のパス
-	Bullet( int initPosX, int initPosY, Direction direction, LPCTSTR spritePath, bool isCharged );
+	Bullet( int playerNumber, int initPosX, int initPosY, Direction direction, bool isCharged );
 
 	~Bullet();
 
@@ -43,14 +40,20 @@ public:
 	/// @return Y座標
 	int GetPosY();
 
+	/// @brief 方向を取得する
+	/// @return 方向
+	Direction GetDirection();
+
 private:
+	int playerNumber;
 	int posX;
 	int posY;
 	int speed;
 	Direction dir;
 	bool changeChargeShot;
 
-	LPCTSTR spriteFolderPath;
+	LPCTSTR spritePath;	// 描画する画像のパス
+	int spriteNumber; // 画像の何番目を表示するか
 };
 
 #endif // !BULLET_H
