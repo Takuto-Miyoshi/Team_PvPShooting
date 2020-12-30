@@ -14,7 +14,7 @@ Tunnel::Tunnel(){
 	centerY = 1980;
 	spriteNumber = 0;
 	spritePath = Sprite::Gimmick::tunnel[spriteNumber];
-	summonCounter = 0;
+	summonCounter = -120;
 
 	srand( ( unsigned ) time( NULL ) );
 

@@ -125,10 +125,10 @@ void Player::Move() {
 	if( tempX != posX || tempY != posY ) isMoved = true;
 
 	// 画面外なら戻す
-	if( posY < 0 ) posY = 0;
-	if( posY > WINDOW_HEIGHT - PLAYER_HEIGHT ) posY = WINDOW_HEIGHT - PLAYER_HEIGHT;
-	if( posX < 0 ) posX = 0;
-	if( posX > WINDOW_WIDTH - PLAYER_WIDTH ) posX = WINDOW_WIDTH - PLAYER_WIDTH;
+	if( posY < 48 ) posY = 48;
+	if( posY > WINDOW_HEIGHT - PLAYER_HEIGHT - 29 ) posY = WINDOW_HEIGHT - PLAYER_HEIGHT - 29;
+	if( posX < 31 ) posX = 31;
+	if( posX > WINDOW_WIDTH - PLAYER_WIDTH - 31 ) posX = WINDOW_WIDTH - PLAYER_WIDTH - 31;
 
 	// 位置調整
 	centerY = posY + PLAYER_HEIGHT / 2;
