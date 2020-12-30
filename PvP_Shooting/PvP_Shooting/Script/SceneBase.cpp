@@ -165,3 +165,7 @@ void SceneBase::Reset(){
 	playerList[0]->SetPosX( 200 );
 	playerList[1]->SetPosX( WINDOW_WIDTH - 200 - PLAYER_WIDTH );
 }
+
+int SceneBase::GetBattleCount(){
+	return battleCount;
+}

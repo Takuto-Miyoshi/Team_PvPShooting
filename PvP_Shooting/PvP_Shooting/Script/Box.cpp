@@ -5,7 +5,7 @@
 #include "Header/GameScene.h"
 #include "Header/Explosion.h"
 
-static Explosion* explosion = nullptr;
+Explosion* explosion = nullptr;
 
 Box::Box( int initX, int initY ){
 	posX = initX;
@@ -15,6 +15,8 @@ Box::Box( int initX, int initY ){
 
 	centerX = initX + BOX_WIDTH / 2;
 	centerY = initY + BOX_HEIGHT / 2;
+
+	isSummoned = false;
 
 	GameScene::EntryObject( this );
 }
@@ -38,8 +40,6 @@ void Box::Control(){
 }
 
 void Box::ExplosionExec(){
-
-	static bool isSummoned = false;
 
 	if( isSummoned == true ){
 		if( explosion == nullptr ) return;

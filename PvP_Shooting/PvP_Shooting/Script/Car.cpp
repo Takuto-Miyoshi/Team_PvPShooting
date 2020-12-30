@@ -51,11 +51,14 @@ bool Car::Control(){
 	for( int p = 0; p < PLAYER_MAX; p++ ){
 		Player* target = SceneBase::GetPlayerData( p );
 
-		// プレイヤーと車の判定
-		if( ( ( target->GetPosX() + PLAYER_WIDTH ) > posX ) && ( target->GetPosX() < ( posX + CAR_WIDTH ) ) &&
-			( target->GetPosY() + PLAYER_HEIGHT ) > ( posY + CAR_OFFSET_UY ) && ( ( target->GetPosY() + target->GetHitOffsetUY() ) < ( posY + CAR_HEIGHT ) ) ){
-			target->BackStep();
-			target->DeathProcessing();
+		if( target->GetAlive() == true ){
+			// プレイヤーと車の判定
+			if( ( ( target->GetPosX() + PLAYER_WIDTH ) > posX ) && ( target->GetPosX() < ( posX + CAR_WIDTH ) ) &&
+				( target->GetPosY() + PLAYER_HEIGHT ) > ( posY + CAR_OFFSET_UY ) && ( ( target->GetPosY() + target->GetHitOffsetUY() ) < ( posY + CAR_HEIGHT ) ) ){
+				target->BackStep();
+				target->DeathProcessing();
+				target->AddScore( -1, SceneBase::GetBattleCount() + 1 );
+			}
 		}
 
 		// 車と弾の判定

@@ -57,7 +57,8 @@ private:
 	void HitManager( Player* target );
 
 	/// @brief ゲーム開始からの経過時間によって処理を行う
-	void GameManager();
+	/// @return Start() End()を実行したならば false
+	bool GameManager();
 
 	/// @brief 開始処理 : 最初に呼び出す
 	void Start();
@@ -68,13 +69,30 @@ private:
 	/// @brief オブジェクトを保存している変数を整列する
 	static void SortObjectVault();
 
+	/// @brief ギミック等の配置
+	static void StageSetUp();
+
+	/// @brief ポーズ機能に関する処理
+	static void Pause();
+
+	/// @brief ポイントゲージの描画
+	static void PointGauge();
+
+	/// @brief 残り時間の描画
+	static void Clock();
+
 private:
 
 	static int counter;
 	static int startCounter;
+	static int introHandle;
 	static int endCounter;
 	static bool isOperatable;
 	static ObjectBase* objectVault[OBJECT_MAX];
+	static bool isPaused;
+
+	static ObjectBase* object[7];
+	static int backGroundHandle;
 };
 
 #endif

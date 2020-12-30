@@ -35,6 +35,10 @@ public:
 	/// @return プレイヤーデータ
 	static Player* GetPlayerData( int playerNumber );
 
+	/// @brief バトルカウントを取得する
+	/// @return バトルカウント
+	static int GetBattleCount();
+
 private:
 
 	virtual void Execute() = 0;
@@ -66,7 +70,7 @@ protected:
 
 	/// @brief 設定しているステージを取得
 	/// @return 設定したステージ
-	Stage GetStage();
+	static Stage GetStage();
 
 	/// @brief 値をリセットする
 	static void Reset();

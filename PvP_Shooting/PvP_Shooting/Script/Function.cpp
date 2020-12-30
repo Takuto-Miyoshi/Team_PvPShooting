@@ -177,7 +177,7 @@ InputState GetPadStatus( int padNum, int padCode ){
 bool IsOutsideWindow( int posX, int posY ){
 
 	if( posX < 0 || posX > WINDOW_WIDTH ||
-		posY < 0 || posY > WINDOW_HEIGHT ){
+		posY < 30 || posY > WINDOW_HEIGHT ){
 		return true;
 	}
 

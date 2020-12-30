@@ -72,6 +72,7 @@ private:
 	int centerY;
 	LPCTSTR spritePath;
 	int spriteNumber;
+	bool isSummoned;
 };
 
 #endif // !BOX_H

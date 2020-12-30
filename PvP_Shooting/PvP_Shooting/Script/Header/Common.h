@@ -84,6 +84,32 @@ namespace Sprite{
 		const static LPCTSTR selectNo = "Sprite/UI/Select_No.png";
 		const static LPCTSTR selectYes = "Sprite/UI/Select_Yes.png";
 		const static LPCTSTR alternativeBack = "Sprite/UI/AlternativeBack.png";
+
+		const static LPCTSTR ready = "Sprite/UI/Ready.png";
+		const static LPCTSTR start = "Sprite/UI/Start.png";
+		const static LPCTSTR end = "Sprite/UI/End.png";
+		const static LPCTSTR pause = "Sprite/UI/Pause.png";
+
+		const static LPCTSTR pointGauge = "Sprite/UI/PointGauge.png";
+
+		const static LPCTSTR clockFrame = "Sprite/UI/Clock/Frame.png";
+		const static LPCTSTR clockNumber[] = {
+			"Sprite/UI/Clock/0.png",
+			"Sprite/UI/Clock/1.png",
+			"Sprite/UI/Clock/2.png",
+			"Sprite/UI/Clock/3.png",
+			"Sprite/UI/Clock/4.png",
+			"Sprite/UI/Clock/5.png",
+			"Sprite/UI/Clock/6.png",
+			"Sprite/UI/Clock/7.png",
+			"Sprite/UI/Clock/8.png",
+			"Sprite/UI/Clock/9.png"
+		};
+	}
+
+	namespace BackGround{
+		const static LPCTSTR stage1 = "Sprite/BackGrounds/Stage1.png";
+		const static LPCTSTR stage2 = "Sprite/BackGrounds/Stage2.png";
 	}
 
 	const static int waitFrame = 4;			// 待機モーションの枚数
