@@ -326,6 +326,9 @@ void Player::Shoot() {
 		if( GetKeyStatus( shotKey ) == InputState::Pressing ){
 #endif
 			chargeCount++;
+			if( chargeCount == CHARGE_COUNT ){
+				PlaySoundMem( chargeSEHandle, DX_PLAYTYPE_LOOP );
+			}
 		}
 #ifdef USE_CONTROLLER
 		else if( GetPadStatus( playerNumber, shotKey ) == InputState::Released ){
@@ -340,6 +343,8 @@ void Player::Shoot() {
 			for( int i = 0; i < BULLET_MAX; i++ ){
 				if( bullets[i] == nullptr ){
 					bullets[i] = new Bullet( playerNumber, posX, posY, dir, tempCharge );
+					StopSoundMem( chargeSEHandle );
+					PlaySoundMem( attackSEHandle, DX_PLAYTYPE_BACK );
 					shootingCoolTime = 0;
 					chargeCount = 0;
 					isAttacked = true;
@@ -402,10 +407,12 @@ void Player::Hit(){
 								case Tag::Tree:
 									objData->SetSpriteNumber( objData->GetSpriteNumber() + 1 );
 									if( objData->GetSpriteNumber() < Sprite::treeFrame ) DeleteBullet( b );
+									PlaySoundMem( treeSEHandle, DX_PLAYTYPE_BACK );
 									break;
 								case Tag::Box:
 									objData->SetSpriteNumber( objData->GetSpriteNumber() + 1 );
 									if( objData->GetSpriteNumber() < Sprite::boxFrame ) DeleteBullet( b );
+									PlaySoundMem( boxSEHandle, DX_PLAYTYPE_BACK );
 									break;
 								default: DeleteBullet( b );
 									break;
@@ -493,6 +500,7 @@ void Player::DeleteBullet( int arrayNum ){
 
 void Player::DeathProcessing(){
 	isAlive = false;
+	PlaySoundMem( hittingSEHandle, DX_PLAYTYPE_BACK );
 	for( int i = 0; i < BULLET_MAX; i++ ){
 		DeleteBullet( i );
 	}
@@ -524,4 +532,19 @@ void Player::BackStep(){
 	default:
 		break;
 	}
+}
+
+void Player::LoadSoundData() {
+	chargeSEHandle = LoadSoundMem( Sounds::SE::charged );
+	hittingSEHandle = LoadSoundMem( Sounds::SE::hitting );
+
+	if( playerNumber == 1 ){
+		attackSEHandle = LoadSoundMem( Sounds::SE::slash );
+	}
+	else{
+		attackSEHandle = LoadSoundMem( Sounds::SE::shoot );
+	}
+
+	treeSEHandle = LoadSoundMem( Sounds::SE::treeDamaged );
+	boxSEHandle = LoadSoundMem( Sounds::SE::boxDamaged );
 }

@@ -91,6 +91,13 @@ protected:
 
 	static int battleCount;
 
+	static int BGMHandle;
+
+	static int backToTitleSEHandle;
+	static int startTitleSEHandle;
+	static int cursorSEHandle;
+	static int enterSEHandle;
+
 private:
 	static int players;
 	static SceneBase* sc_title;

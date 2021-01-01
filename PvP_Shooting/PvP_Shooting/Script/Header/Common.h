@@ -416,6 +416,35 @@ namespace Sprite{
 	}
 }
 
+/// @brief 音リスト
+namespace Sounds{
+	namespace BGM{
+		const static LPCTSTR title = "Sounds/BGM/Title.mp3";
+		const static LPCTSTR battle = "Sounds/BGM/Battle.mp3";
+	}
+
+	namespace SE{
+		const static LPCTSTR titleStart = "Sounds/SE/TitleStart.mp3";
+		const static LPCTSTR backToTitle = "Sounds/SE/BackToTitle.mp3";
+		const static LPCTSTR cursor = "Sounds/SE/Cursor.mp3";
+		const static LPCTSTR enter = "Sounds/SE/Enter.mp3";
+
+		const static LPCTSTR pause = "Sounds/SE/Pause.mp3";
+		const static LPCTSTR battleStart = "Sounds/SE/BattleStart.mp3";
+		const static LPCTSTR battleEnd = "Sounds/SE/BattleEnd.mp3";
+
+		const static LPCTSTR charged = "Sounds/SE/Charged.mp3";
+		const static LPCTSTR hitting = "Sounds/SE/Hitting.mp3";
+		const static LPCTSTR slash = "Sounds/SE/Slash.mp3";
+		const static LPCTSTR shoot = "Sounds/SE/Shoot.mp3";
+
+		const static LPCTSTR treeDamaged = "Sounds/SE/TreeDamaged.mp3";
+		const static LPCTSTR carMoved = "Sounds/SE/Car.mp3";
+		const static LPCTSTR boxDamaged = "Sounds/SE/BoxDamaged.mp3";
+		const static LPCTSTR explosion = "Sounds/SE/Explosion.mp3";
+	}
+}
+
 /// @brief フレームレート
 const int FRAME_RATE = 60;
 

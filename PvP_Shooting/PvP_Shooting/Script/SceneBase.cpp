@@ -47,6 +47,12 @@ int SceneBase::battleCount = 0;
 int SceneBase::players = 0;
 Stage SceneBase::stage = stageList[0];
 
+int SceneBase::BGMHandle = 0;
+int SceneBase::backToTitleSEHandle = 0;
+int SceneBase::startTitleSEHandle = 0;
+int SceneBase::cursorSEHandle = 0;
+int SceneBase::enterSEHandle = 0;
+
 SceneBase::SceneBase() {
 
 }
@@ -96,6 +102,9 @@ void SceneBase::CreateScene() {
 	default:
 		break;
 	}
+
+	ChangeVolumeSoundMem( 128, BGMHandle );
+	PlaySoundMem( BGMHandle, DX_PLAYTYPE_LOOP );
 }
 
 void SceneBase::ExecuteScene() {
@@ -106,9 +115,10 @@ void SceneBase::ExecuteScene() {
 
 void SceneBase::ReleaseCurrentScene() {
 	// シーンに変化があるなら今のシーンはdeleteする
-	if ( previousScene != GetCurrentScene() ) {
+	if( previousScene != GetCurrentScene() ) {
 		delete pSceneBase[previousScene];
 		pSceneBase[previousScene] = nullptr;
+		InitSoundMem();
 	}
 }
 

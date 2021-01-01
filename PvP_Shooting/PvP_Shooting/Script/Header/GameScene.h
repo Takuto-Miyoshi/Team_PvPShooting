@@ -73,7 +73,7 @@ private:
 	static void StageSetUp();
 
 	/// @brief ポーズ機能に関する処理
-	static void Pause();
+	void Pause();
 
 	/// @brief ポイントゲージの描画
 	static void PointGauge();
@@ -93,6 +93,10 @@ private:
 
 	static ObjectBase* object[7];
 	static int backGroundHandle;
+
+	int pauseSEHandle;
+	int battleStartSEHandle;
+	int battleEndSEHandle;
 };
 
 #endif

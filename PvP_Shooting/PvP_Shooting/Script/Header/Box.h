@@ -73,6 +73,8 @@ private:
 	LPCTSTR spritePath;
 	int spriteNumber;
 	bool isSummoned;
+
+	int explosionSEHandle;
 };
 
 #endif // !BOX_H

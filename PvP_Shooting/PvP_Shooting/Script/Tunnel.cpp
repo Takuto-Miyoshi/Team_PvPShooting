@@ -20,6 +20,8 @@ Tunnel::Tunnel(){
 
 	for( int i = 0; i < 2; i++ ) car[i] = nullptr;
 
+	carMoveSEHandle = LoadSoundMem( Sounds::SE::carMoved );
+
 	GameScene::EntryObject( this );
 }
 
@@ -53,6 +55,7 @@ void Tunnel::CarExec( int num ){
 		if( car[num] == nullptr ) return;
 
 		if( car[num]->Control() == true ){
+			StopSoundMem( carMoveSEHandle );
 			delete car[num];
 			car[num] = nullptr;
 			isSummoned = false;
@@ -64,6 +67,7 @@ void Tunnel::CarExec( int num ){
 
 		if( summonCounter >= 180 ){
 			if( rand() % 2 == 0 ){
+				PlaySoundMem( carMoveSEHandle, DX_PLAYTYPE_LOOP );
 				car[0] = new Car( Direction::Right );
 				car[1] = new Car( Direction::Left );
 				summonCounter = 0;

@@ -6,7 +6,7 @@
 #define USE_CONTROLLER
 
 ResultScene::ResultScene() {
-
+	SceneBase::backToTitleSEHandle = LoadSoundMem( Sounds::SE::backToTitle );
 }
 
 ResultScene::~ResultScene() {
@@ -23,10 +23,13 @@ void ResultScene::Control() {
 	if( fadeMode != FadeMode::None ) return;
 
 #ifdef USE_CONTROLLER
-	if( GetPadStatus( player1->GetPlayerNumber(), PAD_INPUT_8 ) == InputState::Pressed )fadeMode = FadeMode::Out;
+	if( GetPadStatus( player1->GetPlayerNumber(), PAD_INPUT_8 ) == InputState::Pressed ){
 #else
-	if( GetKeyStatus( KEY_INPUT_RETURN ) == InputState::Pressed )fadeMode = FadeMode::Out;
+	if( GetKeyStatus( KEY_INPUT_RETURN ) == InputState::Pressed ){
 #endif
+		fadeMode = FadeMode::Out;
+		PlaySoundMem( SceneBase::backToTitleSEHandle, DX_PLAYTYPE_BACK );
+	}
 }
 
 void ResultScene::Draw() {

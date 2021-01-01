@@ -148,6 +148,9 @@ public:
 
 	/// @brief 向きに応じて１歩下がる
 	void BackStep();
+
+	/// @brief プレイヤーのサウンドデータを読み込む
+	void LoadSoundData();
 private:
 
 public:
@@ -182,6 +185,13 @@ private:
 
 	bool isMoved;		// 移動中か
 	bool isAttacked;	// 攻撃中か
+
+	int chargeSEHandle;
+	int hittingSEHandle;
+	int attackSEHandle;
+
+	int treeSEHandle;
+	int boxSEHandle;
 };
 
 #endif // !PLAYER_H

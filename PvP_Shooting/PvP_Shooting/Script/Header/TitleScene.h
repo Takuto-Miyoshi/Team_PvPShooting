@@ -24,12 +24,10 @@ private:
 	void Draw();
 
 private:
-
 	int spriteCounter;
 	const int COUNTER_MAX = 3;	// 説明画面の枚数
 	bool ruleShowing;
 
-	/// @brief ルールの画像
 	static const LPCTSTR ruleSprite[];
 };
 
