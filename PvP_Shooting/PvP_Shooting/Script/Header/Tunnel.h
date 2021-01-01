@@ -76,6 +76,8 @@ private:
 	int spriteNumber;
 
 	int summonCounter;
+
+	int carMoveSEHandle;
 };
 
 #endif // !TUNNEL_H

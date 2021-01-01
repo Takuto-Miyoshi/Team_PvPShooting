@@ -17,6 +17,7 @@ Box::Box( int initX, int initY ){
 	centerY = initY + BOX_HEIGHT / 2;
 
 	isSummoned = false;
+	explosionSEHandle = LoadSoundMem( Sounds::SE::explosion );
 
 	GameScene::EntryObject( this );
 }
@@ -51,6 +52,7 @@ void Box::ExplosionExec(){
 		}
 	}
 	else{
+		PlaySoundMem( explosionSEHandle, DX_PLAYTYPE_BACK );
 		explosion = new Explosion( centerX - EXPLOSION_WIDTH / 2, posY + BOX_HEIGHT - EXPLOSION_HEIGHT );
 		isSummoned = true;
 	}

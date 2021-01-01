@@ -26,10 +26,16 @@ SettingScene::SettingScene() {
 	confirm.handle2 = LoadGraph( Sprite::UI::selectNo );
 	confirm.currentSelection = 0;
 
+	SceneBase::backToTitleSEHandle = LoadSoundMem( Sounds::SE::backToTitle );
+	SceneBase::cursorSEHandle = LoadSoundMem( Sounds::SE::cursor );
+
+	SceneBase::BGMHandle = LoadSoundMem( Sounds::BGM::title );
+
 	SceneBase::SetStage( SceneBase::stageList[preview.currentSelection] );
 }
 
 SettingScene::~SettingScene() {
+
 }
 
 void SettingScene::Execute() {
@@ -48,6 +54,7 @@ void SettingScene::Control() {
 #endif
 		destinationScene = SceneList::Title;
 		fadeMode = FadeMode::Out;
+		PlaySoundMem( SceneBase::backToTitleSEHandle, DX_PLAYTYPE_BACK );
 		return;
 	}
 
@@ -97,6 +104,8 @@ void SettingScene::SetStage(){
 #endif
 		SettingScene::ReplaceData( &preview );
 
+		PlaySoundMem( SceneBase::cursorSEHandle, DX_PLAYTYPE_BACK );
+
 		SceneBase::SetStage( SceneBase::stageList[preview.currentSelection] );
 	}
 
@@ -118,6 +127,8 @@ void SettingScene::Confirm(){
 		GetKeyStatus( player1->downMovingKey ) == InputState::Pressed ){
 #endif
 		SettingScene::ReplaceData( &confirm );
+
+		PlaySoundMem( SceneBase::cursorSEHandle, DX_PLAYTYPE_BACK );
 	}
 
 #ifdef USE_CONTROLLER

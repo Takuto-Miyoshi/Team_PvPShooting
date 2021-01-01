@@ -31,9 +31,16 @@ GameScene::GameScene() {
 		for( int b = 0; b < BULLET_MAX; b++ ){
 			playerList[p]->DeleteBullet( b );
 		}
+		playerList[p]->LoadSoundData();
 	}
 
 	StageSetUp();
+
+	pauseSEHandle = LoadSoundMem( Sounds::SE::pause );
+	battleStartSEHandle = LoadSoundMem( Sounds::SE::battleStart );
+	battleEndSEHandle = LoadSoundMem( Sounds::SE::battleEnd );
+
+	SceneBase::BGMHandle = LoadSoundMem( Sounds::BGM::battle );
 }
 
 GameScene::~GameScene() {
@@ -195,7 +202,10 @@ void GameScene::Start(){
 
 	switch( startCounter ){
 	case 0: introHandle = LoadGraph( Sprite::UI::ready ); break;
-	case FRAME_RATE: introHandle = LoadGraph( Sprite::UI::start ); break;
+	case FRAME_RATE:
+		introHandle = LoadGraph( Sprite::UI::start );
+		PlaySoundMem( battleStartSEHandle, DX_PLAYTYPE_BACK );
+		break;
 	case FRAME_RATE + FRAME_RATE / 2: counter++; break;
 	}
 
@@ -204,7 +214,10 @@ void GameScene::Start(){
 
 void GameScene::End(){
 
-	if( endCounter >= FRAME_RATE ){
+	if( endCounter == 0 ){
+		PlaySoundMem( battleEndSEHandle, DX_PLAYTYPE_BACK );
+	}
+	else if( endCounter >= FRAME_RATE ){
 		fadeMode = FadeMode::Out;
 		battleCount++;
 		counter++;
@@ -294,6 +307,7 @@ void GameScene::Pause(){
 #else
 	if( GetKeyStatus( KEY_INPUT_RETURN ) == InputState::Pressed ) {
 #endif
+		PlaySoundMem( pauseSEHandle, DX_PLAYTYPE_BACK );
 		isPaused = !isPaused;
 	}
 
