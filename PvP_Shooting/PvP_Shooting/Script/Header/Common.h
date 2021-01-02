@@ -58,6 +58,13 @@ namespace Sprite{
 	const static LPCTSTR characterInfoScreen = "Sprite/CharacterInfo_Screen.png";
 	const static LPCTSTR resultNobunagaScreen = "Sprite/ResultNobunaga_Screen.png";
 	const static LPCTSTR resultNapoleonScreen = "Sprite/ResultNapoleon_Screen.png";
+	
+	const static LPCTSTR hitEffect[] = {
+		"Sprite/HitEffect/hit1.png",
+		"Sprite/HitEffect/hit2.png",
+		"Sprite/HitEffect/hit3.png",
+		"Sprite/HitEffect/hitMax.png"
+	};
 
 	namespace UI{
 		const static LPCTSTR titleScreen = "Sprite/UI/ScreenSprite/Title_Screen.png";
@@ -65,7 +72,7 @@ namespace Sprite{
 		const static LPCTSTR descriptionControl = "Sprite/UI/ScreenSprite/Description_Control.png";
 		const static LPCTSTR descriptionRule1 = "Sprite/UI/ScreenSprite/Description_Rule1.png";
 		const static LPCTSTR descriptionRule2 = "Sprite/UI/ScreenSprite/Description_Rule2.png";
-
+	
 		const static LPCTSTR stageSelectScreen = "Sprite/UI/ScreenSprite/StageSelectScreen.png";
 
 		const static LPCTSTR roundInfo[] = {
@@ -121,6 +128,9 @@ namespace Sprite{
 	const static int tunnelFrame = 2;		// トンネルの画像数
 	const static int carFrame = 4;			// 車の画像数
 	const static int explosionFrame = 8;	// 爆発の画像数
+	const static int chargeFrame = 3;		// チャージエフェクトの枚数
+	const static int hitFrame = 3;			// ヒットエフェクトの枚数
+
 
 	// 信長の画像
 	namespace Nobunaga{
@@ -204,6 +214,13 @@ namespace Sprite{
 			"Sprite/Nobunaga/Attack/right3.png",
 			"Sprite/Nobunaga/Attack/right4.png"
 		};
+
+		const static LPCTSTR chargeEffect[] = {
+			"Sprite/Nobunaga/ChargeEffect/charge1.png",
+			"Sprite/Nobunaga/ChargeEffect/charge2.png",
+			"Sprite/Nobunaga/ChargeEffect/charge3.png"
+		};
+
 
 		const static LPCTSTR bulletUp[] = {
 			"Sprite/Nobunaga/NormalBullet/Up.png",
@@ -326,6 +343,12 @@ namespace Sprite{
 			"Sprite/Napoleon/Attack/right1.png",
 			"Sprite/Napoleon/Attack/right2.png",
 			"Sprite/Napoleon/Attack/right2.png"
+		};
+			
+		const static LPCTSTR chargeEffect[] = {
+			"Sprite/Napoleon/ChargeEffect/charge1.png",
+			"Sprite/Napoleon/ChargeEffect/charge2.png",
+			"Sprite/Napoleon/ChargeEffect/charge3.png"
 		};
 
 		const static LPCTSTR bulletUp[] = {

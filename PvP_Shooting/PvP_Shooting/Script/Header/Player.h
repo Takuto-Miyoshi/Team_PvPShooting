@@ -181,10 +181,13 @@ private:
 	LPCTSTR spritePath;	// 描画する画像のパス
 
 	int spriteNumber; // 画像の何番目を表示するか
+	int chargeSpriteNumber;	// チャージ画像の何番目を表示するか
+	int hitSpriteNumber;	// ヒット画像の何番目を表示するか
 	int animationCounter;	// アニメーションの変更タイミング
 
 	bool isMoved;		// 移動中か
 	bool isAttacked;	// 攻撃中か
+	bool previousAlive;	// 前のフレームは生きていたか
 
 	int chargeSEHandle;
 	int hittingSEHandle;
