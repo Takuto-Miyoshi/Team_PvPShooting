@@ -12,8 +12,6 @@ Flag::Flag( int initX, int initY ){
 	animationCounter = 0;
 
 	centerY = initY + FLAG_HEIGHT / 4 * 3;
-
-	GameScene::EntryObject( this );
 }
 
 Flag::~Flag(){

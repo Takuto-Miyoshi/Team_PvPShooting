@@ -34,8 +34,6 @@ Player::Player( int padNum, int playerNum, int keyUp, int keyRight, int keyLeft,
 	isAttacked = false;
 	spriteNumber = 0;
 	animationCounter = 0;
-
-	GameScene::EntryObject( this );
 }
 
 Player::~Player() {

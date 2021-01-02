@@ -21,8 +21,6 @@ Tunnel::Tunnel(){
 	for( int i = 0; i < 2; i++ ) car[i] = nullptr;
 
 	carMoveSEHandle = LoadSoundMem( Sounds::SE::carMoved );
-
-	GameScene::EntryObject( this );
 }
 
 Tunnel::~Tunnel(){
