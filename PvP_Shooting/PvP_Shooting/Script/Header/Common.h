@@ -619,7 +619,7 @@ const int ROUND_MAX = 3;
 const int PLAY_TIME = 60;
 
 /// @brief 描画可能なオブジェクトの数
-const int OBJECT_MAX = 50;
+const int OBJECT_MAX = 15;
 
 const int COLOR_WHITE = GetColor(255, 255, 255);
 const int COLOR_BLACK = GetColor(0, 0, 0);

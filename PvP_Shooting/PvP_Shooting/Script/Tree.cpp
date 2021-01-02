@@ -11,8 +11,6 @@ Tree::Tree( int initX, int initY ){
 	spritePath = Sprite::Gimmick::tree[spriteNumber];
 
 	centerY = initY + TREE_HEIGHT / 2;
-
-	GameScene::EntryObject( this );
 }
 
 Tree::~Tree(){

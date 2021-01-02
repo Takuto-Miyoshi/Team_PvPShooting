@@ -9,7 +9,6 @@ Stone::Stone( int initX, int initY ){
 	posY = initY;
 
 	centerY = initY + STONE_HEIGHT / 2;
-	GameScene::EntryObject( this );
 }
 
 Stone::~Stone(){

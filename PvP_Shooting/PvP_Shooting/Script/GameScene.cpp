@@ -19,7 +19,6 @@ int GameScene::introHandle = 0;
 int GameScene::endCounter = 0;
 bool GameScene::isOperatable = false;
 ObjectBase* GameScene::objectVault[OBJECT_MAX];
-ObjectBase* GameScene::object[7];
 int GameScene::backGroundHandle = 0;
 bool GameScene::isPaused = false;
 
@@ -88,8 +87,6 @@ void GameScene::Draw() {
 			objectVault[obj]->Draw();
 		}
 	}
-
-	DrawString( 10, 10, "OnPlay", COLOR_RED );
 
 	DrawFormatString( playerList[0]->GetPosX(), playerList[0]->GetPosY() - 40, COLOR_RED, "SCORE : %d", playerList[0]->GetScore( battleCount + 1 ) );
 	DrawFormatString( playerList[1]->GetPosX(), playerList[1]->GetPosY() - 40, COLOR_BLUE, "SCORE : %d", playerList[1]->GetScore( battleCount + 1 ) );
@@ -225,23 +222,12 @@ void GameScene::End(){
 	endCounter++;
 }
 
-int GameScene::EntryObject( ObjectBase* object ){
-	for( int i = 0; i < OBJECT_MAX; i++ ){
-		if( objectVault[i] == nullptr ){
-			objectVault[i] = object;
-			return i;
-		}
-	}
-
-	return -1;
-}
-
 void GameScene::SortObjectVault(){
 	for( int obj = 0; obj < OBJECT_MAX - 1; obj++ ){
 		for( int i = obj + 1; i < OBJECT_MAX; i++ ){
 			if( objectVault[obj] == nullptr ) break;
 
-			if( objectVault[i] != nullptr ){
+			if( objectVault[i] != nullptr && objectVault[obj] != nullptr ){
 				if( objectVault[obj]->GetCenterY() > objectVault[i]->GetCenterY() ){
 					ObjectBase* temp = objectVault[obj];
 					objectVault[obj] = objectVault[i];
@@ -273,26 +259,29 @@ void GameScene::StageSetUp(){
 	switch( SceneBase::GetStage().number )
 	{
 	case 1:
-		object[0] = new Flag( 225, 140 );
-		object[1] = new Stone( 730, 260 );
-		object[2] = new Flag( 1466, 140 );
-		object[3] = new Tree( 417, 383 );
-		object[4] = new Stone( 994, 603 );
-		object[5] = new Tree( 1352, 476 );
-		object[6] = new Stone( 726, 860 );
+		objectVault[0] = new Flag( 225, 140 );
+		objectVault[1] = new Stone( 730, 260 );
+		objectVault[2] = new Flag( 1466, 140 );
+		objectVault[3] = new Tree( 417, 383 );
+		objectVault[4] = new Stone( 994, 603 );
+		objectVault[5] = new Tree( 1352, 476 );
+		objectVault[6] = new Stone( 726, 860 );
 		backGroundHandle = LoadGraph( Sprite::BackGround::stage1 );
 		break;
 	default:
-		object[0] = new Tunnel();
-		object[1] = new Box( 397, 348 );
-		object[2] = new Box( 1249, 395 );
-		object[3] = new Box( 1441, 395 );
-		object[4] = new Box( 662, 859 );
-		object[5] = new Box( 1441, 859 );
-		object[6] = nullptr;
+		objectVault[0] = new Tunnel();
+		objectVault[1] = new Box( 397, 348 );
+		objectVault[2] = new Box( 1249, 395 );
+		objectVault[3] = new Box( 1441, 395 );
+		objectVault[4] = new Box( 662, 859 );
+		objectVault[5] = new Box( 1441, 859 );
+		objectVault[6] = nullptr;
 		backGroundHandle = LoadGraph( Sprite::BackGround::stage2 );
 		break;
 	}
+
+	objectVault[7] = playerList[0];
+	objectVault[8] = playerList[1];
 
 	playerList[0]->SetPosX( 70 );
 	playerList[0]->SetPosY( 820 );

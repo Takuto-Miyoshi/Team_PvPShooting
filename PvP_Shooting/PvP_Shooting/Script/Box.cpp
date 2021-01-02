@@ -18,8 +18,6 @@ Box::Box( int initX, int initY ){
 
 	isSummoned = false;
 	explosionSEHandle = LoadSoundMem( Sounds::SE::explosion );
-
-	GameScene::EntryObject( this );
 }
 
 Box::~Box(){

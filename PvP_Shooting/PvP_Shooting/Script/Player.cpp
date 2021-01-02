@@ -36,8 +36,6 @@ Player::Player( int padNum, int playerNum, int keyUp, int keyRight, int keyLeft,
 	chargeSpriteNumber = 0;
 	hitSpriteNumber = 0;
 	animationCounter = 0;
-
-	GameScene::EntryObject( this );
 }
 
 Player::~Player() {

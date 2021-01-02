@@ -17,11 +17,6 @@ public:
 	/// @brief メインループで呼び出すもの
 	void Execute();
 
-	/// @brief 描画するオブジェクトを登録する
-	/// @return 保存した配列番号 : -1 => 枠なし
-	static int EntryObject( ObjectBase* object );
-
-
 	/// @brief objectVaultの情報を取得する
 	/// @param arrayNum 配列番号
 	/// @return ObjectBase*
@@ -80,7 +75,6 @@ private:
 
 	/// @brief 残り時間の描画
 	static void Clock();
-
 private:
 
 	static int counter;
@@ -91,7 +85,6 @@ private:
 	static ObjectBase* objectVault[OBJECT_MAX];
 	static bool isPaused;
 
-	static ObjectBase* object[7];
 	static int backGroundHandle;
 
 	int pauseSEHandle;
