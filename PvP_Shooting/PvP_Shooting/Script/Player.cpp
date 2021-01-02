@@ -33,6 +33,8 @@ Player::Player( int padNum, int playerNum, int keyUp, int keyRight, int keyLeft,
 	isMoved = false;
 	isAttacked = false;
 	spriteNumber = 0;
+	chargeSpriteNumber = 0;
+	hitSpriteNumber = 0;
 	animationCounter = 0;
 
 	GameScene::EntryObject( this );
@@ -291,18 +293,50 @@ void Player::Draw() {
 	// 点滅
 	if( isAlive == true || ( invincibleCount >= 12 && invincibleCount < 24 || invincibleCount >= 36 && invincibleCount < 48 ) ) {
 		LoadGraphScreen( posX - PLAYER_OFFSET_X, posY, spritePath, true );
+	
+	if( chargeCount >= CHARGE_COUNT ) {
+		if( animationCounter == 0 ) {
+			chargeSpriteNumber++;
+			if( chargeSpriteNumber >= Sprite::chargeFrame ) {
+				chargeSpriteNumber = 0;
+			}
+		}
+		
+		if( playerNumber == 1 ) {
+			spritePath = Sprite::Nobunaga::chargeEffect[chargeSpriteNumber];
+		}
+		else {
+			spritePath = Sprite::Napoleon::chargeEffect[chargeSpriteNumber];
+		}
+		LoadGraphScreen( posX, posY, spritePath, true );
 	}
 
 	animationCounter++;
 	if( animationCounter >= 6 ){
 		animationCounter = 0;
 		spriteNumber++;
+		hitSpriteNumber++;
 	}
 
 	for( int i = 0; i < BULLET_MAX; i++ ){
 		if( bullets[i] != nullptr )bullets[i]->Draw();
 	}
 
+	if( isAlive == false )
+	{
+		if( previousAlive == true ) {
+			hitSpriteNumber = 0;
+		}
+
+		if( hitSpriteNumber >= Sprite::hitFrame ) {
+			hitSpriteNumber = Sprite::hitFrame;
+		}
+
+		spritePath = Sprite::hitEffect[hitSpriteNumber];
+		LoadGraphScreen( posX - 36, posY - 30, spritePath, true );
+	}
+
+	previousAlive = GetAlive();
 }
 
 void Player::Shoot() {
