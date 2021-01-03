@@ -60,68 +60,7 @@ void Bullet::Move(){
 
 void Bullet::Draw() {
 
-	if( playerNumber == 1 ) {
-		switch( dir )
-		{
-		case Direction::Up:
-			spritePath = Sprite::Nobunaga::bulletUp[spriteNumber];
-			break;
-		case Direction::UpperRight:
-			spritePath = Sprite::Nobunaga::bulletUpperRight[spriteNumber];
-			break;
-		case Direction::UpperLeft:
-			spritePath = Sprite::Nobunaga::bulletUpperLeft[spriteNumber];
-			break;
-		case Direction::Down:
-			spritePath = Sprite::Nobunaga::bulletDown[spriteNumber];
-			break;
-		case Direction::LowerRight:
-			spritePath = Sprite::Nobunaga::bulletLowerRight[spriteNumber];
-			break;
-		case Direction::LowerLeft:
-			spritePath = Sprite::Nobunaga::bulletLowerLeft[spriteNumber];
-			break;
-		case Direction::Right:
-			spritePath = Sprite::Nobunaga::bulletRight[spriteNumber];
-			break;
-		case Direction::Left:
-			spritePath = Sprite::Nobunaga::bulletLeft[spriteNumber];
-			break;
-		default:break;
-		}
-	}
-	else {
-		switch( dir )
-		{
-		case Direction::Up:
-			spritePath = Sprite::Napoleon::bulletUp[spriteNumber];
-			break;
-		case Direction::UpperRight:
-			spritePath = Sprite::Napoleon::bulletUpperRight[spriteNumber];
-			break;
-		case Direction::UpperLeft:
-			spritePath = Sprite::Napoleon::bulletUpperLeft[spriteNumber];
-			break;
-		case Direction::Down:
-			spritePath = Sprite::Napoleon::bulletDown[spriteNumber];
-			break;
-		case Direction::LowerRight:
-			spritePath = Sprite::Napoleon::bulletLowerRight[spriteNumber];
-			break;
-		case Direction::LowerLeft:
-			spritePath = Sprite::Napoleon::bulletLowerLeft[spriteNumber];
-			break;
-		case Direction::Right:
-			spritePath = Sprite::Napoleon::bulletRight[spriteNumber];
-			break;
-		case Direction::Left:
-			spritePath = Sprite::Napoleon::bulletLeft[spriteNumber];
-			break;
-		default:break;
-		}
-	}
-
-	LoadGraphScreen( posX, posY, spritePath, true );
+	DrawGraph( posX, posY, GameScene::GetBulletHandle( playerNumber, dir, changeChargeShot ), true );
 }
 
 int Bullet::GetPosX()const{

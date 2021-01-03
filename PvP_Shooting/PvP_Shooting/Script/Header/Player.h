@@ -151,8 +151,6 @@ public:
 
 	/// @brief プレイヤーのサウンドデータを読み込む
 	void LoadSoundData();
-private:
-
 public:
 	int upMovingKey;
 	int rightMovingKey;
@@ -178,7 +176,7 @@ private:
 
 	int padNumber;
 	int ultKey;
-	LPCTSTR spritePath;	// 描画する画像のパス
+	int spriteHandle;
 
 	int spriteNumber; // 画像の何番目を表示するか
 	int chargeSpriteNumber;	// チャージ画像の何番目を表示するか

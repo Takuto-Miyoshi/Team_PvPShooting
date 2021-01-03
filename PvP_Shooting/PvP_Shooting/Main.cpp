@@ -8,8 +8,9 @@ int WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 {
 	SetOutApplicationLogValidFlag( false );
 
-	SetGraphMode ( WINDOW_WIDTH, WINDOW_HEIGHT, 32, 60 );
-	ChangeWindowMode ( true ); // ウィンドウモードに変更
+	SetGraphMode ( WINDOW_WIDTH, WINDOW_HEIGHT, 32, FRAME_RATE );
+	ChangeWindowMode ( false ); // ウィンドウモードに変更
+	SetMainWindowText( "時狭間の戦い" );
 
 	if ( DxLib_Init () == -1 )	// ＤＸライブラリ初期化処理
 	{

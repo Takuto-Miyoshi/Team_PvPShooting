@@ -25,7 +25,6 @@ Player::Player( int padNum, int playerNum, int keyUp, int keyRight, int keyLeft,
 	shotKey = keyShot;
 	bombKey = keyBomb;
 	ultKey = keyUlt;
-	spritePath = "";
 	dir = ( playerNum == 1 ) ? Direction::Right : Direction::Left;
 
 	for( int i = 0; i < BULLET_MAX; i++ )bullets[i] = nullptr;
@@ -36,6 +35,12 @@ Player::Player( int padNum, int playerNum, int keyUp, int keyRight, int keyLeft,
 	chargeSpriteNumber = 0;
 	hitSpriteNumber = 0;
 	animationCounter = 0;
+
+	chargeSEHandle = 0;
+	hittingSEHandle = 0;
+	attackSEHandle = 0;
+	treeSEHandle = 0;
+	boxSEHandle = 0;
 }
 
 Player::~Player() {
@@ -142,49 +147,8 @@ void Player::Draw() {
 		if( spriteNumber >= Sprite::attackFrame ){
 			isAttacked = false;
 		}
-		else if( playerNumber == 1 ){
-			switch( dir )
-			{
-			case Direction::Up:
-			case Direction::UpperRight:
-			case Direction::UpperLeft:
-				spritePath = Sprite::Nobunaga::attackUp[spriteNumber];
-				break;
-			case Direction::Down:
-			case Direction::LowerRight:
-			case Direction::LowerLeft:
-				spritePath = Sprite::Nobunaga::attackDown[spriteNumber];
-				break;
-			case Direction::Right:
-				spritePath = Sprite::Nobunaga::attackRight[spriteNumber];
-				break;
-			case Direction::Left:
-				spritePath = Sprite::Nobunaga::attackLeft[spriteNumber];
-				break;
-			default:break;
-			}
-		}
 		else{
-			switch( dir )
-			{
-			case Direction::Up:
-			case Direction::UpperRight:
-			case Direction::UpperLeft:
-				spritePath = Sprite::Napoleon::attackUp[spriteNumber];
-				break;
-			case Direction::Down:
-			case Direction::LowerRight:
-			case Direction::LowerLeft:
-				spritePath = Sprite::Napoleon::attackDown[spriteNumber];
-				break;
-			case Direction::Right:
-				spritePath = Sprite::Napoleon::attackRight[spriteNumber];
-				break;
-			case Direction::Left:
-				spritePath = Sprite::Napoleon::attackLeft[spriteNumber];
-				break;
-			default:break;
-			}
+			spriteHandle = GameScene::GetPlayerHandle( playerNumber, dir, Motion::Attack, spriteNumber );
 		}
 	}
 	// 移動
@@ -192,49 +156,8 @@ void Player::Draw() {
 		if( spriteNumber >= Sprite::walkFrame ){
 			spriteNumber = 1;
 		}
-		else if( playerNumber == 1 ){
-			switch( dir )
-			{
-			case Direction::Up:
-			case Direction::UpperRight:
-			case Direction::UpperLeft:
-				spritePath = Sprite::Nobunaga::walkUp[spriteNumber];
-				break;
-			case Direction::Down:
-			case Direction::LowerRight:
-			case Direction::LowerLeft:
-				spritePath = Sprite::Nobunaga::walkDown[spriteNumber];
-				break;
-			case Direction::Right:
-				spritePath = Sprite::Nobunaga::walkRight[spriteNumber];
-				break;
-			case Direction::Left:
-				spritePath = Sprite::Nobunaga::walkLeft[spriteNumber];
-				break;
-			default:break;
-			}
-		}
 		else{
-			switch( dir )
-			{
-			case Direction::Up:
-			case Direction::UpperRight:
-			case Direction::UpperLeft:
-				spritePath = Sprite::Napoleon::walkUp[spriteNumber];
-				break;
-			case Direction::Down:
-			case Direction::LowerRight:
-			case Direction::LowerLeft:
-				spritePath = Sprite::Napoleon::walkDown[spriteNumber];
-				break;
-			case Direction::Right:
-				spritePath = Sprite::Napoleon::walkRight[spriteNumber];
-				break;
-			case Direction::Left:
-				spritePath = Sprite::Napoleon::walkLeft[spriteNumber];
-				break;
-			default:break;
-			}
+			spriteHandle = GameScene::GetPlayerHandle( playerNumber, dir, Motion::Walk, spriteNumber );
 		}
 	}
 	// 待機
@@ -242,102 +165,55 @@ void Player::Draw() {
 		if( spriteNumber >= Sprite::waitFrame ){
 			spriteNumber = 0;
 		}
-		else if( playerNumber == 1 ){
-			switch( dir )
-			{
-			case Direction::Up:
-			case Direction::UpperRight:
-			case Direction::UpperLeft:
-				spritePath = Sprite::Nobunaga::waitUp[spriteNumber];
-				break;
-			case Direction::Down:
-			case Direction::LowerRight:
-			case Direction::LowerLeft:
-				spritePath = Sprite::Nobunaga::waitDown[spriteNumber];
-				break;
-			case Direction::Right:
-				spritePath = Sprite::Nobunaga::waitRight[spriteNumber];
-				break;
-			case Direction::Left:
-				spritePath = Sprite::Nobunaga::waitLeft[spriteNumber];
-				break;
-			default:break;
-			}
-		}
 		else{
-			switch( dir )
-			{
-			case Direction::Up:
-			case Direction::UpperRight:
-			case Direction::UpperLeft:
-				spritePath = Sprite::Napoleon::waitUp[spriteNumber];
-				break;
-			case Direction::Down:
-			case Direction::LowerRight:
-			case Direction::LowerLeft:
-				spritePath = Sprite::Napoleon::waitDown[spriteNumber];
-				break;
-			case Direction::Right:
-				spritePath = Sprite::Napoleon::waitRight[spriteNumber];
-				break;
-			case Direction::Left:
-				spritePath = Sprite::Napoleon::waitLeft[spriteNumber];
-				break;
-			default:break;
-			}
+			spriteHandle = GameScene::GetPlayerHandle( playerNumber, dir, Motion::Wait, spriteNumber );
 		}
 	}
 
-	// 点滅
+	// 描画
 	if( isAlive == true || ( invincibleCount >= 12 && invincibleCount < 24 || invincibleCount >= 36 && invincibleCount < 48 ) ) {
-		LoadGraphScreen( posX - PLAYER_OFFSET_X, posY, spritePath, true );
-	
-	if( chargeCount >= CHARGE_COUNT ) {
-		if( animationCounter == 0 ) {
-			chargeSpriteNumber++;
-			if( chargeSpriteNumber >= Sprite::chargeFrame ) {
-				chargeSpriteNumber = 0;
+		DrawGraph( posX - PLAYER_OFFSET_X, posY, spriteHandle, true );
+
+		if( chargeCount >= CHARGE_COUNT ) {
+			if( animationCounter == 0 ) {
+				chargeSpriteNumber++;
+				if( chargeSpriteNumber >= Sprite::chargeFrame ) {
+					chargeSpriteNumber = 0;
+				}
 			}
+
+			DrawGraph( posX - PLAYER_OFFSET_X, posY, GameScene::GetChargeEffectHandle( playerNumber, chargeSpriteNumber ), true );
 		}
-		
-		if( playerNumber == 1 ) {
-			spritePath = Sprite::Nobunaga::chargeEffect[chargeSpriteNumber];
+
+		animationCounter++;
+		if( animationCounter >= 6 ){
+			animationCounter = 0;
+			spriteNumber++;
+			hitSpriteNumber++;
 		}
-		else {
-			spritePath = Sprite::Napoleon::chargeEffect[chargeSpriteNumber];
+
+		for( int i = 0; i < BULLET_MAX; i++ ){
+			if( bullets[i] != nullptr )bullets[i]->Draw();
 		}
-		LoadGraphScreen( posX, posY, spritePath, true );
+
+		if( isAlive == false )
+		{
+			if( previousAlive == true ) {
+				hitSpriteNumber = 0;
+			}
+
+			if( hitSpriteNumber >= Sprite::hitFrame ) {
+				hitSpriteNumber = Sprite::hitFrame;
+			}
+
+			DrawGraph( posX - 36 - PLAYER_OFFSET_X, posY - 30, GameScene::GetHitEffectHandle( hitSpriteNumber ), true );
+		}
+
+		previousAlive = GetAlive();
 	}
-
-	animationCounter++;
-	if( animationCounter >= 6 ){
-		animationCounter = 0;
-		spriteNumber++;
-		hitSpriteNumber++;
-	}
-
-	for( int i = 0; i < BULLET_MAX; i++ ){
-		if( bullets[i] != nullptr )bullets[i]->Draw();
-	}
-
-	if( isAlive == false )
-	{
-		if( previousAlive == true ) {
-			hitSpriteNumber = 0;
-		}
-
-		if( hitSpriteNumber >= Sprite::hitFrame ) {
-			hitSpriteNumber = Sprite::hitFrame;
-		}
-
-		spritePath = Sprite::hitEffect[hitSpriteNumber];
-		LoadGraphScreen( posX - 36, posY - 30, spritePath, true );
-	}
-
-	previousAlive = GetAlive();
 }
 
-void Player::Shoot() {
+void Player::Shoot(){
 
 	if( isAlive == false ) return;
 
@@ -414,7 +290,15 @@ void Player::Hit(){
 				else if( ( ( posX + PLAYER_WIDTH ) > objData->GetPosX() ) && ( posX < ( objData->GetPosX() + objData->GetSpriteWidth() ) ) &&
 					( posY + PLAYER_HEIGHT ) > ( objData->GetPosY() + objData->GetHitOffsetUY() ) && ( ( posY + GetHitOffsetUY() ) < ( objData->GetPosY() + objData->GetSpriteHeight() ) ) ){
 
-					BackStep();
+					switch( objData->GetTag() )
+					{
+					case Tag::Car:
+						DeathProcessing();
+						break;
+					default:
+						BackStep();
+						break;
+					}
 				}
 
 				// 弾とオブジェクトの判定
@@ -438,13 +322,17 @@ void Player::Hit(){
 									break;
 								case Tag::Tree:
 									objData->SetSpriteNumber( objData->GetSpriteNumber() + 1 );
-									if( objData->GetSpriteNumber() < Sprite::treeFrame ) DeleteBullet( b );
-									PlaySoundMem( treeSEHandle, DX_PLAYTYPE_BACK );
+									if( objData->GetSpriteNumber() < Sprite::treeFrame ){
+										DeleteBullet( b );
+										PlaySoundMem( treeSEHandle, DX_PLAYTYPE_BACK );
+									}
 									break;
 								case Tag::Box:
 									objData->SetSpriteNumber( objData->GetSpriteNumber() + 1 );
-									if( objData->GetSpriteNumber() < Sprite::boxFrame ) DeleteBullet( b );
-									PlaySoundMem( boxSEHandle, DX_PLAYTYPE_BACK );
+									if( objData->GetSpriteNumber() < Sprite::boxFrame ){
+										DeleteBullet( b );
+										PlaySoundMem( boxSEHandle, DX_PLAYTYPE_BACK );
+									}
 									break;
 								default: DeleteBullet( b );
 									break;

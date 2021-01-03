@@ -7,6 +7,8 @@
 
 ResultScene::ResultScene() {
 	SceneBase::backToTitleSEHandle = LoadSoundMem( Sounds::SE::backToTitle );
+	Result();
+	PlaySoundMem( resultJingleHandle, DX_PLAYTYPE_BACK );
 }
 
 ResultScene::~ResultScene() {
@@ -33,36 +35,28 @@ void ResultScene::Control() {
 }
 
 void ResultScene::Draw() {
-	DrawResult();
-
+	DrawGraph( 0, 0, resultBackHandle, false );
 	SceneFade( SceneList::Title, 255 / 60, COLOR_BLUE );
 }
 
-void ResultScene::DrawResult(){
+void ResultScene::Result(){
 
 	int winner = -1;
 	if( SceneBase::player1->GetScore( -1 ) == SceneBase::player2->GetScore( -1 ) )winner = 0;
 	else winner = ( SceneBase::player1->GetScore( -1 ) > SceneBase::player2->GetScore( -1 ) ) ? 1 : 2;
 
-	for( int p = 0; p < PLAYER_MAX; p++ ){
-		int drawX = 400;
-		int drawY = 300;
-		if( p == 1 )drawX = WINDOW_WIDTH - 400;
-		DrawFormatString( drawX - CenterAdjustment( 2 ), drawY, COLOR_RED, "%dP", p + 1 );
-		drawY += 100;
-		for( int r = 0; r < ROUND_MAX; r++ ){
-			DrawFormatString( drawX - CenterAdjustment( 7 ), drawY, COLOR_WHITE, "%dR : %2d", r + 1, playerList[p]->GetScore( r + 1 ) );
-			drawY += 100;
-		}
-		DrawFormatString( drawX - CenterAdjustment( 11 ), drawY, COLOR_WHITE, "Total : %3d", playerList[p]->GetScore( -1 ) );
-	}
-
-	// 結果
-	LPCTSTR winnerScreen = "";
 	switch( winner ){
-	case 0:winnerScreen = Sprite::UI::resultDraw; break;
-	case 1:winnerScreen = Sprite::UI::resultNobunaga; break;
-	case 2:winnerScreen = Sprite::UI::resultNapoleon; break;
+	case 0:
+		resultBackHandle = LoadGraph( Sprite::UI::resultDraw );
+		resultJingleHandle = LoadSoundMem( Sounds::SE::resultDraw );
+		break;
+	case 1:
+		resultBackHandle = LoadGraph( Sprite::UI::resultNobunaga );
+		resultJingleHandle = LoadSoundMem( Sounds::SE::result );
+		break;
+	case 2:
+		resultBackHandle = LoadGraph( Sprite::UI::resultNapoleon );
+		resultJingleHandle = LoadSoundMem( Sounds::SE::result );
+		break;
 	}
-	LoadGraphScreen( 0, 0, winnerScreen, false );
 }

@@ -118,6 +118,7 @@ void SceneBase::ReleaseCurrentScene() {
 	if( previousScene != GetCurrentScene() ) {
 		delete pSceneBase[previousScene];
 		pSceneBase[previousScene] = nullptr;
+		InitGraph();
 		InitSoundMem();
 	}
 }

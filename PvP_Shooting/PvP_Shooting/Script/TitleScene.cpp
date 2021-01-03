@@ -5,23 +5,22 @@
 
 #define USE_CONTROLLER
 
-/// @brief ルールの画像
-const LPCTSTR TitleScene::ruleSprite[] {
-	Sprite::UI::descriptionControl,
-	Sprite::UI::descriptionRule1,
-	Sprite::UI::descriptionRule2
-};
-
-
 TitleScene::TitleScene() {
 	ruleShowing = false;
 	spriteCounter = -1;
+
+	backGroundHandle = LoadGraph( Sprite::UI::titleScreen );
+	ruleSprite[0] = LoadGraph( Sprite::UI::descriptionRule1 );
+	ruleSprite[1] = LoadGraph( Sprite::UI::descriptionRule2 );
+	ruleSprite[2] = LoadGraph( Sprite::UI::descriptionControl );
 
 	SceneBase::startTitleSEHandle = LoadSoundMem( Sounds::SE::titleStart );
 	SceneBase::cursorSEHandle = LoadSoundMem( Sounds::SE::cursor );
 	SceneBase::enterSEHandle = LoadSoundMem( Sounds::SE::enter );
 
 	SceneBase::BGMHandle = LoadSoundMem( Sounds::BGM::title );
+	tutorialBGMHandle = LoadSoundMem( Sounds::BGM::tutorial );
+	ChangeVolumeSoundMem( 128, tutorialBGMHandle );
 
 	SceneBase::Reset();
 }
@@ -57,9 +56,16 @@ void TitleScene::Control() {
 
 		if( ruleShowing == false ){
 			PlaySoundMem( SceneBase::enterSEHandle, DX_PLAYTYPE_BACK );
+			StopSoundMem( SceneBase::BGMHandle );
+			PlaySoundMem( tutorialBGMHandle, DX_PLAYTYPE_LOOP );
 		}
 		else{
 			PlaySoundMem( SceneBase::cursorSEHandle, DX_PLAYTYPE_BACK );
+		}
+
+		if( spriteCounter >= COUNTER_MAX ){
+			StopSoundMem( tutorialBGMHandle );
+			PlaySoundMem( SceneBase::BGMHandle, DX_PLAYTYPE_LOOP, FALSE );
 		}
 	}
 
@@ -71,6 +77,12 @@ void TitleScene::Control() {
 		if( spriteCounter >= 0 )spriteCounter--;
 
 		if( ruleShowing == true )PlaySoundMem( SceneBase::cursorSEHandle, DX_PLAYTYPE_BACK );
+
+		if( spriteCounter < 0 ){
+			StopSoundMem( BGMHandle );
+			StopSoundMem( tutorialBGMHandle );
+			PlaySoundMem( SceneBase::BGMHandle, DX_PLAYTYPE_LOOP, FALSE );
+		}
 	}
 
 	if( spriteCounter >= COUNTER_MAX ) spriteCounter = -1;
@@ -79,9 +91,9 @@ void TitleScene::Control() {
 
 void TitleScene::Draw() {
 
-	LoadGraphScreen( 0, 0, Sprite::UI::titleScreen, false );
+	DrawGraph( 0, 0, backGroundHandle, false );
 
-	if( ruleShowing == true ) LoadGraphScreen( 0, 0, ruleSprite[spriteCounter], false );
+	if( ruleShowing == true ) DrawGraph( 0, 0, ruleSprite[spriteCounter], false );
 
 	SceneFade( SceneList::Setting, 255 / 30, COLOR_WHITE );
 }

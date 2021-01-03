@@ -8,7 +8,6 @@ Flag::Flag( int initX, int initY ){
 	posX = initX;
 	posY = initY;
 	spriteNumber = 0;
-	spritePath = Sprite::Gimmick::flag[spriteNumber] ;
 	animationCounter = 0;
 
 	centerY = initY + FLAG_HEIGHT / 4 * 3;
@@ -19,7 +18,7 @@ Flag::~Flag(){
 }
 
 void Flag::Draw(){
-	LoadGraphScreen( posX, posY, spritePath, true );
+	DrawGraph( posX, posY, GameScene::GetObjectHandle( Tag::Flag, spriteNumber ), true );
 }
 
 void Flag::Control(){
@@ -29,7 +28,6 @@ void Flag::Control(){
 		spriteNumber++;
 		if( spriteNumber >= Sprite::flagFrame )spriteNumber = 0;
 
-		spritePath = Sprite::Gimmick::flag[spriteNumber];
 		animationCounter = 0;
 	}
 }

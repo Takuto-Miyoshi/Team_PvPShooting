@@ -16,7 +16,7 @@ Stone::~Stone(){
 }
 
 void Stone::Draw(){
-	LoadGraphScreen( posX, posY, Sprite::Gimmick::stone, true );
+	DrawGraph( posX, posY, GameScene::GetObjectHandle( Tag::Stone, 0 ), true );
 }
 
 void Stone::Control(){

@@ -70,7 +70,6 @@ private:
 	int posY;
 	int centerX;
 	int centerY;
-	LPCTSTR spritePath;
 	int spriteNumber;
 	bool isSummoned;
 

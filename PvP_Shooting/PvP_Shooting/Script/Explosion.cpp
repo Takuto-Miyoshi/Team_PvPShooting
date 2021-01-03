@@ -7,7 +7,6 @@ Explosion::Explosion( int initX, int initY ){
 	posX = initX;
 	posY = initY;
 	spriteNumber = 0;
-	spritePath = Sprite::Gimmick::explosion[spriteNumber];
 	animationCounter = 0;
 
 	centerY = initY + EXPLOSION_HEIGHT / 2;
@@ -18,7 +17,7 @@ Explosion::~Explosion(){
 }
 
 void Explosion::Draw(){
-	LoadGraphScreen( posX, posY, spritePath, true );
+	DrawGraph( posX, posY, GameScene::GetObjectHandle( Tag::Explosion, spriteNumber ), true );
 }
 
 bool Explosion::Control(){
@@ -45,8 +44,6 @@ bool Explosion::Control(){
 		animationCounter = 0;
 		if( spriteNumber == Sprite::explosionFrame ) return true;
 	}
-
-	spritePath = Sprite::Gimmick::explosion[spriteNumber];
 
 	return false;
 }

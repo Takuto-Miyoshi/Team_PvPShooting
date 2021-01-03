@@ -19,7 +19,6 @@ private:
 	int posX;
 	int posY;
 	int centerY;
-	LPCTSTR spritePath;
 	int spriteNumber;
 	int animationCounter;
 };
