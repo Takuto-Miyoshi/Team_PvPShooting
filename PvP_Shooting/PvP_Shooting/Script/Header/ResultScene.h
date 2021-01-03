@@ -23,8 +23,13 @@ private:
 	/// @brief 描画処理
 	void Draw();
 
-	/// @brief 結果を表示する
-	void DrawResult();
+	/// @brief 結果を調べる
+	void Result();
+
+private:
+
+	int resultBackHandle;
+	int resultJingleHandle;
 };
 
 #endif

@@ -40,6 +40,12 @@ enum class Tag{
 	Explosion
 };
 
+enum class Motion{
+	Attack,
+	Walk,
+	Wait
+};
+
 /// @brief ステージの情報
 struct Stage{
 	int number;			// ステージ番号
@@ -58,7 +64,7 @@ namespace Sprite{
 	const static LPCTSTR characterInfoScreen = "Sprite/CharacterInfo_Screen.png";
 	const static LPCTSTR resultNobunagaScreen = "Sprite/ResultNobunaga_Screen.png";
 	const static LPCTSTR resultNapoleonScreen = "Sprite/ResultNapoleon_Screen.png";
-	
+
 	const static LPCTSTR hitEffect[] = {
 		"Sprite/HitEffect/hit1.png",
 		"Sprite/HitEffect/hit2.png",
@@ -72,7 +78,7 @@ namespace Sprite{
 		const static LPCTSTR descriptionControl = "Sprite/UI/ScreenSprite/Description_Control.png";
 		const static LPCTSTR descriptionRule1 = "Sprite/UI/ScreenSprite/Description_Rule1.png";
 		const static LPCTSTR descriptionRule2 = "Sprite/UI/ScreenSprite/Description_Rule2.png";
-	
+
 		const static LPCTSTR stageSelectScreen = "Sprite/UI/ScreenSprite/StageSelectScreen.png";
 
 		const static LPCTSTR roundInfo[] = {
@@ -344,7 +350,7 @@ namespace Sprite{
 			"Sprite/Napoleon/Attack/right2.png",
 			"Sprite/Napoleon/Attack/right2.png"
 		};
-			
+
 		const static LPCTSTR chargeEffect[] = {
 			"Sprite/Napoleon/ChargeEffect/charge1.png",
 			"Sprite/Napoleon/ChargeEffect/charge2.png",
@@ -443,6 +449,8 @@ namespace Sprite{
 namespace Sounds{
 	namespace BGM{
 		const static LPCTSTR title = "Sounds/BGM/Title.mp3";
+		const static LPCTSTR tutorial = "Sounds/BGM/Tutorial.mp3";
+		const static LPCTSTR stageSelect = "Sounds/BGM/StageSelect.mp3";
 		const static LPCTSTR battle = "Sounds/BGM/Battle.mp3";
 	}
 
@@ -465,6 +473,9 @@ namespace Sounds{
 		const static LPCTSTR carMoved = "Sounds/SE/Car.mp3";
 		const static LPCTSTR boxDamaged = "Sounds/SE/BoxDamaged.mp3";
 		const static LPCTSTR explosion = "Sounds/SE/Explosion.mp3";
+
+		const static LPCTSTR result = "Sounds/SE/ResultJingle.mp3";
+		const static LPCTSTR resultDraw = "Sounds/SE/DrawJingle.mp3";
 	}
 }
 

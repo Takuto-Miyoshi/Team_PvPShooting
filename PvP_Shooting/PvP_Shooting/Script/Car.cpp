@@ -1,5 +1,6 @@
 ﻿
 #include "Header/Common.h"
+#include "Header/ObjectBase.h"
 #include "Header/Car.h"
 #include "Header/GameScene.h"
 
@@ -22,6 +23,7 @@ Car::Car( Direction dir ){
 	case Direction::Left:
 	case Direction::UpperLeft:
 	case Direction::LowerLeft:
+	default:
 	posX = 0 - CAR_WIDTH;
 	posY = WINDOW_HEIGHT / 4 * 3 - CAR_HEIGHT / 2;
 	direction = Direction::Left;
@@ -29,9 +31,9 @@ Car::Car( Direction dir ){
 	}
 
 	spriteNumber = 0;
-	spritePath = Sprite::Gimmick::car[spriteNumber];
 	animationCounter = 0;
 	speed = 14;
+	centerY = posY + CAR_HEIGHT / 2;
 }
 
 Car::~Car(){
@@ -41,42 +43,12 @@ Car::~Car(){
 void Car::Draw(){
 	switch( direction )
 	{
-	case Direction::Right:	DrawGraph( posX, posY, graphHandle, true );		break;
-	case Direction::Left:	DrawTurnGraph( posX, posY, graphHandle, true );	break;
+	case Direction::Right:	DrawGraph( posX, posY, GameScene::GetObjectHandle( Tag::Car, spriteNumber ), true );		break;
+	case Direction::Left:	DrawTurnGraph( posX, posY, GameScene::GetObjectHandle( Tag::Car, spriteNumber ), true );	break;
 	}
 }
 
-bool Car::Control(){
-
-	for( int p = 0; p < PLAYER_MAX; p++ ){
-		Player* target = SceneBase::GetPlayerData( p );
-
-		if( target->GetAlive() == true ){
-			// プレイヤーと車の判定
-			if( ( ( target->GetPosX() + PLAYER_WIDTH ) > posX ) && ( target->GetPosX() < ( posX + CAR_WIDTH ) ) &&
-				( target->GetPosY() + PLAYER_HEIGHT ) > ( posY + CAR_OFFSET_UY ) && ( ( target->GetPosY() + target->GetHitOffsetUY() ) < ( posY + CAR_HEIGHT ) ) ){
-				target->BackStep();
-				target->DeathProcessing();
-				target->AddScore( -1, SceneBase::GetBattleCount() + 1 );
-			}
-		}
-
-		// 車と弾の判定
-		for( int b = 0; b < BULLET_MAX; b++ ){
-			if( target->GetBulletData( b ) != nullptr ){
-				if( GameScene::Collision(
-					posX,
-					posX + CAR_WIDTH,
-					posY + CAR_OFFSET_UY,
-					posY + CAR_HEIGHT - CAR_OFFSET_DY,
-					target->GetBulletData( b )->GetPosX() + BULLET_RADIUS,
-					target->GetBulletData( b )->GetPosY() + BULLET_RADIUS,
-					BULLET_RADIUS ) == true ){
-					target->DeleteBullet( b );
-				}
-			}
-		}
-	}
+void Car::Control(){
 
 	switch( direction )
 	{
@@ -90,9 +62,6 @@ bool Car::Control(){
 		spriteNumber++;
 		if( spriteNumber >= Sprite::carFrame )spriteNumber = 0;
 
-		graphHandle = LoadGraph( Sprite::Gimmick::car[spriteNumber] );
 		animationCounter = 0;
 	}
-
-	return ( posX < 0 - CAR_WIDTH * 2 || posX > WINDOW_WIDTH + CAR_WIDTH );
 }

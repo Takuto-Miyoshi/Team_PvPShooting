@@ -27,8 +27,11 @@ private:
 	int spriteCounter;
 	const int COUNTER_MAX = 3;	// 説明画面の枚数
 	bool ruleShowing;
+	int backGroundHandle;
 
-	static const LPCTSTR ruleSprite[];
+	int ruleSprite[3];
+
+	int tutorialBGMHandle;
 };
 
 #endif

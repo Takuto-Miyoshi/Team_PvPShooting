@@ -48,6 +48,10 @@ private:
 
 private:
 	int settingStep;
+	int roundInfoHandle;
+	int alternativeBackHandle;
+	int stagePreviewHandle[2];
+	int backGroundHandle;
 
 	SceneList destinationScene;
 

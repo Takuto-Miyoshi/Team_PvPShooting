@@ -26,10 +26,16 @@ SettingScene::SettingScene() {
 	confirm.handle2 = LoadGraph( Sprite::UI::selectNo );
 	confirm.currentSelection = 0;
 
+	roundInfoHandle = LoadGraph( Sprite::UI::roundInfo[battleCount] );
+	alternativeBackHandle = LoadGraph( Sprite::UI::alternativeBack );
+	stagePreviewHandle[0] = LoadGraph( Sprite::UI::stagePreview1 );
+	stagePreviewHandle[1] = LoadGraph( Sprite::UI::stagePreview2 );
+	backGroundHandle = LoadGraph( Sprite::UI::stageSelectScreen );
+
 	SceneBase::backToTitleSEHandle = LoadSoundMem( Sounds::SE::backToTitle );
 	SceneBase::cursorSEHandle = LoadSoundMem( Sounds::SE::cursor );
 
-	SceneBase::BGMHandle = LoadSoundMem( Sounds::BGM::title );
+	SceneBase::BGMHandle = LoadSoundMem( Sounds::BGM::stageSelect );
 
 	SceneBase::SetStage( SceneBase::stageList[preview.currentSelection] );
 }
@@ -71,7 +77,7 @@ void SettingScene::Draw() {
 	SettingScene::DrawBackground();
 
 	// ラウンド数表示
-	LoadGraphScreen( 0, 0, Sprite::UI::roundInfo[battleCount], true );
+	DrawGraph( 0, 0, roundInfoHandle, true );
 
 	switch( settingStep )
 	{
@@ -82,8 +88,8 @@ void SettingScene::Draw() {
 		break;
 	case 1:
 		// 確認
-		LoadGraphScreen( 0, WINDOW_HEIGHT / 2 - 256, Sprite::UI::alternativeBack, false );
-		LoadGraphScreen( 300, WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 2, SceneBase::GetStage().preview, false );
+		DrawGraph( 0, WINDOW_HEIGHT / 2 - 256, alternativeBackHandle, false );
+		DrawGraph( 300, WINDOW_HEIGHT / 2 - PREVIEW_HEIGHT / 2, stagePreviewHandle[SceneBase::GetStage().number - 1], false );
 		DrawExtendGraph( confirm.x1 - 32, confirm.y1 - 10, confirm.x1 + 352, confirm.y1 + 110, confirm.handle1, true );
 		DrawGraph( confirm.x2, confirm.y2, confirm.handle2, true );
 		break;
@@ -180,5 +186,5 @@ void SettingScene::DrawBackground(){
 	}
 
 	// 描画
-	LoadGraphScreen( x, 0, Sprite::UI::stageSelectScreen, false );
+	DrawGraph( x, 0, backGroundHandle, false );
 }

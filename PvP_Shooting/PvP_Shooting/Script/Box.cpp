@@ -11,7 +11,6 @@ Box::Box( int initX, int initY ){
 	posX = initX;
 	posY = initY;
 	spriteNumber = 0;
-	spritePath = Sprite::Gimmick::box[spriteNumber];
 
 	centerX = initX + BOX_WIDTH / 2;
 	centerY = initY + BOX_HEIGHT / 2;
@@ -25,7 +24,7 @@ Box::~Box(){
 }
 
 void Box::Draw(){
-	LoadGraphScreen( posX, posY, spritePath, true );
+	DrawGraph( posX, posY, GameScene::GetObjectHandle( Tag::Box, spriteNumber ), true );
 	if( explosion != nullptr ) explosion->Draw();
 }
 
@@ -34,8 +33,6 @@ void Box::Control(){
 	if( spriteNumber == Sprite::boxFrame - 1 ) ExplosionExec();
 
 	if( spriteNumber >= Sprite::boxFrame )spriteNumber = Sprite::boxFrame - 1;
-
-	spritePath = Sprite::Gimmick::box[spriteNumber];
 }
 
 void Box::ExplosionExec(){
