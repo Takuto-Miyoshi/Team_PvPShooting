@@ -8,7 +8,7 @@ InputState keyState[256];
 InputState mouseState[MOUSEBUTTON_UPDATE_RANGE] = {};
 
 /// @brief ボタンが何フレーム入力されているか保存する
-InputState padState[2][9];
+InputState padState[2][11];
 
 bool Fade( FadeMode fademode, unsigned int fadePower, int fadeColor, int waitTime ) {
 
@@ -131,7 +131,7 @@ void MouseButtonInputEnabledToggle( int mouseButtonCode ) {
 }
 
 int UpdatePadState(){
-	char currentPadState[2][9];
+	char currentPadState[2][11];
 
 	for( int p = 0; p < 2; p++ ){
 	int buttonTemp = 1;
@@ -141,7 +141,9 @@ int UpdatePadState(){
 			if( buttonTemp >= 16 ) buttonTemp += 16;
 			else buttonTemp *= 2;
 		}
-		currentPadState[p][8] = ( ( GetJoypadInputState( p + 1 ) & PAD_INPUT_10 ) == 0 ) ? 0 : 1;
+		currentPadState[p][8] = ( ( GetJoypadInputState( p + 1 ) & PAD_INPUT_8 ) == 0 ) ? 0 : 1;
+		currentPadState[p][9] = ( ( GetJoypadInputState( p + 1 ) & PAD_INPUT_9 ) == 0 ) ? 0 : 1;
+		currentPadState[p][10] = ( ( GetJoypadInputState( p + 1 ) & PAD_INPUT_10 ) == 0 ) ? 0 : 1;
 	}
 
 	for( int p = 0; p < 2; p++ ){
@@ -149,6 +151,8 @@ int UpdatePadState(){
 			padState[p][i] = UpdateInputState( currentPadState[p][i], padState[p][i] );
 		}
 		padState[p][8] = UpdateInputState( currentPadState[p][8], padState[p][8] );
+		padState[p][9] = UpdateInputState( currentPadState[p][9], padState[p][9] );
+		padState[p][10] = UpdateInputState( currentPadState[p][10], padState[p][10] );
 	}
 
 	return 0;
@@ -167,7 +171,9 @@ InputState GetPadStatus( int padNum, int padCode ){
 	case PAD_INPUT_2:		convertedPadCode = 5; break;
 	case PAD_INPUT_3:		convertedPadCode = 6; break;
 	case PAD_INPUT_4:		convertedPadCode = 7; break;
-	case PAD_INPUT_10:		convertedPadCode = 8; break;
+	case PAD_INPUT_8:		convertedPadCode = 8; break;
+	case PAD_INPUT_9:		convertedPadCode = 9; break;
+	case PAD_INPUT_10:		convertedPadCode = 10; break;
 	default:break;
 	}
 

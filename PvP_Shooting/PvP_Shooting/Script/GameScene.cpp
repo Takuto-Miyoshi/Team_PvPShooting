@@ -110,6 +110,9 @@ GameScene::GameScene() {
 
 	StageSetUp();
 
+	playerList[0]->Reset();
+	playerList[1]->Reset();
+
 	pauseSEHandle = LoadSoundMem( Sounds::SE::pause );
 	battleStartSEHandle = LoadSoundMem( Sounds::SE::battleStart );
 	battleEndSEHandle = LoadSoundMem( Sounds::SE::battleEnd );

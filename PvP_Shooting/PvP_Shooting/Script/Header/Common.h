@@ -634,7 +634,7 @@ const int FONT_SIZE = 42;
 const int ROUND_MAX = 3;
 
 /// @brief プレイ時間(秒)
-const int PLAY_TIME = 5;
+const int PLAY_TIME = 60;
 
 /// @brief 描画可能なオブジェクトの数
 const int OBJECT_MAX = 15;

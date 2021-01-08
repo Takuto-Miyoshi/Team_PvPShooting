@@ -28,6 +28,7 @@ private:
 
 private:
 
+	int winner;
 	int resultBackHandle;
 	static int winBannerHandle[Sprite::UI::winBannerFrame];
 	static int counter;

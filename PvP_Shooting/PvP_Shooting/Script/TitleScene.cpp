@@ -39,12 +39,14 @@ void TitleScene::Control() {
 	if( fadeMode != FadeMode::None ) return;
 
 #ifdef USE_CONTROLLER
-	if( GetPadStatus( player1->GetPlayerNumber(), PAD_INPUT_10 ) == InputState::Pressed ){
+	if( ( GetPadStatus( player1->GetPlayerNumber(), PAD_INPUT_8 ) == InputState::Pressed ) ||
+		( GetPadStatus( player1->GetPlayerNumber(), PAD_INPUT_9 ) == InputState::Pressed ) ||
+		( GetPadStatus( player1->GetPlayerNumber(), PAD_INPUT_10 ) == InputState::Pressed ) ){
 #else
 	if( GetKeyStatus( KEY_INPUT_RETURN ) == InputState::Pressed ){
 #endif
 		fadeMode = FadeMode::Out;
-		PlaySoundMem( SceneBase::startTitleSEHandle, DX_PLAYTYPE_BACK );
+			PlaySoundMem( SceneBase::startTitleSEHandle, DX_PLAYTYPE_BACK );
 	}
 
 #ifdef USE_CONTROLLER

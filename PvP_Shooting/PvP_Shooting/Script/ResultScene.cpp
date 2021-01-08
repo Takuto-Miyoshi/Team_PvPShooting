@@ -10,6 +10,7 @@ int ResultScene::spriteNum = 0;
 int ResultScene::counter = 0;
 
 ResultScene::ResultScene() {
+	winner = 0;
 	SceneBase::backToTitleSEHandle = LoadSoundMem( Sounds::SE::backToTitle );
 	for( int i = 0; i < Sprite::UI::winBannerFrame; i++ ){
 		winBannerHandle[i] = LoadGraph( Sprite::UI::winBanner[i] );
@@ -40,7 +41,9 @@ void ResultScene::Control() {
 	}
 
 #ifdef USE_CONTROLLER
-	if( GetPadStatus( player1->GetPlayerNumber(), PAD_INPUT_10 ) == InputState::Pressed ){
+	if( ( GetPadStatus( player1->GetPlayerNumber(), PAD_INPUT_8 ) == InputState::Pressed ) ||
+		( GetPadStatus( player1->GetPlayerNumber(), PAD_INPUT_9 ) == InputState::Pressed ) ||
+		( GetPadStatus( player1->GetPlayerNumber(), PAD_INPUT_10 ) == InputState::Pressed ) ){
 #else
 	if( GetKeyStatus( KEY_INPUT_RETURN ) == InputState::Pressed ){
 #endif
@@ -52,13 +55,14 @@ void ResultScene::Control() {
 void ResultScene::Draw() {
 	DrawGraph( 0, 0, resultBackHandle, false );
 
-	DrawGraph( 629, 138, winBannerHandle[spriteNum], true );
+	if( winner != 0 ){
+		DrawGraph( 629, 138, winBannerHandle[spriteNum], true );
+	}
 	SceneFade( SceneList::Title, 255 / 60, COLOR_BLACK );
 }
 
 void ResultScene::Result(){
 
-	int winner = -1;
 	if( SceneBase::player1->GetScore( -1 ) == SceneBase::player2->GetScore( -1 ) )winner = 0;
 	else winner = ( SceneBase::player1->GetScore( -1 ) > SceneBase::player2->GetScore( -1 ) ) ? 1 : 2;
 

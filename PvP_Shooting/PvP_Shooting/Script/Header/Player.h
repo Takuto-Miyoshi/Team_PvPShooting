@@ -51,6 +51,8 @@ public:
 	/// @brief 爆弾
 	void Bomb();
 
+	void Reset();
+
 	/// @brief ギミックとの当たり判定
 	void Hit();
 

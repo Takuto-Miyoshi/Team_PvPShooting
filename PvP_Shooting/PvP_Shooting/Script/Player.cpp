@@ -6,15 +6,11 @@
 
 Player::Player( int padNum, int playerNum, int keyUp, int keyRight, int keyLeft, int keyDown, int keyShot, int keyBomb, int keyUlt ){
 	playerNumber = playerNum;
-	isAlive = true;
-	invincibleCount = 0;
 
 	posX = 100;
 	posY = 100;
 	centerY = 0;
 	speed = PLAYER_SPEED;
-	shootingCoolTime = 0;
-	chargeCount = 0;
 	for( int i = 0; i < ROUND_MAX; i++ )score[i] = 0;
 
 	padNumber = padNum;
@@ -29,12 +25,7 @@ Player::Player( int padNum, int playerNum, int keyUp, int keyRight, int keyLeft,
 
 	for( int i = 0; i < BULLET_MAX; i++ )bullets[i] = nullptr;
 
-	isMoved = false;
-	isAttacked = false;
-	spriteNumber = 0;
-	chargeSpriteNumber = 0;
-	hitSpriteNumber = 0;
-	animationCounter = 0;
+	Reset();
 
 	chargeSEHandle = 0;
 	hittingSEHandle = 0;
@@ -344,6 +335,19 @@ void Player::Hit(){
 			}
 		}
 	}
+}
+
+void Player::Reset(){
+	isAlive = true;
+	invincibleCount = 0;
+	shootingCoolTime = 0;
+	chargeCount = 0;
+	isMoved = false;
+	isAttacked = false;
+	spriteNumber = 0;
+	chargeSpriteNumber = 0;
+	hitSpriteNumber = 0;
+	animationCounter = 0;
 }
 
 void Player::Invincible(){
