@@ -2,7 +2,7 @@
 #include "Header/Player.h"
 #include "Header/GameScene.h"
 
-#define USE_CONTROLLER
+// #define USE_CONTROLLER
 
 Player::Player( int padNum, int playerNum, int keyUp, int keyRight, int keyLeft, int keyDown, int keyShot, int keyBomb, int keyUlt ){
 	playerNumber = playerNum;
@@ -257,14 +257,6 @@ void Player::Shoot(){
 	for( int i = 0; i < BULLET_MAX; i++ ){
 		if( bullets[i] != nullptr ) bullets[i]->Move();
 	}
-}
-
-void Player::Control(){
-
-}
-
-void Player::Bomb(){
-
 }
 
 void Player::Hit(){

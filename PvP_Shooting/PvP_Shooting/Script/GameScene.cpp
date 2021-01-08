@@ -12,7 +12,7 @@
 #include "Header/Tunnel.h"
 #include "Header/Car.h"
 
-#define USE_CONTROLLER
+// #define USE_CONTROLLER
 
 int GameScene::counter = 0;
 int GameScene::startCounter = 0;

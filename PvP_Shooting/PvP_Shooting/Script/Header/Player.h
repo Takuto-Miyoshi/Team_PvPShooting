@@ -46,11 +46,9 @@ public:
 	/// @brief 射撃
 	void Shoot();
 
-	void Control();
+	void Control(){};
 
-	/// @brief 爆弾
-	void Bomb();
-
+	/// @brief ラウンド毎に値をリセット
 	void Reset();
 
 	/// @brief ギミックとの当たり判定

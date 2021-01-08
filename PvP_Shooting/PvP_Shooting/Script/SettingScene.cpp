@@ -3,7 +3,7 @@
 #include "Header/SceneBase.h"
 #include "Header/SettingScene.h"
 
-#define USE_CONTROLLER
+// #define USE_CONTROLLER
 
 SettingScene::SettingScene() {
 	settingStep = 0;
