@@ -95,7 +95,7 @@ void SettingScene::Draw() {
 		break;
 	}
 
-	SceneFade( destinationScene, 255 / 30, 255 / 30, COLOR_WHITE, COLOR_BLACK );
+	SceneFade( destinationScene, 255 / 30, COLOR_BLACK );
 }
 
 void SettingScene::SetStage(){

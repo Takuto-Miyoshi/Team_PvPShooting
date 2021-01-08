@@ -93,6 +93,13 @@ namespace Sprite{
 		const static LPCTSTR resultDraw = "Sprite/UI/ScreenSprite/ResultDraw_Screen.png";
 		const static LPCTSTR resultNobunaga = "Sprite/UI/ScreenSprite/ResultNobunaga_Screen.png";
 		const static LPCTSTR resultNapoleon = "Sprite/UI/ScreenSprite/ResultNapoleon_Screen.png";
+		const static LPCTSTR winBanner[] = {
+			"Sprite/UI/ScreenSprite/Win/1.png",
+			"Sprite/UI/ScreenSprite/Win/2.png",
+			"Sprite/UI/ScreenSprite/Win/3.png",
+			"Sprite/UI/ScreenSprite/Win/4.png"
+		};
+		const int winBannerFrame = 4;
 
 		const static LPCTSTR selectNo = "Sprite/UI/Select_No.png";
 		const static LPCTSTR selectYes = "Sprite/UI/Select_Yes.png";
@@ -627,7 +634,7 @@ const int FONT_SIZE = 42;
 const int ROUND_MAX = 3;
 
 /// @brief プレイ時間(秒)
-const int PLAY_TIME = 60;
+const int PLAY_TIME = 5;
 
 /// @brief 描画可能なオブジェクトの数
 const int OBJECT_MAX = 15;

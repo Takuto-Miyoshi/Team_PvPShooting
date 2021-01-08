@@ -95,5 +95,5 @@ void TitleScene::Draw() {
 
 	if( ruleShowing == true ) DrawGraph( 0, 0, ruleSprite[spriteCounter], false );
 
-	SceneFade( SceneList::Setting, 255 / 30, COLOR_WHITE );
+	SceneFade( SceneList::Setting, 255 / 30, COLOR_BLACK );
 }

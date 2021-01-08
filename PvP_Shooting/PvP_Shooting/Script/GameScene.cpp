@@ -180,8 +180,8 @@ void GameScene::Draw() {
 	else if( counter >= FRAME_RATE * PLAY_TIME ) DrawGraph( 0, WINDOW_HEIGHT / 2 - 192, finishHandle, false );
 	else if( isPaused == true ) DrawGraph( 0, WINDOW_HEIGHT / 2 - 192, pauseHandle, false );
 
-	if( battleCount >= 3 )SceneFade( SceneList::Result, 255, 255 / 60, COLOR_BLACK, COLOR_BLUE );
-	else SceneFade( SceneList::Setting, 255, 255 / 60, COLOR_BLACK, COLOR_GREEN );
+	if( battleCount >= 3 )SceneFade( SceneList::Result, 255, 255 / 60, COLOR_BLACK, COLOR_BLACK );
+	else SceneFade( SceneList::Setting, 255, 255 / 60, COLOR_BLACK, COLOR_BLACK );
 }
 
 void GameScene::HitManager( Player* target ){

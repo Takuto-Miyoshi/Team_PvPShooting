@@ -29,6 +29,9 @@ private:
 private:
 
 	int resultBackHandle;
+	static int winBannerHandle[Sprite::UI::winBannerFrame];
+	static int counter;
+	static int spriteNum;
 	int resultJingleHandle;
 };
 
