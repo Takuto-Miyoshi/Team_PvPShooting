@@ -141,7 +141,7 @@ int UpdatePadState(){
 			if( buttonTemp >= 16 ) buttonTemp += 16;
 			else buttonTemp *= 2;
 		}
-		currentPadState[p][8] = ( ( GetJoypadInputState( p + 1 ) & PAD_INPUT_8 ) == 0 ) ? 0 : 1;
+		currentPadState[p][8] = ( ( GetJoypadInputState( p + 1 ) & PAD_INPUT_10 ) == 0 ) ? 0 : 1;
 	}
 
 	for( int p = 0; p < 2; p++ ){
@@ -167,7 +167,7 @@ InputState GetPadStatus( int padNum, int padCode ){
 	case PAD_INPUT_2:		convertedPadCode = 5; break;
 	case PAD_INPUT_3:		convertedPadCode = 6; break;
 	case PAD_INPUT_4:		convertedPadCode = 7; break;
-	case PAD_INPUT_8:		convertedPadCode = 8; break;
+	case PAD_INPUT_10:		convertedPadCode = 8; break;
 	default:break;
 	}
 
