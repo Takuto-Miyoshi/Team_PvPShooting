@@ -3,7 +3,7 @@
 #include "Header/SceneBase.h"
 #include "Header/ResultScene.h"
 
-// #define USE_CONTROLLER
+#define USE_CONTROLLER
 
 int ResultScene::winBannerHandle[Sprite::UI::winBannerFrame] = {};
 int ResultScene::spriteNum = 0;

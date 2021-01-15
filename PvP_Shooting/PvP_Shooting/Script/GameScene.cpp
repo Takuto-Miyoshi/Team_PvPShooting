@@ -12,7 +12,7 @@
 #include "Header/Tunnel.h"
 #include "Header/Car.h"
 
-// #define USE_CONTROLLER
+#define USE_CONTROLLER
 
 int GameScene::counter = 0;
 int GameScene::startCounter = 0;
@@ -484,7 +484,9 @@ void GameScene::StageSetUp(){
 void GameScene::Pause(){
 
 #ifdef USE_CONTROLLER
-	if( GetPadStatus( player1->GetPlayerNumber(), PAD_INPUT_8 ) == InputState::Pressed ) {
+	if( ( GetPadStatus( player1->GetPlayerNumber(), PAD_INPUT_8 ) == InputState::Pressed ) ||
+		( GetPadStatus( player1->GetPlayerNumber(), PAD_INPUT_9 ) == InputState::Pressed ) ||
+		( GetPadStatus( player1->GetPlayerNumber(), PAD_INPUT_10 ) == InputState::Pressed ) ){
 #else
 	if( GetKeyStatus( KEY_INPUT_RETURN ) == InputState::Pressed ) {
 #endif

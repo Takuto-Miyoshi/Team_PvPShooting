@@ -7,7 +7,7 @@
 #include "Header/GameScene.h"
 #include "Header/ResultScene.h"
 
-// #define USE_CONTROLLER
+#define USE_CONTROLLER
 
 FadeMode SceneBase::fadeMode = FadeMode::None;
 SceneList SceneBase::currentScene = SceneList::Title;
